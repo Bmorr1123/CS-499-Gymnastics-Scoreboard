@@ -8,8 +8,10 @@ from sqlalchemy.orm import mapped_column, declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import LargeBinary
 
+
 class Models(DeclarativeBase):
     pass
+
 
 class School(Models):
     __tablename__ = "school"
@@ -17,12 +19,14 @@ class School(Models):
     school_name: Mapped[str] = mapped_column(String(30))
     school_logo: Mapped[Optional[str]] = mapped_column(LargeBinary)
 
+
 class Event(Models):
     __tablename__ = "event"
     event_id: Mapped[int] = mapped_column(primary_key=True)
     event_name: Mapped[str] = mapped_column(String(30))
     event_location: Mapped[Optional[str]] = mapped_column(String(30))
     event_date: Mapped[Optional[str]] = mapped_column(String(30))
+
 
 class Gymnast(Models):
     __tablename__ = "gymnast"
@@ -50,6 +54,8 @@ class Lineup(Models):
 
     def __repr__(self) -> str:
         return f"Lineup(lineup_id={self.lineup_id!r}, school_id={self.school_id!r}, event_id={self.event_id!r}, apparatus_name={self.apparatus_name!r})"
+
+
 class LineupEntry(Models):
     __tablename__ = "lineup_entry"
     lineup_entry_id: Mapped[int] = mapped_column(primary_key=True)
@@ -60,6 +66,7 @@ class LineupEntry(Models):
 
     def __repr__(self) -> str:
         return f"LineupEntry(lineyp_entry_id={self.lineup_entry_id!r}, gymnast_id={self.gymnast_id!r}, lineup_id={self.lineup_id!r}, score={self.score!r}, status={self.status!r})"
+
 
 class Judge(Models):
     __tablename__ = "judge"
