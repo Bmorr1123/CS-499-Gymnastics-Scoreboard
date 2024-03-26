@@ -115,6 +115,19 @@ class Window(QWidget):
         image4.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
         image4.setPixmap(image1.pixmap.scaled(200, 200))
         image4.setAlignment(Qt.AlignCenter)
+        # create order labels
+        order1 = QLabel("Order: " + "1st")  # will need to be replaced with attribute
+        order1.setFont(QFont('Arial', 30))
+        order1.setAlignment(Qt.AlignCenter)
+        order2 = QLabel("Order: " + "1st")  # will need to be replaced with attribute
+        order2.setFont(QFont('Arial', 30))
+        order2.setAlignment(Qt.AlignCenter)
+        order3 = QLabel("Order: " + "1st")  # will need to be replaced with attribute
+        order3.setFont(QFont('Arial', 30))
+        order3.setAlignment(Qt.AlignCenter)
+        order4 = QLabel("Order: " + "1st")  # will need to be replaced with attribute
+        order4.setFont(QFont('Arial', 30))
+        order4.setAlignment(Qt.AlignCenter)
 
         # create a HBoxLayout instance for event and start value
         event1 = QHBoxLayout()
@@ -223,12 +236,13 @@ class Window(QWidget):
         imageScore1.addWidget(logo1, 1)
         imageScore1.addWidget(score1, 2)
 
-        team1.addLayout(info1, 1, 0, 1, 2)
+        team1.addLayout(info1, 1, 0, 1, 1)
         info1.addWidget(name1)
         info1.addWidget(class1)
         info1.addWidget(major1)
         info1.addWidget(avg1)
-        team1.addWidget(image1, 1, 2)
+        team1.addWidget(image1, 1, 1)
+        team1.addWidget(order1, 1, 2)
 
         team1.addLayout(event1, 2, 0, 1, 2)
         event1.addWidget(app1)
@@ -249,12 +263,13 @@ class Window(QWidget):
         imageScore2.addWidget(logo2, 1)
         imageScore2.addWidget(score2, 2)
 
-        team2.addLayout(info2, 1, 0, 1, 2)
+        team2.addLayout(info2, 1, 0, 1, 1)
         info2.addWidget(name2)
         info2.addWidget(class2)
         info2.addWidget(major2)
         info2.addWidget(avg2)
-        team2.addWidget(image2, 1, 2)
+        team2.addWidget(image2, 1, 1)
+        team2.addWidget(order2, 1, 2)
 
         team2.addLayout(event2, 2, 0, 1, 2)
         event2.addWidget(app2)
@@ -276,12 +291,13 @@ class Window(QWidget):
             imageScore3.addWidget(logo3, 1)
             imageScore3.addWidget(score3, 2)
 
-            team3.addLayout(info3, 1, 0, 1, 2)
+            team3.addLayout(info3, 1, 0, 1, 1)
             info3.addWidget(name3)
             info3.addWidget(class3)
             info3.addWidget(major3)
             info3.addWidget(avg3)
-            team3.addWidget(image3, 1, 2)
+            team3.addWidget(image3, 1, 1)
+            team3.addWidget(order3, 1, 2)
 
             team3.addLayout(event3, 2, 0, 1, 2)
             event3.addWidget(app3)
@@ -303,12 +319,13 @@ class Window(QWidget):
             imageScore4.addWidget(logo4, 1)
             imageScore4.addWidget(score4, 2)
 
-            team4.addLayout(info4, 1, 0, 1, 2)
+            team4.addLayout(info4, 1, 0, 1, 1)
             info4.addWidget(name4)
             info4.addWidget(class4)
             info4.addWidget(major4)
             info4.addWidget(avg4)
-            team4.addWidget(image4, 1, 2)
+            team4.addWidget(image4, 1, 1)
+            team4.addWidget(order4, 1, 2)
 
             team4.addLayout(event4, 2, 0, 1, 2)
             event4.addWidget(app4)
