@@ -14,14 +14,14 @@ class Models(DeclarativeBase):
 
 
 class School(Models):
-    __tablename__ = "school"
+    __tablename__ = "School"
     school_id: Mapped[int] = mapped_column(primary_key=True)
     school_name: Mapped[str] = mapped_column(String(30))
     school_logo: Mapped[Optional[str]] = mapped_column(LargeBinary)
 
 
 class Event(Models):
-    __tablename__ = "event"
+    __tablename__ = "Event"
     event_id: Mapped[int] = mapped_column(primary_key=True)
     event_name: Mapped[str] = mapped_column(String(30))
     event_location: Mapped[Optional[str]] = mapped_column(String(30))
@@ -41,12 +41,13 @@ class Gymnast(Models):
     # addresses: Mapped[List["Address"]] = relationship(
     #     back_populates="user", cascade="all, delete-orphan"
     # )
+
     def __repr__(self) -> str:
         return f"Gymnast(gymnast_id={self.gymnast_id!r}, first_name={self.first_name!r}, last_name={self.last_name!r}, major={self.major!r}, classification={self.classification!r})"
 
 
 class Lineup(Models):
-    __tablename__ = "lineup"
+    __tablename__ = "Lineup"
     lineup_id: Mapped[int] = mapped_column(primary_key=True)
     school_id: Mapped[School] = mapped_column(ForeignKey(School.school_id))
     event_id: Mapped[Event] = mapped_column(ForeignKey(Event.event_id))
@@ -57,7 +58,7 @@ class Lineup(Models):
 
 
 class LineupEntry(Models):
-    __tablename__ = "lineup_entry"
+    __tablename__ = "LineupEntry"
     lineup_entry_id: Mapped[int] = mapped_column(primary_key=True)
     lineup_id: Mapped[int] = mapped_column(ForeignKey(Lineup.lineup_id))
     gymnast_id: Mapped[int] = mapped_column(ForeignKey(Gymnast.gymnast_id))
@@ -69,7 +70,7 @@ class LineupEntry(Models):
 
 
 class Judge(Models):
-    __tablename__ = "judge"
+    __tablename__ = "Judge"
     judge_id: Mapped[int] = mapped_column(primary_key=True)
     first_name: Mapped[str] = mapped_column(String(30))
     last_name: Mapped[str] = mapped_column(String(30))
