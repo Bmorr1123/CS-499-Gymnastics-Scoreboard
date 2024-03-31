@@ -9,7 +9,7 @@ load_dotenv()  # This loads our .env file so that os can use it.
 
 def get_environment_variable(env_var_name: str) -> str:
     env_var = getenv(env_var_name)
-    print(f"{env_var_name} = {env_var}")
+    # print(f"{env_var_name} = {env_var}")  # Debug statement to check if .env is found
     if not env_var:
         raise EnvironmentError(f"Could not find environment variable '{env_var_name}'.")
     return env_var
