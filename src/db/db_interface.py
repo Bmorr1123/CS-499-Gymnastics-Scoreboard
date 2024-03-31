@@ -22,7 +22,7 @@ class DBInterface:
                 drivername="mysql",
                 username=get_environment_variable("MYSQL_USER"),
                 password=get_environment_variable("MYSQL_PASSWORD"),
-                host="127.0.0.1",
+                host=get_environment_variable("DATABASE_HOST"),
                 database=get_environment_variable("MYSQL_DATABASE"),
             ),
             pool_recycle=3600  # Refresh the connection every hour.
