@@ -25,3 +25,6 @@
 ## Restarting the Contianer
 - When you want to start your container in the future, you can run ```docker compose up```, but I like to run
 ```docker compose up-d``` to run the container detached from my terminal session.
+
+## Populating Tables
+- In order to populate the tables of the MySQL db, you need to initialize and instance of the DBInterface class. I would just run `db_interface_test.py`
