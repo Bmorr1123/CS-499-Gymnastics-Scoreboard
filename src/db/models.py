@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column, declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import LargeBinary
+from sqlalchemy.types import LargeBinary, Float
 
 
 class Models(DeclarativeBase):
@@ -61,7 +61,7 @@ class LineupEntry(Models):
     lineup_entry_id: Mapped[int] = mapped_column(primary_key=True)
     lineup_id: Mapped[int] = mapped_column(ForeignKey(Lineup.lineup_id))
     gymnast_id: Mapped[int] = mapped_column(ForeignKey(Gymnast.gymnast_id))
-    score: Mapped[float] = mapped_column(float)
+    score: Mapped[float] = mapped_column(Float)
     status: Mapped[str] = mapped_column(String(30))
 
     def __repr__(self) -> str:
