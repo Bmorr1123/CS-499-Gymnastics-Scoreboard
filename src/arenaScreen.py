@@ -10,6 +10,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 class Window(QWidget):
     def __init__(self):
         super().__init__()
@@ -67,7 +68,7 @@ class Window(QWidget):
         info4 = QVBoxLayout()
         # create info for gymnast for teams
         name1 = QLabel("Name")
-        name1.setFont(QFont('Arial', 25))
+        name1.setFont(QFont('Arial', 20))
         class1 = QLabel("Classification")
         class1.setFont(QFont('Arial', 15))
         major1 = QLabel("Major")
@@ -75,7 +76,7 @@ class Window(QWidget):
         avg1 = QLabel("Season Average")
         avg1.setFont(QFont('Arial', 15))
         name2 = QLabel("Name")
-        name2.setFont(QFont('Arial', 25))
+        name2.setFont(QFont('Arial', 20))
         class2 = QLabel("Classification")
         class2.setFont(QFont('Arial', 15))
         major2 = QLabel("Major")
@@ -83,7 +84,7 @@ class Window(QWidget):
         avg2 = QLabel("Season Average")
         avg2.setFont(QFont('Arial', 15))
         name3 = QLabel("Name")
-        name3.setFont(QFont('Arial', 25))
+        name3.setFont(QFont('Arial', 20))
         class3 = QLabel("Classification")
         class3.setFont(QFont('Arial', 15))
         major3 = QLabel("Major")
@@ -91,7 +92,7 @@ class Window(QWidget):
         avg3 = QLabel("Season Average")
         avg3.setFont(QFont('Arial', 15))
         name4 = QLabel("Name")
-        name4.setFont(QFont('Arial', 25))
+        name4.setFont(QFont('Arial', 20))
         class4 = QLabel("Classification")
         class4.setFont(QFont('Arial', 15))
         major4 = QLabel("Major")
@@ -101,19 +102,19 @@ class Window(QWidget):
         # create image labels for gymnasts
         image1 = QLabel()
         image1.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
-        image1.setPixmap(image1.pixmap.scaled(200, 200))
+        image1.setPixmap(image1.pixmap.scaled(150, 150))
         image1.setAlignment(Qt.AlignCenter)
         image2 = QLabel()
         image2.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
-        image2.setPixmap(image1.pixmap.scaled(200, 200))
+        image2.setPixmap(image1.pixmap.scaled(150, 150))
         image2.setAlignment(Qt.AlignCenter)
         image3 = QLabel()
         image3.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
-        image3.setPixmap(image1.pixmap.scaled(200, 200))
+        image3.setPixmap(image1.pixmap.scaled(150, 150))
         image3.setAlignment(Qt.AlignCenter)
         image4 = QLabel()
         image4.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
-        image4.setPixmap(image1.pixmap.scaled(200, 200))
+        image4.setPixmap(image1.pixmap.scaled(150, 150))
         image4.setAlignment(Qt.AlignCenter)
         # create order labels
         order1 = QLabel("Order: " + "1st")  # will need to be replaced with attribute
