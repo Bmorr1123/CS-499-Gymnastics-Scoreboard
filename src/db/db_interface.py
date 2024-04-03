@@ -92,7 +92,7 @@ class DBInterface:
         select_statement = select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
         return list(session.scalars(select_statement))
 
-    def get_gymnasts_by_names(self, names: list[tuple[str]]) -> [Gymnast]:
+    def get_gymnasts_by_names(self, names: list[tuple[str, str]]) -> [Gymnast]:
         session = self.get_session()
         select_statements = union_all(*(
             select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
