@@ -6,9 +6,13 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QWidget, QHBoxLayout, QLabel,
 )
+
+from PyQt5.QtCore import Qt
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
 
 class Window(QWidget):
     def __init__(self):
@@ -44,7 +48,7 @@ class Window(QWidget):
         score4.setAlignment(Qt.AlignCenter)
         # create logo labels for teams
         logo1 = QLabel()
-        logo1.pixmap = QPixmap('exampleLogo.jpg') # will need to transfer school logo in
+        logo1.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
         logo1.setPixmap(logo1.pixmap.scaled(150, 150))
         logo1.setAlignment(Qt.AlignCenter)
         logo2 = QLabel()
