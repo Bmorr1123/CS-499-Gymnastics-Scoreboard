@@ -148,9 +148,11 @@ class Window(QWidget):
         self.judgesLabel.setText("List of Judges")
 
     def getFile(self):
-        fileName = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Text files (*.txt, *.pdf)")
-        self.judgesLabel.setText(fileName)
-        # crashes when user selects a file
+        fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
+        if fileName:
+            self.judgesLabel.setText(fileName)
+        else:
+            self.judgesLabel.setText("List of Judges")
 
     def changeLineups(self, button):
         if button.text() == "Dual":
