@@ -17,6 +17,7 @@ class Window(QWidget):
         team2 = QGridLayout()
         team3 = QGridLayout()
         team4 = QGridLayout()
+        nextButtons = QHBoxLayout()
 
         # create area for score entering for each team
         scoreInfo1 = QVBoxLayout()
@@ -201,30 +202,11 @@ class Window(QWidget):
         self.nextGymnast4 = QPushButton("Next Gymnast")
         topButtons4.addWidget(self.nextGymnast4)
 
-        # create area for 'next event' and 'finish meet' buttons for each team
-        bottomButtons1 = QHBoxLayout()
-        self.nextEvent1 = QPushButton("Next Event")
-        bottomButtons1.addWidget(self.nextEvent1)
-        self.finish1 = QPushButton("Finish Meet")
-        bottomButtons1.addWidget(self.finish1)
-
-        bottomButtons2 = QHBoxLayout()
-        self.nextEvent2 = QPushButton("Next Event")
-        bottomButtons2.addWidget(self.nextEvent2)
-        self.finish2 = QPushButton("Finish Meet")
-        bottomButtons2.addWidget(self.finish2)
-
-        bottomButtons3 = QHBoxLayout()
-        self.nextEvent3 = QPushButton("Next Event")
-        bottomButtons3.addWidget(self.nextEvent3)
-        self.finish3 = QPushButton("Finish Meet")
-        bottomButtons3.addWidget(self.finish3)
-
-        bottomButtons4 = QHBoxLayout()
-        self.nextEvent4 = QPushButton("Next Event")
-        bottomButtons4.addWidget(self.nextEvent4)
-        self.finish4 = QPushButton("Finish Meet")
-        bottomButtons4.addWidget(self.finish4)
+        # create 'next event' and 'finish meet' buttons
+        self.nextEvent = QPushButton("Next Event")
+        self.finish = QPushButton("Finish Meet")
+        nextButtons.addWidget(self.nextEvent)
+        nextButtons.addWidget(self.finish)
 
         # add areas to each grid layout for each team
         # ~team 1~
@@ -232,7 +214,6 @@ class Window(QWidget):
         team1.addWidget(self.timer1, 1, 0)
         team1.addLayout(outOrder1, 0, 1, 2, 1)
         team1.addLayout(topButtons1, 0, 2)
-        team1.addLayout(bottomButtons1, 1, 2)
         mainLayout.addLayout(team1)
 
         # ~team 2~
@@ -240,7 +221,6 @@ class Window(QWidget):
         team2.addWidget(self.timer2, 1, 0)
         team2.addLayout(outOrder2, 0, 1, 2, 1)
         team2.addLayout(topButtons2, 0, 2)
-        team2.addLayout(bottomButtons2, 1, 2)
         mainLayout.addLayout(team2)
 
         # ~team 3~
@@ -248,7 +228,6 @@ class Window(QWidget):
         team3.addWidget(self.timer3, 1, 0)
         team3.addLayout(outOrder3, 0, 1, 2, 1)
         team3.addLayout(topButtons3, 0, 2)
-        team3.addLayout(bottomButtons3, 1, 2)
         mainLayout.addLayout(team3)
 
         # ~team 4~
@@ -256,8 +235,10 @@ class Window(QWidget):
         team4.addWidget(self.timer4, 1, 0)
         team4.addLayout(outOrder4, 0, 1, 2, 1)
         team4.addLayout(topButtons4, 0, 2)
-        team4.addLayout(bottomButtons4, 1, 2)
         mainLayout.addLayout(team4)
+
+        # add 'next event' and 'finish meet' buttons to main layout
+        mainLayout.addLayout(nextButtons)
 
         # set the main layout on the application's window
         self.setLayout(mainLayout)

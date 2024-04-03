@@ -32,9 +32,11 @@ class MonoLineup(QWidget):
         self.monoLineup.addWidget(self.insert1Label)
 
     def getFile(self):
-        fileName = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Text files (*.txt)")
-        self.insert1Label.setText(fileName)
-        # crashes when user selects a file
+        fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
+        if fileName:
+            self.insert1Label.setText(fileName)
+        else:
+            self.insert1Label.setText("Lineup #1")
 
 
 class DualLineups(QWidget):
@@ -54,9 +56,11 @@ class DualLineups(QWidget):
         self.dualLineups.addWidget(self.insert2Label)
 
     def getFile(self):
-        fileName = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Text files (*.txt)")
-        self.insert2Label.setText(fileName)
-        # crashes when user selects a file
+        fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
+        if fileName:
+            self.insert2Label.setText(fileName)
+        else:
+            self.insert2Label.setText("Lineup #2")
 
 
 class TriLineups(QWidget):
@@ -76,9 +80,11 @@ class TriLineups(QWidget):
         self.triLineups.addWidget(self.insert3Label)
 
     def getFile(self):
-        fileName = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Text files (*.txt)")
-        self.insert3Label.setText(fileName)
-        # crashes when user selects a file
+        fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
+        if fileName:
+            self.insert3Label.setText(fileName)
+        else:
+            self.insert3Label.setText("Lineup #3")
 
 
 class QuadLineups(QWidget):
@@ -98,6 +104,8 @@ class QuadLineups(QWidget):
         self.quadLineups.addWidget(self.insert4Label)
 
     def getFile(self):
-        fileName = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "Text files (*.txt)")
-        self.insert4Label.setText(fileName)
-        # crashes when user selects a file
+        fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
+        if fileName:
+            self.insert4Label.setText(fileName)
+        else:
+            self.insert4Label.setText("Lineup #4")
