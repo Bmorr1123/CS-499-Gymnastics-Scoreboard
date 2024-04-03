@@ -1,10 +1,9 @@
-from sqlalchemy import create_engine, URL, select, Select
+from sqlalchemy import create_engine, URL, select, union_all, Select
 from sqlalchemy.orm import Session
 from os import getenv
 from dotenv import load_dotenv
 from models import Models, School, Event, Gymnast, Lineup, LineupEntry, Judge
 
-load_dotenv()  # This loads our .env file so that os can use it.
 
 
 def get_environment_variable(env_var_name: str) -> str:
@@ -16,7 +15,12 @@ def get_environment_variable(env_var_name: str) -> str:
 
 
 class DBInterface:
-    def __init__(self):
+    def __init__(self, path_to_dotenv: str):
+        if path_to_dotenv:
+            load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.
+        else:
+            load_dotenv()  # This will attempt to load a .env from the current working directory.
+
         self.engine = create_engine(
             URL.create(
                 drivername="mysql",
@@ -87,6 +91,14 @@ class DBInterface:
         session = self.get_session()
         select_statement = select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
         return list(session.scalars(select_statement))
+
+    def get_gymnasts_by_names(self, names: list[tuple[str]]) -> [Gymnast]:
+        session = self.get_session()
+        select_statements = union_all(*(
+            select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
+            for first_name, last_name in names
+        ))
+        return list(session.scalars(select_statements))
 
     # ----------------------------------------------------------------------------------------------- Lineup Queries ---
     def get_lineups(self) -> [Lineup]:
