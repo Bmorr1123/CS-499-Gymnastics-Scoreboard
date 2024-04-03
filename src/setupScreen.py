@@ -1,4 +1,6 @@
 import sys
+import scorekeeperScreen
+import arenaScreen
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -125,10 +127,18 @@ class Window(QWidget):
         self.otherButtons.addWidget(self.resetButton)
         self.doneButton = QPushButton("Finish Setup")
         # NEED TO ADD FUNCTION ONCE SCOREKEEPER IS DONE
+        self.doneButton.clicked.connect(self.doneClicked)
         self.otherButtons.addWidget(self.doneButton)
 
         # set the main layout on the application's window
         self.setLayout(gridFormat)
+
+    def doneClicked(self):
+        self.close()
+        self.sScreen = scorekeeperScreen.Window()
+        self.aScreen = arenaScreen.Window()
+        self.sScreen.show()
+        self.aScreen.show()
 
     def resetSelections(self):
         self.logoCheckbox.setChecked(False)
