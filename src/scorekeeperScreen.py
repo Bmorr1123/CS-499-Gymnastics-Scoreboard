@@ -1,8 +1,13 @@
 import sys
-
+import updateLineup
+import postScreen
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
 
 class Window(QWidget):
     def __init__(self):
@@ -181,32 +186,37 @@ class Window(QWidget):
         topButtons1 = QHBoxLayout()
         self.update1 = QPushButton("Update Lineup")
         topButtons1.addWidget(self.update1)
+        self.update1.clicked.connect(self.lineupChange)
         self.nextGymnast1 = QPushButton("Next Gymnast")
         topButtons1.addWidget(self.nextGymnast1)
 
         topButtons2 = QHBoxLayout()
         self.update2 = QPushButton("Update Lineup")
         topButtons2.addWidget(self.update2)
+        self.update2.clicked.connect(self.lineupChange)
         self.nextGymnast2 = QPushButton("Next Gymnast")
         topButtons2.addWidget(self.nextGymnast2)
 
         topButtons3 = QHBoxLayout()
         self.update3 = QPushButton("Update Lineup")
         topButtons3.addWidget(self.update3)
+        self.update3.clicked.connect(self.lineupChange)
         self.nextGymnast3 = QPushButton("Next Gymnast")
         topButtons3.addWidget(self.nextGymnast3)
 
         topButtons4 = QHBoxLayout()
         self.update4 = QPushButton("Update Lineup")
         topButtons4.addWidget(self.update4)
+        self.update4.clicked.connect(self.lineupChange)
         self.nextGymnast4 = QPushButton("Next Gymnast")
         topButtons4.addWidget(self.nextGymnast4)
 
         # create 'next event' and 'finish meet' buttons
         self.nextEvent = QPushButton("Next Event")
-        self.finish = QPushButton("Finish Meet")
         nextButtons.addWidget(self.nextEvent)
+        self.finish = QPushButton("Finish Meet")
         nextButtons.addWidget(self.finish)
+        self.finish.clicked.connect(self.meetDone)
 
         # add areas to each grid layout for each team
         # ~team 1~
@@ -246,8 +256,16 @@ class Window(QWidget):
     def enterPressed(self):
         print("enter")
 
+    def lineupChange(self):
+        self.lScreen = updateLineup.Window()
+        self.lScreen.show()
+
     def activated1(self):
         self.orderSelect1.setCurrentIndex(1)
+    def meetDone(self):
+        self.close()
+        self.pScreen = postScreen.Window()
+        self.pScreen.show()
 
     def activated2(self):
         self.orderSelect2.setCurrentIndex(1)
