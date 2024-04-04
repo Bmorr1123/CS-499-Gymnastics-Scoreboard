@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from schools import *
 
 
 class BlankLineups(QWidget):
@@ -22,6 +23,7 @@ class MonoLineup(QWidget):
         self.setLayout(self.monoLineup)
 
         self.school1 = QPushButton("Select School #1")
+        self.school1.clicked.connect(self.showSchools)
         self.insertLineup1 = QPushButton("Insert Lineup #1 File")
         self.insert1Label = QLabel("Lineup #1")
         self.insert1Label.setFont(QFont('Arial', 10))
@@ -38,6 +40,10 @@ class MonoLineup(QWidget):
         else:
             self.insert1Label.setText("Lineup #1")
 
+    def showSchools(self):
+        self.list = SchoolSelection()
+        self.list.show()
+
 
 class DualLineups(QWidget):
     def __init__(self, *args, **kwargs):
@@ -46,6 +52,7 @@ class DualLineups(QWidget):
         self.setLayout(self.dualLineups)
 
         self.school2 = QPushButton("Select School #2")
+        self.school2.clicked.connect(self.showSchools)
         self.insertLineup2 = QPushButton("Insert Lineup #2 File")
         self.insertLineup2.clicked.connect(self.getFile)
         self.insert2Label = QLabel("Lineup #2")
@@ -62,6 +69,10 @@ class DualLineups(QWidget):
         else:
             self.insert2Label.setText("Lineup #2")
 
+    def showSchools(self):
+        self.list = SchoolSelection()
+        self.list.show()
+
 
 class TriLineups(QWidget):
     def __init__(self, *args, **kwargs):
@@ -70,6 +81,7 @@ class TriLineups(QWidget):
         self.setLayout(self.triLineups)
 
         self.school3 = QPushButton("Select School #3")
+        self.school3.clicked.connect(self.showSchools)
         self.insertLineup3 = QPushButton("Insert Lineup #3 File")
         self.insertLineup3.clicked.connect(self.getFile)
         self.insert3Label = QLabel("Lineup #3")
@@ -86,6 +98,10 @@ class TriLineups(QWidget):
         else:
             self.insert3Label.setText("Lineup #3")
 
+    def showSchools(self):
+        self.list = SchoolSelection()
+        self.list.show()
+
 
 class QuadLineups(QWidget):
     def __init__(self, *args, **kwargs):
@@ -94,6 +110,7 @@ class QuadLineups(QWidget):
         self.setLayout(self.quadLineups)
 
         self.school4 = QPushButton("Select School #4")
+        self.school4.clicked.connect(self.showSchools)
         self.insertLineup4 = QPushButton("Insert Lineup #4 File")
         self.insertLineup4.clicked.connect(self.getFile)
         self.insert4Label = QLabel("Lineup #4")
@@ -109,3 +126,7 @@ class QuadLineups(QWidget):
             self.insert4Label.setText(fileName)
         else:
             self.insert4Label.setText("Lineup #4")
+
+    def showSchools(self):
+        self.list = SchoolSelection()
+        self.list.show()
