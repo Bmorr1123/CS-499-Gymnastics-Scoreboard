@@ -1,6 +1,7 @@
 import sys
 import updateLineup
 import postScreen
+import setupScreen
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -262,8 +263,10 @@ class Window(QWidget):
 
     def activated1(self):
         self.orderSelect1.setCurrentIndex(1)
+
     def meetDone(self):
         self.close()
+        setupScreen.aScreen.close()  # grab instance of aScreen from setupScreen and close it
         self.pScreen = postScreen.Window()
         self.pScreen.show()
 

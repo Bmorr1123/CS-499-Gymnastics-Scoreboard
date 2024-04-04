@@ -136,9 +136,10 @@ class Window(QWidget):
     def doneClicked(self):
         self.close()
         self.sScreen = scorekeeperScreen.Window()
-        self.aScreen = arenaScreen.Window()
+        global aScreen  # make arena screen instance a global variable
+        aScreen = arenaScreen.Window()
         self.sScreen.show()
-        self.aScreen.show()
+        aScreen.show()
 
     def resetSelections(self):
         self.logoCheckbox.setChecked(False)
