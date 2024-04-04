@@ -152,6 +152,7 @@ class Window(QWidget):
         self.verifyButton = QPushButton("Update Lineup")
         self.verifyButton.setFont(QFont('Arial', 15))
         substitution.addWidget(self.verifyButton)
+        self.verifyButton.clicked.connect(self.updateClicked)
 
         # put function to dropdown menu of team lineups
         lineupMenu.activated.connect(self.activated)
@@ -162,6 +163,9 @@ class Window(QWidget):
     def activated(self, index):
         self.teamLineup.setCurrentIndex(index)
         self.teamRoster.setCurrentIndex(index)
+
+    def updateClicked(self):
+        self.close()
 
 
 if __name__ == "__main__":
