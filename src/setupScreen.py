@@ -1,6 +1,7 @@
 import sys
-import scorekeeperScreen
-import arenaScreen
+
+import setupController
+import screensController
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -134,12 +135,8 @@ class Window(QWidget):
         self.setLayout(gridFormat)
 
     def doneClicked(self):
-        self.close()
-        self.sScreen = scorekeeperScreen.Window()
-        global aScreen  # make arena screen instance a global variable
-        aScreen = arenaScreen.Window()
-        self.sScreen.show()
-        aScreen.show()
+        setupController.close_window()
+        screensController.open_windows()
 
     def resetSelections(self):
         self.logoCheckbox.setChecked(False)

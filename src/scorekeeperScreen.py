@@ -1,7 +1,9 @@
 import sys
-import updateLineup
-import postScreen
-import setupScreen
+
+import screensController
+import postController
+import updateController
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -258,17 +260,14 @@ class Window(QWidget):
         print("enter")
 
     def lineupChange(self):
-        self.lScreen = updateLineup.Window()
-        self.lScreen.show()
+        updateController.open_window()
 
     def activated1(self):
         self.orderSelect1.setCurrentIndex(1)
 
     def meetDone(self):
-        self.close()
-        setupScreen.aScreen.close()  # grab instance of aScreen from setupScreen and close it
-        self.pScreen = postScreen.Window()
-        self.pScreen.show()
+        screensController.close_windows()
+        postController.open_window()
 
     def activated2(self):
         self.orderSelect2.setCurrentIndex(1)
