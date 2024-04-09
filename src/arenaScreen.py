@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QWidget, QHBoxLayout, QLabel,
 )
+from PyQt5.QtCore import QTimer
 
 from PyQt5.QtCore import Qt
 
@@ -34,18 +35,18 @@ class Window(QWidget):
         imageScore3 = QHBoxLayout()
         imageScore4 = QHBoxLayout()
         # create score labels
-        score1 = QLabel("180.99")
-        score1.setFont(QFont('Arial', 50))
-        score1.setAlignment(Qt.AlignCenter)
-        score2 = QLabel("180.99")
-        score2.setFont(QFont('Arial', 50))
-        score2.setAlignment(Qt.AlignCenter)
-        score3 = QLabel("180.99")
-        score3.setFont(QFont('Arial', 50))
-        score3.setAlignment(Qt.AlignCenter)
-        score4 = QLabel("180.99")
-        score4.setFont(QFont('Arial', 50))
-        score4.setAlignment(Qt.AlignCenter)
+        self.score1 = QLabel("180.99")
+        self.score1.setFont(QFont('Arial', 50))
+        self.score1.setAlignment(Qt.AlignCenter)
+        self.score2 = QLabel("180.99")
+        self.score2.setFont(QFont('Arial', 50))
+        self.score2.setAlignment(Qt.AlignCenter)
+        self.score3 = QLabel("180.99")
+        self.score3.setFont(QFont('Arial', 50))
+        self.score3.setAlignment(Qt.AlignCenter)
+        self.score4 = QLabel("180.99")
+        self.score4.setFont(QFont('Arial', 50))
+        self.score4.setAlignment(Qt.AlignCenter)
         # create logo labels for teams
         logo1 = QLabel()
         logo1.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
@@ -238,7 +239,7 @@ class Window(QWidget):
         # ~team 1~
         team1.addLayout(imageScore1, 0, 0, 1, 3)
         imageScore1.addWidget(logo1, 1)
-        imageScore1.addWidget(score1, 2)
+        imageScore1.addWidget(self.score1, 2)
 
         team1.addLayout(info1, 1, 0, 1, 1)
         info1.addWidget(name1)
@@ -265,7 +266,7 @@ class Window(QWidget):
         # ~team 2~
         team2.addLayout(imageScore2, 0, 0, 1, 3)
         imageScore2.addWidget(logo2, 1)
-        imageScore2.addWidget(score2, 2)
+        imageScore2.addWidget(self.score2, 2)
 
         team2.addLayout(info2, 1, 0, 1, 1)
         info2.addWidget(name2)
@@ -293,7 +294,7 @@ class Window(QWidget):
         if True:  # change this and team 4 to "false" to see dual meet format
             team3.addLayout(imageScore3, 0, 0, 1, 3)
             imageScore3.addWidget(logo3, 1)
-            imageScore3.addWidget(score3, 2)
+            imageScore3.addWidget(self.score3, 2)
 
             team3.addLayout(info3, 1, 0, 1, 1)
             info3.addWidget(name3)
@@ -321,7 +322,7 @@ class Window(QWidget):
         if True:  # change this to "false" to see triangular meet format
             team4.addLayout(imageScore4, 0, 0, 1, 3)
             imageScore4.addWidget(logo4, 1)
-            imageScore4.addWidget(score4, 2)
+            imageScore4.addWidget(self.score4, 2)
 
             team4.addLayout(info4, 1, 0, 1, 1)
             info4.addWidget(name4)
@@ -348,9 +349,73 @@ class Window(QWidget):
         # set the layout on the application's window
         self.setLayout(quadFormat)
 
+    def update_scoreLabel1(self, score):
+        self.score1.setText(score)
+        self.flash_score(1)
+
+    def update_scoreLabel2(self, score):
+        self.score2.setText(score)
+        self.flash_score(2)
+
+    def update_scoreLabel3(self, score):
+        self.score3.setText(score)
+        self.flash_score(3)
+
+    def update_scoreLabel4(self, score):
+        self.score4.setText(score)
+        self.flash_score(4)
+
+    def flash_score(self, team):
+        print("FLASH")
+        self.flash_timer = QTimer(self)
+        if team == 1:
+            self.flash_timer.timeout.connect(self.toggle_color1)
+        elif team == 2:
+            self.flash_timer.timeout.connect(self.toggle_color2)
+        elif team == 3:
+            self.flash_timer.timeout.connect(self.toggle_color3)
+        elif team == 4:
+            self.flash_timer.timeout.connect(self.toggle_color4)
+        self.flash_timer.start(500)
+
+        self.stop_timer = QTimer(self)
+        self.stop_timer.timeout.connect(self.stop_flashing)
+        self.stop_timer.start(3000)  # Stop flashing after 3 seconds
+
+    def toggle_color1(self):
+        if self.score1.isVisible():
+            self.score1.hide()
+        else:
+            self.score1.show()
+
+    def toggle_color2(self):
+        if self.score2.isVisible():
+            self.score2.hide()
+        else:
+            self.score2.show()
+
+    def toggle_color3(self):
+        if self.score3.isVisible():
+            self.score3.hide()
+        else:
+            self.score3.show()
+
+    def toggle_color4(self):
+        if self.score4.isVisible():
+            self.score4.hide()
+        else:
+            self.score4.show()
+
+    def stop_flashing(self):
+        self.flash_timer.stop()
+        self.score1.show()
+        self.score2.show()
+        self.score3.show()
+        self.score4.show()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Window()
-    window.show()
+    arena = Window()
+    arena.show()
     sys.exit(app.exec_())

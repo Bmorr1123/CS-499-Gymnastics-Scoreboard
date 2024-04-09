@@ -41,7 +41,8 @@ class Window(QWidget):
         self.enterScore1.setMaxLength(6)
         self.enterScore1.setAlignment(Qt.AlignLeft)
         self.enterScore1.setFont(QFont('Arial', 15))
-        self.enterScore1.returnPressed.connect(lambda: self.enterPressed())
+        self.enterScore1.returnPressed.connect(lambda: self.update_Score(self.enterScore1.text(), 1))
+        # self.enterScore1.returnPressed.connect(lambda: self.enterPressed())
         scoreForm1 = QFormLayout()
         scoreForm1.addRow("Enter Score", self.enterScore1)
         scoreInfo1.addLayout(scoreForm1)
@@ -59,7 +60,8 @@ class Window(QWidget):
         self.enterScore2.setMaxLength(6)
         self.enterScore2.setAlignment(Qt.AlignLeft)
         self.enterScore2.setFont(QFont('Arial', 15))
-        self.enterScore2.returnPressed.connect(lambda: self.enterPressed())
+        self.enterScore2.returnPressed.connect(lambda: self.update_Score(self.enterScore2.text(), 2))
+        # self.enterScore2.returnPressed.connect(lambda: self.enterPressed())
         scoreForm2 = QFormLayout()
         scoreForm2.addRow("Enter Score", self.enterScore2)
         scoreInfo2.addLayout(scoreForm2)
@@ -77,7 +79,8 @@ class Window(QWidget):
         self.enterScore3.setMaxLength(6)
         self.enterScore3.setAlignment(Qt.AlignLeft)
         self.enterScore3.setFont(QFont('Arial', 15))
-        self.enterScore3.returnPressed.connect(lambda: self.enterPressed())
+        self.enterScore3.returnPressed.connect(lambda: self.update_Score(self.enterScore3.text(), 3))
+        # self.enterScore3.returnPressed.connect(lambda: self.enterPressed())
         scoreForm3 = QFormLayout()
         scoreForm3.addRow("Enter Score", self.enterScore3)
         scoreInfo3.addLayout(scoreForm3)
@@ -95,7 +98,8 @@ class Window(QWidget):
         self.enterScore4.setMaxLength(6)
         self.enterScore4.setAlignment(Qt.AlignLeft)
         self.enterScore4.setFont(QFont('Arial', 15))
-        self.enterScore4.returnPressed.connect(lambda: self.enterPressed())
+        self.enterScore4.returnPressed.connect(lambda: self.update_Score(self.enterScore4.text(), 4))
+        # self.enterScore4.returnPressed.connect(lambda: self.enterPressed())
         scoreForm4 = QFormLayout()
         scoreForm4.addRow("Enter Score", self.enterScore4)
         scoreInfo4.addLayout(scoreForm4)
@@ -259,6 +263,9 @@ class Window(QWidget):
     def enterPressed(self):
         print("enter")
 
+    def update_Score(self, score, team):
+        screensController.update_score(team, score)
+
     def lineupChange(self):
         updateController.open_window()
 
@@ -279,8 +286,8 @@ class Window(QWidget):
         self.orderSelect4.setCurrentIndex(1)
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Window()
-    window.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#    app = QApplication(sys.argv)
+#    scorekeeper = Window()
+#    scorekeeper.show()
+#    sys.exit(app.exec_())
