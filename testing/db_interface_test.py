@@ -62,7 +62,7 @@ def create_gymnasts(db_int: DBInterface, school: School) -> [Gymnast]:
 # print(db_int.get_gymnasts_from_school(school))
 
 def main():
-    db_int = DBInterface()
+    db_int = DBInterface("../db_setup/.env")
 
     lsu = create_school(db_int)
     print(lsu)
