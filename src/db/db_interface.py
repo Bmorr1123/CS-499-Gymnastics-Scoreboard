@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from models import Models, School, Event, Gymnast, Lineup, LineupEntry, Judge
 
 
-
 def get_environment_variable(env_var_name: str) -> str:
     env_var = getenv(env_var_name)
     # print(f"{env_var_name} = {env_var}")  # Debug statement to check if .env is found
@@ -15,7 +14,7 @@ def get_environment_variable(env_var_name: str) -> str:
 
 
 class DBInterface:
-    def __init__(self, path_to_dotenv: str):
+    def __init__(self, path_to_dotenv: str | None = None):
         if path_to_dotenv:
             load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.
         else:
@@ -60,6 +59,12 @@ class DBInterface:
         select_statement = select(School).where(School.school_name == school_name)
         return list(session.scalars(select_statement))
 
+    def get_schools_by_names(self, school_names: [str]) -> [School]:
+        session = self.get_session()
+        # select_statements = union_all(*(select(School).where(School.school_name == name) for name in school_names))
+        select_statements = session.query(School).filter(School.school_name.in_(school_names))
+        return list(session.scalars(select_statements))
+
     # ------------------------------------------------------------------------------------------------ Event Queries ---
     def get_events(self) -> [Event]:
         session = self.get_session()
@@ -98,6 +103,7 @@ class DBInterface:
             select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
             for first_name, last_name in names
         ))
+        # select_statements = session.query(Gymnast).filter(Gymnast.)
         return list(session.scalars(select_statements))
 
     # ----------------------------------------------------------------------------------------------- Lineup Queries ---
