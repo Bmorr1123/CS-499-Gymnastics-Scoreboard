@@ -61,7 +61,6 @@ class DBInterface:
 
     def get_schools_by_names(self, school_names: [str]) -> [School]:
         session = self.get_session()
-        # select_statements = union_all(*(select(School).where(School.school_name == name) for name in school_names))
         select_statements = session.query(School).filter(School.school_name.in_(school_names))
         return list(session.scalars(select_statements))
 
@@ -103,7 +102,10 @@ class DBInterface:
             select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
             for first_name, last_name in names
         ))
-        # select_statements = session.query(Gymnast).filter(Gymnast.)
+        gymnasts_ids = list(session.scalars(select_statements))  # For some reason union_all only returns IDs
+
+        # This select statement will get all the gymnast information.
+        select_statements = session.query(Gymnast).filter(Gymnast.gymnast_id.in_(gymnasts_ids))
         return list(session.scalars(select_statements))
 
     # ----------------------------------------------------------------------------------------------- Lineup Queries ---

@@ -19,6 +19,9 @@ class School(Models):
     school_name: Mapped[str] = mapped_column(String(30))
     school_logo: Mapped[Optional[str]] = mapped_column(LargeBinary)
 
+    def __repr__(self) -> str:
+        return f"School(school_id={self.school_id}, school_name={self.school_name!r}, school_logo={self.school_logo!r})"
+
 
 class Event(Models):
     __tablename__ = "Event"
@@ -27,9 +30,12 @@ class Event(Models):
     event_location: Mapped[Optional[str]] = mapped_column(String(30))
     event_date: Mapped[Optional[str]] = mapped_column(String(30))
 
+    def __repr__(self) -> str:
+        return f"Event(event_id={self.event_id!r}, event_name={self.event_name!r}, event_location={self.event_location!r}, event_date={self.event_date!r})"
+
 
 class Gymnast(Models):
-    __tablename__ = "gymnast"
+    __tablename__ = "Gymnast"
     gymnast_id: Mapped[int] = mapped_column(primary_key=True)
     school_id: Mapped[School] = mapped_column(ForeignKey(School.school_id))
     first_name: Mapped[str] = mapped_column(String(30))
