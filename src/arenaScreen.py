@@ -1,18 +1,12 @@
 import sys
 
-from PyQt5.QtWidgets import (
-    QApplication,
-    QGridLayout,
-    QPushButton,
-    QWidget, QHBoxLayout, QLabel,
-)
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QPushButton, QWidget, QHBoxLayout, QLabel,)
 from PyQt5.QtCore import QTimer
-
 from PyQt5.QtCore import Qt
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QColor
 
 
 class Window(QWidget):
@@ -404,48 +398,56 @@ class Window(QWidget):
             self.stop_timer4.start(3000)  # Stop flashing after 3 seconds
 
     def toggle_color1(self):
-        if self.score1.isVisible():
-            self.score1.hide()
+        palette = self.score1.palette()
+        color = palette.color(self.score1.foregroundRole())
+        if color == QColor("black"):
+            self.score1.setStyleSheet("background-color: yellow; color: white")
         else:
-            self.score1.show()
+            self.score1.setStyleSheet("background-color: none; color: black")
 
     def toggle_color2(self):
-        if self.score2.isVisible():
-            self.score2.hide()
+        palette = self.score2.palette()
+        color = palette.color(self.score2.foregroundRole())
+        if color == QColor("black"):
+            self.score2.setStyleSheet("background-color: yellow; color: white")
         else:
-            self.score2.show()
+            self.score2.setStyleSheet("background-color: none; color: black")
 
     def toggle_color3(self):
-        if self.score3.isVisible():
-            self.score3.hide()
+        palette = self.score3.palette()
+        color = palette.color(self.score3.foregroundRole())
+        if color == QColor("black"):
+            self.score3.setStyleSheet("background-color: yellow; color: white")
         else:
-            self.score3.show()
+            self.score3.setStyleSheet("background-color: none; color: black")
 
     def toggle_color4(self):
-        if self.score4.isVisible():
-            self.score4.hide()
+        palette = self.score4.palette()
+        color = palette.color(self.score4.foregroundRole())
+        if color == QColor("black"):
+            self.score4.setStyleSheet("background-color: yellow; color: white")
         else:
-            self.score4.show()
+            self.score4.setStyleSheet("background-color: none; color: black")
 
     def stop_flashing1(self):
         self.flash_timer1.stop()
         self.stop_timer1.stop()
-        self.score1.show()
+        self.score1.setStyleSheet("background-color: none; color: black")
 
     def stop_flashing2(self):
         self.flash_timer2.stop()
         self.stop_timer2.stop()
-        self.score2.show()
+        self.score2.setStyleSheet("background-color: none; color: black")
 
     def stop_flashing3(self):
         self.flash_timer3.stop()
         self.stop_timer3.stop()
-        self.score3.show()
+        self.score3.setStyleSheet("background-color: none; color: black")
 
     def stop_flashing4(self):
         self.flash_timer4.stop()
         self.stop_timer4.stop()
-        self.score4.show()
+        self.score4.setStyleSheet("background-color: none; color: black")
 
 
 if __name__ == "__main__":
