@@ -10,7 +10,7 @@ global displayJudges
 global meetFormat
 
 
-def open_windows(check1, check2, check3, check4, format):
+def open_windows(check1, check2, check3, check4, formats):
     global displayLogo
     displayLogo = check1
 
@@ -24,7 +24,7 @@ def open_windows(check1, check2, check3, check4, format):
     displayJudges = check4
 
     global meetFormat
-    meetFormat = format
+    meetFormat = formats
 
     global aScreen
     aScreen = arenaScreen.Window()
