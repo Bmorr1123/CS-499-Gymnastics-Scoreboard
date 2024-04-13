@@ -135,8 +135,14 @@ class Window(QWidget):
         self.setLayout(gridFormat)
 
     def doneClicked(self):
+        meet = ""
+        if self.triButton.isChecked():
+            meet = "Tri"
+        elif self.quadButton.isChecked():
+            meet = "Quad"
         setupController.close_window()
-        screensController.open_windows()
+        screensController.open_windows(self.logoCheckbox.isChecked(), self.orderCheckbox.isChecked(),
+                                       self.svCheckbox.isChecked(), self.judgesCheckbox.isChecked(), meet)
 
     def resetSelections(self):
         self.logoCheckbox.setChecked(False)
