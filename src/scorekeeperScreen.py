@@ -20,13 +20,6 @@ class Window(QWidget):
         # create a QVBoxLayout instance for the outer layout
         mainLayout = QVBoxLayout()
 
-        # create QGridLayout instance for each team area on screen
-        team1 = QGridLayout()
-        team2 = QGridLayout()
-        team3 = QGridLayout()
-        team4 = QGridLayout()
-        nextButtons = QHBoxLayout()
-
         # create area for score entering for each team
         scoreInfo1 = QVBoxLayout()
         self.schoolName1 = QLabel("School Name")
@@ -219,6 +212,7 @@ class Window(QWidget):
         topButtons4.addWidget(self.nextGymnast4)
 
         # create 'next event' and 'finish meet' buttons
+        nextButtons = QHBoxLayout()
         self.nextEvent = QPushButton("Next Event")
         nextButtons.addWidget(self.nextEvent)
         self.finish = QPushButton("Finish Meet")
@@ -227,6 +221,7 @@ class Window(QWidget):
 
         # add areas to each grid layout for each team
         # ~team 1~
+        team1 = QGridLayout()
         team1.addLayout(scoreInfo1, 0, 0)
         team1.addWidget(self.timer1, 1, 0)
         team1.addLayout(outOrder1, 0, 1, 2, 1)
@@ -234,6 +229,7 @@ class Window(QWidget):
         mainLayout.addLayout(team1)
 
         # ~team 2~
+        team2 = QGridLayout()
         team2.addLayout(scoreInfo2, 0, 0)
         team2.addWidget(self.timer2, 1, 0)
         team2.addLayout(outOrder2, 0, 1, 2, 1)
@@ -241,17 +237,21 @@ class Window(QWidget):
         mainLayout.addLayout(team2)
 
         # ~team 3~
-        team3.addLayout(scoreInfo3, 0, 0)
-        team3.addWidget(self.timer3, 1, 0)
-        team3.addLayout(outOrder3, 0, 1, 2, 1)
-        team3.addLayout(topButtons3, 0, 2)
+        team3 = QGridLayout()
+        if screensController.meetFormat == "Tri" or screensController.meetFormat == "Quad":
+            team3.addLayout(scoreInfo3, 0, 0)
+            team3.addWidget(self.timer3, 1, 0)
+            team3.addLayout(outOrder3, 0, 1, 2, 1)
+            team3.addLayout(topButtons3, 0, 2)
         mainLayout.addLayout(team3)
 
         # ~team 4~
-        team4.addLayout(scoreInfo4, 0, 0)
-        team4.addWidget(self.timer4, 1, 0)
-        team4.addLayout(outOrder4, 0, 1, 2, 1)
-        team4.addLayout(topButtons4, 0, 2)
+        team4 = QGridLayout()
+        if screensController.meetFormat == "Quad":
+            team4.addLayout(scoreInfo4, 0, 0)
+            team4.addWidget(self.timer4, 1, 0)
+            team4.addLayout(outOrder4, 0, 1, 2, 1)
+            team4.addLayout(topButtons4, 0, 2)
         mainLayout.addLayout(team4)
 
         # add 'next event' and 'finish meet' buttons to main layout
@@ -269,12 +269,12 @@ class Window(QWidget):
     def lineupChange(self):
         updateController.open_window()
 
-    def activated1(self):
-        self.orderSelect1.setCurrentIndex(1)
-
     def meetDone(self):
         screensController.close_windows()
         postController.open_window()
+
+    def activated1(self):
+        self.orderSelect1.setCurrentIndex(1)
 
     def activated2(self):
         self.orderSelect2.setCurrentIndex(1)
@@ -286,8 +286,8 @@ class Window(QWidget):
         self.orderSelect4.setCurrentIndex(1)
 
 
-# if __name__ == "__main__":
-#    app = QApplication(sys.argv)
-#    scorekeeper = Window()
-#    scorekeeper.show()
-#    sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    scorekeeper = Window()
+    scorekeeper.show()
+    sys.exit(app.exec_())
