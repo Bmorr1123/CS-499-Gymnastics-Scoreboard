@@ -3,9 +3,29 @@ import scorekeeperScreen
 
 global aScreen
 global sScreen
+global displayLogo
+global displayOrder
+global displaySV
+global displayJudges
+global meetFormat
 
 
-def open_windows():
+def open_windows(check1, check2, check3, check4, formats):
+    global displayLogo
+    displayLogo = check1
+
+    global displayOrder
+    displayOrder = check2
+
+    global displaySV
+    displaySV = check3
+
+    global displayJudges
+    displayJudges = check4
+
+    global meetFormat
+    meetFormat = formats
+
     global aScreen
     aScreen = arenaScreen.Window()
     aScreen.show()

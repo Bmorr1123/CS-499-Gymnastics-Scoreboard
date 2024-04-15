@@ -1,0 +1,17 @@
+{
+    "school_name": "University of Kentucky",
+    "gymnasts": [
+        {
+            "first_name": "Jasmine",
+            "last_name": "Harold",
+            "major": "Business",
+            "classification": "Senior"
+        },
+        {
+            "first_name": "Melissa",
+            "last_name": "Baumgardner",
+            "major": "Finance",
+            "classification": "Graduate"
+        }
+    ]
+}

@@ -1,10 +1,8 @@
-from sqlalchemy import create_engine, URL, select, Select
+from sqlalchemy import create_engine, URL, select, union_all, Select
 from sqlalchemy.orm import Session
 from os import getenv
 from dotenv import load_dotenv
 from models import Models, School, Event, Gymnast, Lineup, LineupEntry, Judge
-
-load_dotenv()  # This loads our .env file so that os can use it.
 
 
 def get_environment_variable(env_var_name: str) -> str:
@@ -16,17 +14,21 @@ def get_environment_variable(env_var_name: str) -> str:
 
 
 class DBInterface:
-    def __init__(self):
-        self.engine = create_engine(
-            URL.create(
-                drivername="mysql",
-                username=get_environment_variable("MYSQL_USER"),
-                password=get_environment_variable("MYSQL_PASSWORD"),
-                host=get_environment_variable("DATABASE_HOST"),
-                database=get_environment_variable("MYSQL_DATABASE"),
-            ),
-            pool_recycle=3600  # Refresh the connection every hour.
-        )
+    def __init__(self, path_to_dotenv: str | None = None):
+        load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.
+        try:
+            self.engine = create_engine(
+                URL.create(
+                    drivername="mysql",
+                    username=get_environment_variable("MYSQL_USER"),
+                    password=get_environment_variable("MYSQL_PASSWORD"),
+                    host=get_environment_variable("DATABASE_HOST"),
+                    database=get_environment_variable("MYSQL_DATABASE"),
+                ),
+                pool_recycle=3600  # Refresh the connection every hour.
+            )
+        except EnvironmentError:
+            raise EnvironmentError("Could not find the required environment variables. Required Variables:\n\tMYSQL_USER\n\tMYSQL_PASSWORD\n\tDATABASE_HOST\n\tMYSQL_DATABASE")
 
         self.session = None
 
@@ -55,6 +57,11 @@ class DBInterface:
         session = self.get_session()
         select_statement = select(School).where(School.school_name == school_name)
         return list(session.scalars(select_statement))
+
+    def get_schools_by_names(self, school_names: [str]) -> [School]:
+        session = self.get_session()
+        select_statements = session.query(School).filter(School.school_name.in_(school_names))
+        return list(session.scalars(select_statements))
 
     # ------------------------------------------------------------------------------------------------ Event Queries ---
     def get_events(self) -> [Event]:
@@ -88,6 +95,18 @@ class DBInterface:
         select_statement = select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
         return list(session.scalars(select_statement))
 
+    def get_gymnasts_by_names(self, names: list[tuple[str, str]]) -> [Gymnast]:
+        session = self.get_session()
+        select_statements = union_all(*(
+            select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
+            for first_name, last_name in names
+        ))
+        gymnasts_ids = list(session.scalars(select_statements))  # For some reason union_all only returns IDs
+
+        # This select statement will get all the gymnast information.
+        select_statements = session.query(Gymnast).filter(Gymnast.gymnast_id.in_(gymnasts_ids))
+        return list(session.scalars(select_statements))
+
     # ----------------------------------------------------------------------------------------------- Lineup Queries ---
     def get_lineups(self) -> [Lineup]:
         session = self.get_session()
@@ -112,8 +131,20 @@ class DBInterface:
     def get_lineups_by_event_and_apparatus(self, event: Event, apparatus_name: str) -> [Lineup]:
         session = self.get_session()
         select_statement = select(Lineup).where(
-            Lineup.event_id == event.event_id,
+            Lineup.event_id == event.event_id
+        ).where(
             Lineup.apparatus_name == apparatus_name
+        )
+        return list(session.scalars(select_statement))
+
+    def get_lineups_by_event_and_apparatus_and_school(self, event_id: int, apparatus_name: str, school_id: int) -> [Lineup]:
+        session = self.get_session()
+        select_statement = select(Lineup).where(
+            Lineup.event_id == event_id
+        ).where(
+            Lineup.apparatus_name == apparatus_name
+        ).where(
+            Lineup.school_id == school_id
         )
         return list(session.scalars(select_statement))
 
@@ -155,6 +186,6 @@ class DBInterface:
 
     def delete(self, *objects: Models):
         session = self.get_session()
-        for object in objects:
-            session.delete(object)
+        for obj in objects:
+            session.delete(obj)
         session.commit()
