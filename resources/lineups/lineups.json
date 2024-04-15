@@ -1,0 +1,20 @@
+[
+    {
+        "school_id": "University of Kentucky",
+        "event_id": "Test Event",
+        "apparatus_name": "Vault",
+        "gymnasts": [
+            "Melissa Baumgardner",
+            "Jasmine Harold"
+        ]
+    },
+    {
+        "school_id": "University of Kentucky",
+        "event_id": "Test Event",
+        "apparatus_name": "Floor",
+        "gymnasts": [
+            "Jasmine Harold",
+            "Melissa Baumgardner"
+        ]
+    }
+]

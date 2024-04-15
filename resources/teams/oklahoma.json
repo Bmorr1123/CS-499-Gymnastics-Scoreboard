@@ -1,0 +1,17 @@
+{
+    "school_name": "Oklahoma University",
+    "gymnasts": [
+        {
+            "first_name": "Hannah",
+            "last_name": "Stiles",
+            "major": "Business",
+            "classification": "Senior"
+        },
+        {
+            "first_name": "Megan",
+            "last_name": "Helminak",
+            "major": "Finance",
+            "classification": "Graduate"
+        }
+    ]
+}

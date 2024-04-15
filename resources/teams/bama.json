@@ -1,0 +1,17 @@
+{
+    "school_name": "Alabama University",
+    "gymnasts": [
+        {
+            "first_name": "Madison",
+            "last_name": "Mohr",
+            "major": "Business",
+            "classification": "Senior"
+        },
+        {
+            "first_name": "Molly",
+            "last_name": "Smith",
+            "major": "Finance",
+            "classification": "Graduate"
+        }
+    ]
+}
