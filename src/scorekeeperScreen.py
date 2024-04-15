@@ -262,9 +262,6 @@ class Window(QWidget):
         # set the main layout on the application's window
         self.setLayout(mainLayout)
 
-    def enterPressed(self):
-        print("enter")
-
     def update_Score(self, score, team):
         screensController.update_score(team, score)
 

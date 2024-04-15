@@ -8,6 +8,14 @@ global displayOrder
 global displaySV
 global displayJudges
 global meetFormat
+scores1 = []
+meetScores1 = 0
+scores2 = []
+meetScores2 = 0
+scores3 = []
+meetScores3 = 0
+scores4 = []
+meetScores4 = 0
 
 
 def open_windows(check1, check2, check3, check4, formats):
@@ -41,10 +49,72 @@ def close_windows():
 
 def update_score(team, score):
     if team == 1:
-        arenaScreen.Window.update_scoreLabel1(aScreen, score)
+        global meetScores1
+
+        # send score to database for gymnast
+        # send score to cumulative AA competition for gymnast
+        if len(scores1) == 5:
+            drop_lowest(scores1, int(score))
+
+            meetScores1 = 0
+            for i in range(0, len(scores1) - 1):
+                meetScores1 += scores1[i]
+        else:
+            scores1.append(int(score))
+            meetScores1 += int(score)
+
+        arenaScreen.Window.update_scoreLabel1(aScreen, str(meetScores1))
     if team == 2:
-        arenaScreen.Window.update_scoreLabel2(aScreen, score)
+        global meetScores2
+
+        if len(scores2) == 5:
+            drop_lowest(scores2, int(score))
+
+            meetScores2 = 0
+            for i in range(0, len(scores2) - 1):
+                meetScores2 += scores2[i]
+        else:
+            scores2.append(int(score))
+            meetScores2 += int(score)
+
+        arenaScreen.Window.update_scoreLabel2(aScreen, str(meetScores2))
     if team == 3:
-        arenaScreen.Window.update_scoreLabel3(aScreen, score)
+        global meetScores3
+
+        if len(scores3) == 5:
+            drop_lowest(scores3, int(score))
+
+            meetScores3 = 0
+            for i in range(0, len(scores3) - 1):
+                meetScores3 += scores3[i]
+        else:
+            scores3.append(int(score))
+            meetScores3 += int(score)
+
+        arenaScreen.Window.update_scoreLabel3(aScreen, str(meetScores3))
     if team == 4:
-        arenaScreen.Window.update_scoreLabel4(aScreen, score)
+        global meetScores4
+
+        if len(scores4) == 5:
+            drop_lowest(scores4, int(score))
+
+            meetScores4 = 0
+            for i in range(0, len(scores4) - 1):
+                meetScores4 += scores4[i]
+        else:
+            scores4.append(int(score))
+            meetScores4 += int(score)
+
+        arenaScreen.Window.update_scoreLabel4(aScreen, str(meetScores4))
+
+
+def drop_lowest(array, value):
+    # find the lowest score in the array
+    min_index = 0
+    for i in range(1, len(array)):
+        if array[i] < array[min_index]:
+            min_index = i
+
+    # check to see if new score is lower than the lowest score in the array
+    if value > array[min_index]:
+        array[min_index] = value  # if new score is greater, replace the lowest score with new score
