@@ -50,14 +50,15 @@ def close_windows():
 def update_score(team, score):
     if team == 1:
         global meetScores1
+        global scores1
 
         # send score to database for gymnast
         # send score to cumulative AA competition for gymnast
         if len(scores1) == 5:
-            drop_lowest(scores1, int(score))
+            scores1 = drop_lowest(scores1, int(score))
 
             meetScores1 = 0
-            for i in range(0, len(scores1) - 1):
+            for i in range(0, len(scores1)):
                 meetScores1 += scores1[i]
         else:
             scores1.append(int(score))
@@ -66,9 +67,10 @@ def update_score(team, score):
         arenaScreen.Window.update_scoreLabel1(aScreen, str(meetScores1))
     if team == 2:
         global meetScores2
+        global scores2
 
         if len(scores2) == 5:
-            drop_lowest(scores2, int(score))
+            scores2 = drop_lowest(scores2, int(score))
 
             meetScores2 = 0
             for i in range(0, len(scores2) - 1):
@@ -80,9 +82,10 @@ def update_score(team, score):
         arenaScreen.Window.update_scoreLabel2(aScreen, str(meetScores2))
     if team == 3:
         global meetScores3
+        global scores3
 
         if len(scores3) == 5:
-            drop_lowest(scores3, int(score))
+            scores3 = drop_lowest(scores3, int(score))
 
             meetScores3 = 0
             for i in range(0, len(scores3) - 1):
@@ -94,9 +97,10 @@ def update_score(team, score):
         arenaScreen.Window.update_scoreLabel3(aScreen, str(meetScores3))
     if team == 4:
         global meetScores4
+        global scores4
 
         if len(scores4) == 5:
-            drop_lowest(scores4, int(score))
+            scores4 = drop_lowest(scores4, int(score))
 
             meetScores4 = 0
             for i in range(0, len(scores4) - 1):
@@ -118,3 +122,5 @@ def drop_lowest(array, value):
     # check to see if new score is lower than the lowest score in the array
     if value > array[min_index]:
         array[min_index] = value  # if new score is greater, replace the lowest score with new score
+
+    return array

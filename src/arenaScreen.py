@@ -383,7 +383,6 @@ class Window(QWidget):
 
     def flash_score(self, team):
         if team == 1:
-            print("FLASH 1")
             self.flash_timer1 = QTimer(self)
             self.flash_timer1.timeout.connect(self.toggle_color1)
             self.flash_timer1.start(500)
@@ -392,7 +391,6 @@ class Window(QWidget):
             self.stop_timer1.timeout.connect(self.stop_flashing1)
             self.stop_timer1.start(3000)  # Stop flashing after 3 seconds
         elif team == 2:
-            print("FLASH 2")
             self.flash_timer2 = QTimer(self)
             self.flash_timer2.timeout.connect(self.toggle_color2)
             self.flash_timer2.start(500)
@@ -401,7 +399,6 @@ class Window(QWidget):
             self.stop_timer2.timeout.connect(self.stop_flashing2)
             self.stop_timer2.start(3000)  # Stop flashing after 3 seconds
         elif team == 3:
-            print("FLASH 3")
             self.flash_timer3 = QTimer(self)
             self.flash_timer3.timeout.connect(self.toggle_color3)
             self.flash_timer3.start(500)
@@ -410,7 +407,6 @@ class Window(QWidget):
             self.stop_timer3.timeout.connect(self.stop_flashing3)
             self.stop_timer3.start(3000)  # Stop flashing after 3 seconds
         elif team == 4:
-            print("FLASH 4")
             self.flash_timer4 = QTimer(self)
             self.flash_timer4.timeout.connect(self.toggle_color4)
             self.flash_timer4.start(500)
