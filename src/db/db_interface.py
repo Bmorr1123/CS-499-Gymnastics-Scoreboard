@@ -15,21 +15,20 @@ def get_environment_variable(env_var_name: str) -> str:
 
 class DBInterface:
     def __init__(self, path_to_dotenv: str | None = None):
-        if path_to_dotenv:
-            load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.
-        else:
-            load_dotenv()  # This will attempt to load a .env from the current working directory.
-
-        self.engine = create_engine(
-            URL.create(
-                drivername="mysql",
-                username=get_environment_variable("MYSQL_USER"),
-                password=get_environment_variable("MYSQL_PASSWORD"),
-                host=get_environment_variable("DATABASE_HOST"),
-                database=get_environment_variable("MYSQL_DATABASE"),
-            ),
-            pool_recycle=3600  # Refresh the connection every hour.
-        )
+        load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.
+        try:
+            self.engine = create_engine(
+                URL.create(
+                    drivername="mysql",
+                    username=get_environment_variable("MYSQL_USER"),
+                    password=get_environment_variable("MYSQL_PASSWORD"),
+                    host=get_environment_variable("DATABASE_HOST"),
+                    database=get_environment_variable("MYSQL_DATABASE"),
+                ),
+                pool_recycle=3600  # Refresh the connection every hour.
+            )
+        except EnvironmentError:
+            raise EnvironmentError("Could not find the required environment variables. Required Variables:\n\tMYSQL_USER\n\tMYSQL_PASSWORD\n\tDATABASE_HOST\n\tMYSQL_DATABASE")
 
         self.session = None
 
@@ -132,8 +131,20 @@ class DBInterface:
     def get_lineups_by_event_and_apparatus(self, event: Event, apparatus_name: str) -> [Lineup]:
         session = self.get_session()
         select_statement = select(Lineup).where(
-            Lineup.event_id == event.event_id,
+            Lineup.event_id == event.event_id
+        ).where(
             Lineup.apparatus_name == apparatus_name
+        )
+        return list(session.scalars(select_statement))
+
+    def get_lineups_by_event_and_apparatus_and_school(self, event_id: int, apparatus_name: str, school_id: int) -> [Lineup]:
+        session = self.get_session()
+        select_statement = select(Lineup).where(
+            Lineup.event_id == event_id
+        ).where(
+            Lineup.apparatus_name == apparatus_name
+        ).where(
+            Lineup.school_id == school_id
         )
         return list(session.scalars(select_statement))
 
@@ -175,6 +186,6 @@ class DBInterface:
 
     def delete(self, *objects: Models):
         session = self.get_session()
-        for object in objects:
-            session.delete(object)
+        for obj in objects:
+            session.delete(obj)
         session.commit()
