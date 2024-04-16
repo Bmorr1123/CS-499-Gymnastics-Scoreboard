@@ -1,0 +1,151 @@
+{
+    "school_name": "Auburn University",
+    "gymnasts": [
+        {
+            "first_name": "Bryn",
+            "last_name": "Bartman",
+            "major": "Business",
+            "classification": "Freshman"
+        },
+        {
+            "first_name": "Emma Grace",
+            "last_name": "Boyd",
+            "major": "Engineering",
+            "classification": "Freshman"
+        },
+
+        {
+            "first_name": "Ananda",
+            "last_name": "Brown",
+            "major": "Liberal Arts",
+            "classification": "Senior"
+        },
+
+        {
+            "first_name": "Aria",
+            "last_name": "Brusch",
+            "major": "Liberal Arts",
+            "classification": "Graduate Student"
+        },
+
+        {
+            "first_name": "Madelynn",
+            "last_name": "Crow",
+            "major": "Sciences and Mathematics",
+            "classification": "Sophomore"
+        },
+
+        {
+            "first_name": "Olivia",
+            "last_name": "Greaves",
+            "major": "Business",
+            "classification": "Redshirt Freshman"
+        },
+
+        {
+            "first_name": "Sophia",
+            "last_name": "Greaves",
+            "major": "Business",
+            "classification": "Freshmen"
+        },
+
+        {
+            "first_name": "Sophia",
+            "last_name": "Groth",
+            "major": "Education",
+            "classification": "Junior"
+        },
+
+        {
+            "first_name": "Hannah",
+            "last_name": "Hagle",
+            "major": "Liberal Arts",
+            "classification": "Sophomore"
+        },
+        {
+            "first_name": "Anna",
+            "last_name": "Hill",
+            "major": "Education",
+            "classification": "Junior"
+        },
+
+        {
+            "first_name": "Olivia",
+            "last_name": "Hollingsworth",
+            "major": "Sciences and Mathematics",
+            "classification": "Senior"
+        },
+
+        {
+            "first_name": "Sara",
+            "last_name": "Hubbard",
+            "major": "Business",
+            "classification": "Junior"
+        },
+
+        {
+            "first_name": "Julianne",
+            "last_name": "Huff",
+            "major": "Education",
+            "classification": "Freshman"
+        },
+
+        {
+            "first_name": "Hailey",
+            "last_name": "John",
+            "major": "Engineering",
+            "classification": "Redshirt Freshman"
+        },
+
+
+        {
+            "first_name": "Caroline",
+            "last_name": "Leonard",
+            "major": "Nursing",
+            "classification": "Junior"
+        },
+
+        {
+            "first_name": "Gabby",
+            "last_name": "McLaughlin",
+            "major": "Liberal Arts",
+            "classification": "Senior"
+        },
+
+        {
+            "first_name": "Sydney",
+            "last_name": "Schumaker",
+            "major": "Liberal Arts",
+            "classification": "Senior"
+        },
+
+        {
+            "first_name": "Lila",
+            "last_name": "Smith",
+            "major": "Education",
+            "classification": "Junior"
+        },
+
+        {
+            "first_name": "Cassie",
+            "last_name": "Stevens",
+            "major": "Business",
+            "classification": "Graduate Student"
+        },
+
+        {
+            "first_name": "Jersie",
+            "last_name": "Woolsey",
+            "major": "Education",
+            "classification": "Freshman"
+        },
+
+        {
+            "first_name": "Paige",
+            "last_name": "Zancan",
+            "major": "Business",
+            "classification": "Freshman"
+        }
+
+    ]
+}
