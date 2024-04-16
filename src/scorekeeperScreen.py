@@ -263,7 +263,8 @@ class Window(QWidget):
         self.setLayout(mainLayout)
 
     def update_Score(self, score, team):
-        screensController.update_score(team, score)
+        print(float(score))
+        screensController.update_score(team, float(score))
 
     def lineupChange(self):
         updateController.open_window()

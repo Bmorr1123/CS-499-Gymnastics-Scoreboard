@@ -55,14 +55,14 @@ def update_score(team, score):
         # send score to database for gymnast
         # send score to cumulative AA competition for gymnast
         if len(scores1) == 5:
-            scores1 = drop_lowest(scores1, int(score))
+            scores1 = drop_lowest(scores1, score)
 
             meetScores1 = 0
             for i in range(0, len(scores1)):
                 meetScores1 += scores1[i]
         else:
-            scores1.append(int(score))
-            meetScores1 += int(score)
+            scores1.append(score)
+            meetScores1 += score
 
         arenaScreen.Window.update_scoreLabel1(aScreen, str(meetScores1))
     if team == 2:
@@ -70,14 +70,14 @@ def update_score(team, score):
         global scores2
 
         if len(scores2) == 5:
-            scores2 = drop_lowest(scores2, int(score))
+            scores2 = drop_lowest(scores2, score)
 
             meetScores2 = 0
-            for i in range(0, len(scores2) - 1):
+            for i in range(0, len(scores2)):
                 meetScores2 += scores2[i]
         else:
-            scores2.append(int(score))
-            meetScores2 += int(score)
+            scores2.append(score)
+            meetScores2 += score
 
         arenaScreen.Window.update_scoreLabel2(aScreen, str(meetScores2))
     if team == 3:
@@ -85,14 +85,14 @@ def update_score(team, score):
         global scores3
 
         if len(scores3) == 5:
-            scores3 = drop_lowest(scores3, int(score))
+            scores3 = drop_lowest(scores3, score)
 
             meetScores3 = 0
-            for i in range(0, len(scores3) - 1):
+            for i in range(0, len(scores3)):
                 meetScores3 += scores3[i]
         else:
-            scores3.append(int(score))
-            meetScores3 += int(score)
+            scores3.append(score)
+            meetScores3 += score
 
         arenaScreen.Window.update_scoreLabel3(aScreen, str(meetScores3))
     if team == 4:
@@ -100,14 +100,14 @@ def update_score(team, score):
         global scores4
 
         if len(scores4) == 5:
-            scores4 = drop_lowest(scores4, int(score))
+            scores4 = drop_lowest(scores4, score)
 
             meetScores4 = 0
-            for i in range(0, len(scores4) - 1):
+            for i in range(0, len(scores4)):
                 meetScores4 += scores4[i]
         else:
-            scores4.append(int(score))
-            meetScores4 += int(score)
+            scores4.append(score)
+            meetScores4 += score
 
         arenaScreen.Window.update_scoreLabel4(aScreen, str(meetScores4))
 
