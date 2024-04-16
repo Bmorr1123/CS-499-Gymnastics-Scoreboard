@@ -112,7 +112,7 @@
         {
             "first_name": "Aleah",
             "last_name": "Finnegan",
-            "major": "",
+            "major": "Undefined",
             "classification": "Junior",
             "gymnast_picture": "aleah_finnegan.jpg",
             "vault_avg": 9.856,
@@ -208,7 +208,7 @@
         {
             "first_name": "Kai",
             "last_name": "Rivers",
-            "major": "",
+            "major": "Undefined",
             "classification": "Graduate Student",
             "gymnast_picture": "kai_rivers.jpg",
             "vault_avg": 9.840,
