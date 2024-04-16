@@ -73,7 +73,7 @@ def update_score(team, score):
             scores2 = drop_lowest(scores2, score)
 
             meetScores2 = 0
-            for i in range(0, len(scores2) - 1):
+            for i in range(0, len(scores2)):
                 meetScores2 += scores2[i]
         else:
             scores2.append(score)
@@ -88,7 +88,7 @@ def update_score(team, score):
             scores3 = drop_lowest(scores3, score)
 
             meetScores3 = 0
-            for i in range(0, len(scores3) - 1):
+            for i in range(0, len(scores3)):
                 meetScores3 += scores3[i]
         else:
             scores3.append(score)
@@ -103,7 +103,7 @@ def update_score(team, score):
             scores4 = drop_lowest(scores4, score)
 
             meetScores4 = 0
-            for i in range(0, len(scores4) - 1):
+            for i in range(0, len(scores4)):
                 meetScores4 += scores4[i]
         else:
             scores4.append(score)

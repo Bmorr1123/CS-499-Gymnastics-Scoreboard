@@ -1,5 +1,7 @@
 import sys
 
+import postController
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -29,13 +31,13 @@ class Window(QWidget):
         aroundTitle.setAlignment(Qt.AlignCenter)
 
         # create labels for final meet scores
-        finalScore1 = QLabel("1st: " + "Team Name " + "190.00")
+        finalScore1 = QLabel("1st: " + "Team Name " + str(postController.sortedScores[0]))
         finalScore1.setFont(QFont('Arial', 50))
-        finalScore2 = QLabel("2nd: " + "Team Name " + "190.00")
+        finalScore2 = QLabel("2nd: " + "Team Name " + str(postController.sortedScores[1]))
         finalScore2.setFont(QFont('Arial', 50))
-        finalScore3 = QLabel("3rd: " + "Team Name " + "190.00")
+        finalScore3 = QLabel("3rd: " + "Team Name " + str(postController.sortedScores[2]))
         finalScore3.setFont(QFont('Arial', 50))
-        finalScore4 = QLabel("4th: " + "Team Name " + "190.00")
+        finalScore4 = QLabel("4th: " + "Team Name " + str(postController.sortedScores[3]))
         finalScore4.setFont(QFont('Arial', 50))
 
         # create labels for all-around scores
