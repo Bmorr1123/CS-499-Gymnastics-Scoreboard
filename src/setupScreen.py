@@ -142,7 +142,8 @@ class Window(QWidget):
             meet = "Quad"
         setupController.close_window()
         screensController.open_windows(self.logoCheckbox.isChecked(), self.orderCheckbox.isChecked(),
-                                       self.svCheckbox.isChecked(), self.judgesCheckbox.isChecked(), meet)
+                                       self.svCheckbox.isChecked(), self.judgesCheckbox.isChecked(), meet,
+                                       setupController.schools_selected)
 
     def resetSelections(self):
         self.logoCheckbox.setChecked(False)
