@@ -47,22 +47,22 @@ class Window(QWidget):
         # create logo labels for teams
         if screensController.displayLogo:
             logo1 = QLabel()
-            logo1.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
+            logo1.pixmap = QPixmap(screensController.competingSchools[0].school_logo)  # will need to transfer school logo in
             logo1.setPixmap(logo1.pixmap.scaled(150, 150))
             logo1.setAlignment(Qt.AlignCenter)
             imageScore1.addWidget(logo1, 1)
             logo2 = QLabel()
-            logo2.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
+            logo2.pixmap = QPixmap(screensController.competingSchools[1].school_logo)  # will need to transfer school logo in
             logo2.setPixmap(logo1.pixmap.scaled(150, 150))
             logo2.setAlignment(Qt.AlignCenter)
             imageScore2.addWidget(logo2, 1)
             logo3 = QLabel()
-            logo3.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
+            logo3.pixmap = QPixmap(screensController.competingSchools[2].school_logo)  # will need to transfer school logo in
             logo3.setPixmap(logo1.pixmap.scaled(150, 150))
             logo3.setAlignment(Qt.AlignCenter)
             imageScore3.addWidget(logo3, 1)
             logo4 = QLabel()
-            logo4.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
+            logo4.pixmap = QPixmap(screensController.competingSchools[3].school_logo)  # will need to transfer school logo in
             logo4.setPixmap(logo1.pixmap.scaled(150, 150))
             logo4.setAlignment(Qt.AlignCenter)
             imageScore4.addWidget(logo4, 1)

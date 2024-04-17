@@ -29,4 +29,5 @@ class SchoolSelection(QWidget):
 
     def school_clicked(self, clicked_item):
         print(clicked_item.text())
-        setupController.schools_selected.append(setupController.db_int.get_school_by_name(clicked_item.text()))
+        school_selected = setupController.db_int.get_school_by_name(clicked_item.text())
+        setupController.schools_selected.append(school_selected[0])
