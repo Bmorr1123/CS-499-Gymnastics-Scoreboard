@@ -5,6 +5,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from schools import *
 
+import setupController
+
 
 class BlankLineups(QWidget):
     def __init__(self, *args, **kwargs):
@@ -37,6 +39,7 @@ class MonoLineup(QWidget):
         fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
         if fileName:
             self.insert1Label.setText(fileName)
+            json_management.load_lineups_from_file(setupController.db_int, fileName)
         else:
             self.insert1Label.setText("Lineup #1")
 
@@ -66,6 +69,7 @@ class DualLineups(QWidget):
         fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
         if fileName:
             self.insert2Label.setText(fileName)
+            json_management.load_lineups_from_file(setupController.db_int, fileName)
         else:
             self.insert2Label.setText("Lineup #2")
 
@@ -95,6 +99,7 @@ class TriLineups(QWidget):
         fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
         if fileName:
             self.insert3Label.setText(fileName)
+            json_management.load_lineups_from_file(setupController.db_int, fileName)
         else:
             self.insert3Label.setText("Lineup #3")
 
@@ -124,6 +129,7 @@ class QuadLineups(QWidget):
         fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
         if fileName:
             self.insert4Label.setText(fileName)
+            json_management.load_lineups_from_file(setupController.db_int, fileName)
         else:
             self.insert4Label.setText("Lineup #4")
 
