@@ -3,7 +3,7 @@ from src.db.db_interface import DBInterface
 
 global setScreen
 
-db_int = DBInterface("../db_setup/.env")
+db_int = DBInterface.get_interface("../db_setup/.env")
 
 
 def open_window():
