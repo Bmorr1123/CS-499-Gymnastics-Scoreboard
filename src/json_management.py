@@ -183,4 +183,9 @@ def load_lineups_from_file(db_int: DBInterface, path_to_file: str):
     insert_missing_lineups(db_int, lineup_data)
 
 
+def load_judges_from_file (db_int: DBInterface, path_to_file: str):
+    judges_data = json.load(open(path_to_file, "r"))
+
+    insert_missing_judges(db_int, judges_data)
+
 

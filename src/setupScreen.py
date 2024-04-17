@@ -165,6 +165,7 @@ class Window(QWidget):
         fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
         if fileName:
             self.judgesLabel.setText(fileName)
+            json_management.load_judges_from_file(setupController.db_int, fileName)
         else:
             self.judgesLabel.setText("List of Judges")
 

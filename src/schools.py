@@ -1,8 +1,11 @@
 import sys
+import json_management
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
+import setupController
 
 
 class SchoolSelection(QWidget):
@@ -17,10 +20,9 @@ class SchoolSelection(QWidget):
         schools.addWidget(self.selectTitle)
 
         self.schoolList = QListWidget()
-        QListWidgetItem("LSU", self.schoolList)
-        QListWidgetItem("MSU", self.schoolList)
-        QListWidgetItem("BAMA", self.schoolList)
-        QListWidgetItem("AUBURN", self.schoolList)
+        json_management.load_teams_from_directory(setupController.db_int, "../resources/teams")
+        for school in setupController.db_int.get_schools():
+            QListWidgetItem(school.school_name, self.schoolList)
         schools.addWidget(self.schoolList)
 
         self.setLayout(schools)
