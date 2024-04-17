@@ -21,7 +21,7 @@ class DBInterface:
         if DBInterface.interface:
             return DBInterface.interface
         else:
-            DBInterface(path_to_dot_env)
+            return DBInterface(path_to_dot_env)
 
     def __init__(self, path_to_dotenv: str | None = None):
         load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.
