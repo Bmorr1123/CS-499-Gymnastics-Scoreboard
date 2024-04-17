@@ -84,6 +84,11 @@ class DBInterface:
         return list(session.scalars(select_statement))
 
     # ---------------------------------------------------------------------------------------------- Gymnast Queries ---
+    def get_gymnasts(self) -> [Gymnast]:
+        session = self.get_session()
+        select_statement = select(Gymnast)
+        return list(session.scalars(select_statement))
+
     def get_gymnasts_from_school(self, school: School) -> [Gymnast]:
         session = self.get_session()
         select_statement = select(Gymnast).where(Gymnast.school_id == school.school_id)
