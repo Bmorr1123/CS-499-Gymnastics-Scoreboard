@@ -1,0 +1,17 @@
+{
+    "school_name": "University of Florida",
+    "gymnasts": [
+        {
+            "first_name": "",
+            "last_name": "",
+            "major": "",
+            "classification": "",
+            "gymnast_picture": "",
+            "vault_avg": 9.87,
+            "bars_avg": 9.85,
+            "beam_avg": 9.55,
+            "floor_avg": 9.69,
+            "all_around_score": 0
+        }
+    ]
+}
