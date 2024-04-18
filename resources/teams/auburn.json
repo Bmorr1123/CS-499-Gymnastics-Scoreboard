@@ -5,96 +5,181 @@
             "first_name": "Bryn",
             "last_name": "Bartman",
             "major": "Business",
-            "classification": "Freshman"
+            "classification": "Freshman",
+            "gymnast_picture": "Bryn_Bartman",
+            "vault_avg": 9.84,
+            "bars_avg": 9.64,
+            "beam_avg": 9.57,
+            "floor_avg": 9.74,
+            "all_around_score": 0
+
         },
         {
             "first_name": "Emma Grace",
             "last_name": "Boyd",
             "major": "Engineering",
-            "classification": "Freshman"
+            "classification": "Freshman",
+            "gymnast_picture": "EmmaGrace_Boyd",
+            "vault_avg": 9.62,
+            "bars_avg": 9.68,
+            "beam_avg": 9.72,
+            "floor_avg": 9.58,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Ananda",
             "last_name": "Brown",
             "major": "Liberal Arts",
-            "classification": "Senior"
+            "classification": "Senior",
+            "gymnast_picture": "Ananda_Brown",
+            "vault_avg": 9.66,
+            "bars_avg": 9.78,
+            "beam_avg": 9.84,
+            "floor_avg": 9.72,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Aria",
             "last_name": "Brusch",
             "major": "Liberal Arts",
-            "classification": "Graduate Student"
+            "classification": "Graduate Student",
+            "gymnast_picture": "Aria_Brusch",
+            "vault_avg": 0,
+            "bars_avg": 9.885,
+            "beam_avg": 9.880,
+            "floor_avg": 9.860,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Madelynn",
             "last_name": "Crow",
             "major": "Sciences and Mathematics",
-            "classification": "Sophomore"
+            "classification": "Sophomore",
+            "gymnast_picture": "Madelynn_Crow",
+            "vault_avg": 9.64,
+            "bars_avg": 9.72,
+            "beam_avg": 9.56,
+            "floor_avg": 9.55,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Olivia",
             "last_name": "Greaves",
             "major": "Business",
-            "classification": "Redshirt Freshman"
+            "classification": "Redshirt Freshman",
+            "gymnast_picture": "Olivia_Greaves",
+            "vault_avg": 9.73,
+            "bars_avg": 9.78,
+            "beam_avg": 9.83,
+            "floor_avg": 9.62,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Sophia",
             "last_name": "Greaves",
             "major": "Business",
-            "classification": "Freshmen"
+            "classification": "Freshmen",
+            "gymnast_picture": "Sophia_Greaves",
+            "vault_avg": 9.65,
+            "bars_avg": 9.77,
+            "beam_avg": 9.64,
+            "floor_avg": 9.72,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Sophia",
             "last_name": "Groth",
             "major": "Education",
-            "classification": "Junior"
+            "classification": "Junior",
+            "gymnast_picture": "Sophia_Groth",
+            "vault_avg": 9.59,
+            "bars_avg": 9.64,
+            "beam_avg": 9.75,
+            "floor_avg": 9.59,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Hannah",
             "last_name": "Hagle",
             "major": "Liberal Arts",
-            "classification": "Sophomore"
+            "classification": "Sophomore",
+            "gymnast_picture": "Hannah_Haggle",
+            "vault_avg": 9.68,
+            "bars_avg": 9.57,
+            "beam_avg": 9.82,
+            "floor_avg": 9.76,
+            "all_around_score": 0
         },
         {
             "first_name": "Anna",
             "last_name": "Hill",
             "major": "Education",
-            "classification": "Junior"
+            "classification": "Junior",
+            "gymnast_picture": "Anna_Hill",
+            "vault_avg": 9.77,
+            "bars_avg": 9.58,
+            "beam_avg": 9.81,
+            "floor_avg": 9.83,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Olivia",
             "last_name": "Hollingsworth",
             "major": "Sciences and Mathematics",
-            "classification": "Senior"
+            "classification": "Senior",
+            "gymnast_picture": "Olivia_Hollingsworth",
+            "vault_avg": 9.76,
+            "bars_avg": 9.84,
+            "beam_avg": 9.72,
+            "floor_avg": 9.56,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Sara",
             "last_name": "Hubbard",
             "major": "Business",
-            "classification": "Junior"
+            "classification": "Junior",
+            "gymnast_picture": "Sara_Hubbard",
+            "vault_avg": 9.82,
+            "bars_avg": 9.74,
+            "beam_avg": 9.84,
+            "floor_avg": 9.67,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Julianne",
             "last_name": "Huff",
             "major": "Education",
-            "classification": "Freshman"
+            "classification": "Freshman",
+            "gymnast_picture": "Julianne_Huff",
+            "vault_avg": 9.88,
+            "bars_avg": 9.82,
+            "beam_avg": 9.85,
+            "floor_avg": 9.76,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Hailey",
             "last_name": "John",
             "major": "Engineering",
-            "classification": "Redshirt Freshman"
+            "classification": "Redshirt Freshman",
+            "gymnast_picture": "Hailey_John",
+            "vault_avg": 9.42,
+            "bars_avg": 9.56,
+            "beam_avg": 9.73,
+            "floor_avg": 9.86,
+            "all_around_score": 0
         },
 
 
@@ -102,49 +187,91 @@
             "first_name": "Caroline",
             "last_name": "Leonard",
             "major": "Nursing",
-            "classification": "Junior"
+            "classification": "Junior",
+            "gymnast_picture": "Caroline_Leonard",
+            "vault_avg": 9.85,
+            "bars_avg": 9.48,
+            "beam_avg": 9.88,
+            "floor_avg": 9.56,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Gabby",
             "last_name": "McLaughlin",
             "major": "Liberal Arts",
-            "classification": "Senior"
+            "classification": "Senior",
+            "gymnast_picture": "Gabby_McLaughlin",
+            "vault_avg": 9.72,
+            "bars_avg": 9.75,
+            "beam_avg": 9.87,
+            "floor_avg": 9.76,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Sydney",
             "last_name": "Schumaker",
             "major": "Liberal Arts",
-            "classification": "Senior"
+            "classification": "Senior",
+            "gymnast_picture": "Sydney_Schumaker",
+            "vault_avg": 9.87,
+            "bars_avg": 9.62,
+            "beam_avg": 9.73,
+            "floor_avg": 9.65,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Lila",
             "last_name": "Smith",
             "major": "Education",
-            "classification": "Junior"
+            "classification": "Junior",
+            "gymnast_picture": "Lila_Smith",
+            "vault_avg": 9.65,
+            "bars_avg": 9.75,
+            "beam_avg": 9.81,
+            "floor_avg": 9.45,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Cassie",
             "last_name": "Stevens",
             "major": "Business",
-            "classification": "Graduate Student"
+            "classification": "Graduate Student",
+            "gymnast_picture": "Cassie_Stevens",
+            "vault_avg": 9.46,
+            "bars_avg": 9.83,
+            "beam_avg": 9.72,
+            "floor_avg": 9.56,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Jersie",
             "last_name": "Woolsey",
             "major": "Education",
-            "classification": "Freshman"
+            "classification": "Freshman",
+            "gymnast_picture": "Jersie_Woolsey",
+            "vault_avg": 9.84,
+            "bars_avg": 9.71,
+            "beam_avg": 9.54,
+            "floor_avg": 9.44,
+            "all_around_score": 0
         },
 
         {
             "first_name": "Paige",
             "last_name": "Zancan",
             "major": "Business",
-            "classification": "Freshman"
+            "classification": "Freshman",
+            "gymnast_picture": "Paige_Zancan",
+            "vault_avg": 9.84,
+            "bars_avg": 9.72,
+            "beam_avg": 9.55,
+            "floor_avg": 9.87,
+            "all_around_score": 0
         }
 
     ]

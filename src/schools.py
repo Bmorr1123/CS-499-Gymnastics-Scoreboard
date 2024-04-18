@@ -1,8 +1,11 @@
 import sys
+import json_management
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
+import setupController
 
 
 class SchoolSelection(QWidget):
@@ -17,10 +20,14 @@ class SchoolSelection(QWidget):
         schools.addWidget(self.selectTitle)
 
         self.schoolList = QListWidget()
-        QListWidgetItem("LSU", self.schoolList)
-        QListWidgetItem("MSU", self.schoolList)
-        QListWidgetItem("BAMA", self.schoolList)
-        QListWidgetItem("AUBURN", self.schoolList)
+        for school in setupController.db_int.get_schools():
+            QListWidgetItem(school.school_name, self.schoolList)
         schools.addWidget(self.schoolList)
+        self.schoolList.itemClicked.connect(self.school_clicked)
 
         self.setLayout(schools)
+
+    def school_clicked(self, clicked_item):
+        print(clicked_item.text())
+        school_selected = setupController.db_int.get_school_by_name(clicked_item.text())
+        setupController.schools_selected.append(school_selected[0])

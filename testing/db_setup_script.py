@@ -2,6 +2,8 @@ import os
 import json_management
 from db_interface import DBInterface
 
+WIPE_DB_AFTER = False
+
 
 def main():
     print(os.listdir())
@@ -35,6 +37,19 @@ def main():
         database_interface,
         "../resources/lineups/lineups.json"
     )
+
+    if WIPE_DB_AFTER:
+        wipe_database(database_interface)
+
+def wipe_database(db_interface: DBInterface):
+    db_interface.delete(*db_interface.get_judges())
+    db_interface.delete(*db_interface.get_lineup_entries())
+    db_interface.delete(*db_interface.get_lineups())
+    db_interface.delete(*db_interface.get_events())
+    db_interface.delete(*db_interface.get_gymnasts())
+    db_interface.delete(*db_interface.get_schools())
+
+    print("WIPED THE DATABASE")
 
 
 if __name__ == "__main__":

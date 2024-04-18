@@ -1,6 +1,11 @@
 import setupScreen
+from src.db.db_interface import DBInterface
 
 global setScreen
+
+schools_selected = []
+
+db_int = DBInterface.get_interface("../db_setup/.env")
 
 
 def open_window():

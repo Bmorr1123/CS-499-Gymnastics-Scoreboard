@@ -25,7 +25,6 @@ def insert_missing_schools(db_int: DBInterface, school_names: [str]) -> [School]
 
     return list(db_int.get_schools_by_names(school_names))
 
-
 def insert_missing_gymnasts(db_int: DBInterface, gymnasts_information: [dict]) -> [Gymnast]:
     """
     This function inserts Gymnasts objects. It will only add unique Gymnasts.
@@ -42,15 +41,19 @@ def insert_missing_gymnasts(db_int: DBInterface, gymnasts_information: [dict]) -
     gymnasts_to_insert = []
     for gymnast in gymnasts_information:
         if (gymnast["first_name"], gymnast["last_name"]) not in gymnasts_in_db:
-            gymnasts_to_insert.append(
-                Gymnast(
-                    first_name=gymnast["first_name"],
-                    last_name=gymnast["last_name"],
-                    major=gymnast["major"],
-                    classification=gymnast["classification"],
-                    school_id=schools_in_db[gymnast["school_id"]].school_id
-                )
+            gymnast_object = Gymnast(
+                first_name=gymnast["first_name"],
+                last_name=gymnast["last_name"],
+                major=gymnast["major"],
+                classification=gymnast["classification"],
+                school_id=schools_in_db[gymnast["school_id"]].school_id
             )
+
+            if "gymnast_picture" in gymnast:
+                gymnast_object.gymnast_picture = load_image_from_file(gymnast["gymnast_picture"])
+
+            gymnasts_to_insert.append(gymnast_object)
+
         else:
             print(f"\tGymnast {gymnast["first_name"]} {gymnast["last_name"]} already in  DB.")
 
@@ -182,5 +185,21 @@ def load_lineups_from_file(db_int: DBInterface, path_to_file: str):
 
     insert_missing_lineups(db_int, lineup_data)
 
+
+def load_judges_from_file (db_int: DBInterface, path_to_file: str):
+    judges_data = json.load(open(path_to_file, "r"))
+
+    insert_missing_judges(db_int, judges_data)
+
+
+def load_image_from_file(path: str) -> bytes | None:
+    if not path:
+        return None
+    try:
+        with open(f"../resources/images/{path}", "rb") as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Could not find path \"{path}\".")
+        return None
 
 

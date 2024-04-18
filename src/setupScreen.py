@@ -142,7 +142,8 @@ class Window(QWidget):
             meet = "Quad"
         setupController.close_window()
         screensController.open_windows(self.logoCheckbox.isChecked(), self.orderCheckbox.isChecked(),
-                                       self.svCheckbox.isChecked(), self.judgesCheckbox.isChecked(), meet)
+                                       self.svCheckbox.isChecked(), self.judgesCheckbox.isChecked(), meet,
+                                       setupController.schools_selected)
 
     def resetSelections(self):
         self.logoCheckbox.setChecked(False)
@@ -165,6 +166,7 @@ class Window(QWidget):
         fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
         if fileName:
             self.judgesLabel.setText(fileName)
+            json_management.load_judges_from_file(setupController.db_int, fileName)
         else:
             self.judgesLabel.setText("List of Judges")
 

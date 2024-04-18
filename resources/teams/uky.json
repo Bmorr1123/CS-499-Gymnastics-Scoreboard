@@ -2,16 +2,202 @@
     "school_name": "University of Kentucky",
     "gymnasts": [
         {
-            "first_name": "Jasmine",
-            "last_name": "Harold",
-            "major": "Business",
-            "classification": "Senior"
+            "first_name": "Carissa",
+            "last_name": "Clay",
+            "major": "M.S. Sport Leadership",
+            "classification": "Senior",
+            "gymnast_picture": "carissa_clay.webp",
+            "vault_avg": 9.787,
+            "bars_avg": 9.739,
+            "beam_avg": 9.965,
+            "floor_avg": 9.44
         },
         {
-            "first_name": "Melissa",
-            "last_name": "Baumgardner",
-            "major": "Finance",
-            "classification": "Graduate"
+            "first_name": "Bailey",
+            "last_name": "Bunn",
+            "major": "Kinesiology",
+            "classification": "Senior",
+            "gymnast_picture": "bailey_bunn.webp",
+            "vault_avg": 9.661,
+            "bars_avg": 9.596,
+            "beam_avg": 9.897,
+            "floor_avg": 9.354
+        },
+        {
+            "first_name": "Bridget",
+            "last_name": "Bourque",
+            "major": "Marketing",
+            "classification": "Sophomore",
+            "gymnast_picture": "bridget_bourque.webp",
+            "vault_avg": 9.973,
+            "bars_avg": 9.722,
+            "beam_avg": 9.606,
+            "floor_avg": 9.951
+        },
+        {
+            "first_name": "Creslyn",
+            "last_name": "Brose",
+            "major": "Music",
+            "classification": "Freshman",
+            "gymnast_picture": "creslyn_brose.webp",
+            "vault_avg": 9.962,
+            "bars_avg": 9.708,
+            "beam_avg": 9.394,
+            "floor_avg": 9.562
+        },
+        {
+            "first_name": "Hailey",
+            "last_name": "Davis",
+            "major": "Marketing and Management",
+            "classification": "Senior",
+            "gymnast_picture": "hailey_davis.webp",
+            "vault_avg": 9.625,
+            "bars_avg": 9.86,
+            "beam_avg": 9.72,
+            "floor_avg": 9.555
+        },
+        {
+            "first_name": "Samantha",
+            "last_name": "Forman",
+            "major": "Marketing",
+            "classification": "Sophomore",
+            "gymnast_picture": "samantha_foreman.webp",
+            "vault_avg": 9.774,
+            "bars_avg": 9.266,
+            "beam_avg": 9.741,
+            "floor_avg": 9.941
+        },
+        {
+            "first_name": "Cadence",
+            "last_name": "Gormley",
+            "major": "Marketing",
+            "classification": "Freshman",
+            "gymnast_picture": "cadence_gromley.webp",
+            "vault_avg": 9.385,
+            "bars_avg": 9.241,
+            "beam_avg": 9.803,
+            "floor_avg": 9.998
+        },
+        {
+            "first_name": "Kaila",
+            "last_name": "Lawrence",
+            "major": "Health Sciences",
+            "classification": "Freshman",
+            "gymnast_picture": "kaila_lawrence.webp",
+            "vault_avg": 9.82,
+            "bars_avg": 9.62,
+            "beam_avg": 9.524,
+            "floor_avg": 9.79
+        },
+        {
+            "first_name": "Sharon",
+            "last_name": "Lee",
+            "major": "Health Sciences",
+            "classification": "Freshman",
+            "gymnast_picture": "sharon_lee.webp",
+            "vault_avg": 9.718,
+            "bars_avg": 9.801,
+            "beam_avg": 9.856,
+            "floor_avg": 9.714
+        },
+        {
+            "first_name": "Isabella",
+            "last_name": "Magnelli",
+            "major": "M.S. Marketing",
+            "classification": "Senior",
+            "gymnast_picture": "isabella_magnelli.webp",
+            "vault_avg": 9.853,
+            "bars_avg": 9.418,
+            "beam_avg": 9.73,
+            "floor_avg": 9.779
+        },
+        {
+            "first_name": "Arianna",
+            "last_name": "Patterson",
+            "major": "Digital Media Design",
+            "classification": "Redshirt Fifth Year",
+            "gymnast_picture": "arianna_patterson.webp",
+            "vault_avg": 9.958,
+            "bars_avg": 9.958,
+            "beam_avg": 9.711,
+            "floor_avg": 9.772
+        },
+        {
+            "first_name": "Jillian",
+            "last_name": "Procasky",
+            "major": "Marketing",
+            "classification": "Junior",
+            "gymnast_picture": "jillian_procasky.webp",
+            "vault_avg": 9.783,
+            "bars_avg": 9.591,
+            "beam_avg": 9.949,
+            "floor_avg": 9.772
+        },
+        {
+            "first_name": "Annie",
+            "last_name": "Riegert",
+            "major": "Marketing",
+            "classification": "Junior",
+            "gymnast_picture": "annie_riegert.webp",
+            "vault_avg": 9.709,
+            "bars_avg": 9.707,
+            "beam_avg": 9.603,
+            "floor_avg": 9.802
+        },
+        {
+            "first_name": "Cecily",
+            "last_name": "Rizo",
+            "major": "Health Sciences",
+            "classification": "Freshman",
+            "gymnast_picture": "cecily_rizo.webp",
+            "vault_avg": 9.345,
+            "bars_avg": 9.71,
+            "beam_avg": 9.447,
+            "floor_avg": 9.614
+        },
+        {
+            "first_name": "Delaynee",
+            "last_name": "Rodriguez",
+            "major": "Business",
+            "classification": "Freshman",
+            "gymnast_picture": "delaynee_rodriguez.webp",
+            "vault_avg": 9.401,
+            "bars_avg": 9.54,
+            "beam_avg": 9.734,
+            "floor_avg": 9.92
+        },
+        {
+            "first_name": "Claire",
+            "last_name": "Stippich",
+            "major": "Accounting and Mathematical Economics",
+            "classification": "Sophomore",
+            "gymnast_picture": "claire_stippich.webp",
+            "vault_avg": 9.718,
+            "bars_avg": 9.737,
+            "beam_avg": 9.756,
+            "floor_avg": 9.723
+        },
+        {
+            "first_name": "Makenzie",
+            "last_name": "Wilson",
+            "major": "Healthcare Communications",
+            "classification": "Junior",
+            "gymnast_picture": "mackenzie_wilson.webp",
+            "vault_avg": 9.823,
+            "bars_avg": 9.582,
+            "beam_avg": 9.732,
+            "floor_avg": 9.803
+        },
+        {
+            "first_name": "Raena",
+            "last_name": "Worley",
+            "major": "Kinesiology/Communication",
+            "classification": "Fifth Year",
+            "gymnast_picture": "raena_worley.webp",
+            "vault_avg": 9.709,
+            "bars_avg": 9.451,
+            "beam_avg": 9.468,
+            "floor_avg": 9.562
         }
     ]
 }
