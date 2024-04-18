@@ -22,7 +22,7 @@ class Window(QWidget):
 
         # create area for score entering for each team
         scoreInfo1 = QVBoxLayout()
-        self.schoolName1 = QLabel("School Name")
+        self.schoolName1 = QLabel(screensController.competingSchools[0].school_name)
         self.schoolName1.setFont(QFont('Arial', 12))
         scoreInfo1.addWidget(self.schoolName1)
         self.name1 = QLabel("Gymnast Name")
@@ -41,7 +41,7 @@ class Window(QWidget):
         scoreInfo1.addLayout(scoreForm1)
 
         scoreInfo2 = QVBoxLayout()
-        self.schoolName2 = QLabel("School Name")
+        self.schoolName2 = QLabel(screensController.competingSchools[1].school_name)
         self.schoolName2.setFont(QFont('Arial', 12))
         scoreInfo2.addWidget(self.schoolName2)
         self.name2 = QLabel("Gymnast Name")
@@ -60,7 +60,7 @@ class Window(QWidget):
         scoreInfo2.addLayout(scoreForm2)
 
         scoreInfo3 = QVBoxLayout()
-        self.schoolName3 = QLabel("School Name")
+        self.schoolName3 = QLabel(screensController.competingSchools[2].school_name)
         self.schoolName3.setFont(QFont('Arial', 12))
         scoreInfo3.addWidget(self.schoolName3)
         self.name3 = QLabel("Gymnast Name")
@@ -79,7 +79,7 @@ class Window(QWidget):
         scoreInfo3.addLayout(scoreForm3)
 
         scoreInfo4 = QVBoxLayout()
-        self.schoolName4 = QLabel("School Name")
+        self.schoolName4 = QLabel(screensController.competingSchools[3].school_name)
         self.schoolName4.setFont(QFont('Arial', 12))
         scoreInfo4.addWidget(self.schoolName4)
         self.name4 = QLabel("Gymnast Name")

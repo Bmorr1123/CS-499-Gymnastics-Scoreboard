@@ -8,6 +8,7 @@ global displayOrder
 global displaySV
 global displayJudges
 global meetFormat
+global competingSchools
 scores1 = []
 meetScores1 = 0
 scores2 = []
@@ -18,7 +19,7 @@ scores4 = []
 meetScores4 = 0
 
 
-def open_windows(check1, check2, check3, check4, formats):
+def open_windows(check1, check2, check3, check4, formats, schools):
     global displayLogo
     displayLogo = check1
 
@@ -33,6 +34,9 @@ def open_windows(check1, check2, check3, check4, formats):
 
     global meetFormat
     meetFormat = formats
+
+    global competingSchools
+    competingSchools = schools
 
     global aScreen
     aScreen = arenaScreen.Window()
