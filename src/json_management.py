@@ -25,44 +25,64 @@ def insert_missing_schools(db_int: DBInterface, school_names: [str]) -> [School]
 
     return list(db_int.get_schools_by_names(school_names))
 
-def insert_missing_gymnasts(db_int: DBInterface, gymnasts_information: [dict]) -> [Gymnast]:
+def convert_json_to_gymnasts(db_int, gymnasts_information) -> [Gymnast]:
+    schools_in_db = {school.school_name: school for school in db_int.get_schools()}
+
+    gymnasts: [Gymnast] = []
+
+    for gymnast in gymnasts_information:
+        school_name = gymnast["school_id"]
+        if school_name not in schools_in_db:
+            print(f"Couldn't find school by name {school_name} in DB.")
+            continue
+        gymnast_object = Gymnast(
+            first_name=gymnast["first_name"],
+            last_name=gymnast["last_name"],
+            major=gymnast["major"],
+            classification=gymnast["classification"],
+            school_id=schools_in_db[school_name].school_id
+        )
+        gymnasts.append(gymnast_object)
+
+        if "gymnast_picture" in gymnast:
+            gymnast_object.gymnast_picture = load_image_from_file(gymnast["gymnast_picture"])
+
+    return gymnasts
+
+def insert_missing_gymnasts(db_int: DBInterface, gymnast_objects: [Gymnast]) -> [Gymnast]:
     """
     This function inserts Gymnasts objects. It will only add unique Gymnasts.
     :param db_int: The Database Interface to use.
-    :param gymnasts_information: A list of Gymnast information in the form of dictionaries.
+    :param gymnast_objects: A list of Gymnasts objects..
     :return: A list of Gymnast objects matching the input list.
     """
-    schools_in_db = {school.school_name: school for school in db_int.get_schools()}
     # The line below this is evil. It gets Gymnasts by name and returns tuples of their names
     gymnasts_in_db = [(gymnast.first_name, gymnast.last_name) for gymnast in db_int.get_gymnasts_by_names(
-            [(str(gymnast_info["first_name"]), str(gymnast_info["last_name"])) for gymnast_info in gymnasts_information]
+            [(gymnast.first_name, gymnast.last_name) for gymnast in gymnast_objects]
         )
     ]
     gymnasts_to_insert = []
-    for gymnast in gymnasts_information:
-        if (gymnast["first_name"], gymnast["last_name"]) not in gymnasts_in_db:
-            gymnast_object = Gymnast(
-                first_name=gymnast["first_name"],
-                last_name=gymnast["last_name"],
-                major=gymnast["major"],
-                classification=gymnast["classification"],
-                school_id=schools_in_db[gymnast["school_id"]].school_id
-            )
-
-            if "gymnast_picture" in gymnast:
-                gymnast_object.gymnast_picture = load_image_from_file(gymnast["gymnast_picture"])
-
-            gymnasts_to_insert.append(gymnast_object)
-
+    for gymnast in gymnast_objects:
+        if (gymnast.first_name, gymnast.last_name) not in gymnasts_in_db:
+            gymnasts_to_insert.append(gymnast)
         else:
-            print(f"\tGymnast {gymnast["first_name"]} {gymnast["last_name"]} already in  DB.")
+            print(f"\tGymnast {gymnast.first_name} {gymnast.last_name} already in  DB.")
 
     db_int.insert(*gymnasts_to_insert)
 
     return list(db_int.get_gymnasts_by_names(
-        [(str(gymnast_info["first_name"]), str(gymnast_info["last_name"])) for gymnast_info in gymnasts_information]
+        [(gymnast.first_name, gymnast.last_name) for gymnast in gymnast_objects]
     ))
 
+def convert_json_to_events(events_information):
+    return [
+        Event(
+            event_name=event_info["event_name"],
+            event_location=event_info["event_location"],
+            event_date=event_info["event_date"]
+        )
+        for event_info in events_information
+    ]
 
 def insert_missing_events(db_int: DBInterface, event_information: [dict]):
     events = [event.event_name for event in db_int.get_events()]
