@@ -30,6 +30,12 @@ def main():
                 "last_name": "Winger",
                 "event_id": "Test Event",
                 "apparatus_name": "Vault"
+            },
+            {
+                "first_name": "Jeb",
+                "last_name": "Wing",
+                "event_id": "Test Event",
+                "apparatus_name": "Vault"
             }
         ]
     )

@@ -1,5 +1,8 @@
 import arenaScreen
 import scorekeeperScreen
+from db_interface import DBInterface
+
+db_int = DBInterface.get_interface("../db_setup/.env")
 
 global aScreen
 global sScreen

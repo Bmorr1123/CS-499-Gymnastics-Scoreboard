@@ -1,5 +1,5 @@
 import setupScreen
-from src.db.db_interface import DBInterface
+from db_interface import DBInterface
 
 global setScreen
 
