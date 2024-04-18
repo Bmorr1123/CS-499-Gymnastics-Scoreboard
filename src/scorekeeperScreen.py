@@ -25,7 +25,7 @@ class Window(QWidget):
         self.schoolName1 = QLabel(screensController.competingSchools[0].school_name)
         self.schoolName1.setFont(QFont('Arial', 12))
         scoreInfo1.addWidget(self.schoolName1)
-        self.name1 = QLabel("Gymnast Name")
+        self.name1 = QLabel(screensController.name1s)
         self.name1.setFont(QFont('Arial', 15))
         scoreInfo1.addWidget(self.name1)
         self.enterScore1 = QLineEdit()
@@ -44,7 +44,7 @@ class Window(QWidget):
         self.schoolName2 = QLabel(screensController.competingSchools[1].school_name)
         self.schoolName2.setFont(QFont('Arial', 12))
         scoreInfo2.addWidget(self.schoolName2)
-        self.name2 = QLabel("Gymnast Name")
+        self.name2 = QLabel(screensController.name2s)
         self.name2.setFont(QFont('Arial', 15))
         scoreInfo2.addWidget(self.name2)
         self.enterScore2 = QLineEdit()
@@ -63,7 +63,7 @@ class Window(QWidget):
         self.schoolName3 = QLabel(screensController.competingSchools[2].school_name)
         self.schoolName3.setFont(QFont('Arial', 12))
         scoreInfo3.addWidget(self.schoolName3)
-        self.name3 = QLabel("Gymnast Name")
+        self.name3 = QLabel(screensController.name3s)
         self.name3.setFont(QFont('Arial', 15))
         scoreInfo3.addWidget(self.name3)
         self.enterScore3 = QLineEdit()
@@ -82,7 +82,7 @@ class Window(QWidget):
         self.schoolName4 = QLabel(screensController.competingSchools[3].school_name)
         self.schoolName4.setFont(QFont('Arial', 12))
         scoreInfo4.addWidget(self.schoolName4)
-        self.name4 = QLabel("Gymnast Name")
+        self.name4 = QLabel(screensController.name4s)
         self.name4.setFont(QFont('Arial', 15))
         scoreInfo4.addWidget(self.name4)
         self.enterScore4 = QLineEdit()
@@ -191,6 +191,7 @@ class Window(QWidget):
         self.update1.clicked.connect(self.lineupChange)
         self.nextGymnast1 = QPushButton("Next Gymnast")
         topButtons1.addWidget(self.nextGymnast1)
+        self.nextGymnast1.clicked.connect(self.nextGymnast1f)
 
         topButtons2 = QHBoxLayout()
         self.update2 = QPushButton("Update Lineup")
@@ -198,6 +199,7 @@ class Window(QWidget):
         self.update2.clicked.connect(self.lineupChange)
         self.nextGymnast2 = QPushButton("Next Gymnast")
         topButtons2.addWidget(self.nextGymnast2)
+        self.nextGymnast2.clicked.connect(self.nextGymnast2f)
 
         topButtons3 = QHBoxLayout()
         self.update3 = QPushButton("Update Lineup")
@@ -205,6 +207,7 @@ class Window(QWidget):
         self.update3.clicked.connect(self.lineupChange)
         self.nextGymnast3 = QPushButton("Next Gymnast")
         topButtons3.addWidget(self.nextGymnast3)
+        self.nextGymnast3.clicked.connect(self.nextGymnast3f)
 
         topButtons4 = QHBoxLayout()
         self.update4 = QPushButton("Update Lineup")
@@ -212,6 +215,7 @@ class Window(QWidget):
         self.update4.clicked.connect(self.lineupChange)
         self.nextGymnast4 = QPushButton("Next Gymnast")
         topButtons4.addWidget(self.nextGymnast4)
+        self.nextGymnast4.clicked.connect(self.nextGymnast4f)
 
         # create 'next event' and 'finish meet' buttons
         nextButtons = QHBoxLayout()
@@ -268,6 +272,22 @@ class Window(QWidget):
 
     def lineupChange(self):
         updateController.open_window()
+
+    def nextGymnast1f(self):
+        screensController.update_gymnast1()
+        self.name1.setText(screensController.name1s)
+
+    def nextGymnast2f(self):
+        screensController.update_gymnast2()
+        self.name1.setText(screensController.name2s)
+
+    def nextGymnast3f(self):
+        screensController.update_gymnast3()
+        self.name1.setText(screensController.name3s)
+
+    def nextGymnast4f(self):
+        screensController.update_gymnast4()
+        self.name1.setText(screensController.name4s)
 
     def meetDone(self):
         screensController.close_windows()

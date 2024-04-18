@@ -4,11 +4,11 @@
         "event_id": "Test Event",
         "apparatus_name": "Vault",
         "gymnasts": [
-            "Cadence Gormley",
+            "Raena Worley",
+            "Arianna Patterson",
+            "Creslyn Brose",
             "Cecily Rizo",
-            "Makenzie Wilson",
-            "Claire Stippich",
-            "Bailey Bunn",
+            "Bridget Bourque",
             "Kaila Lawrence"
         ]
     },
@@ -17,12 +17,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Floor",
         "gymnasts": [
-            "Jillian Procasky",
-            "Arianna Patterson",
-            "Bailey Bunn",
-            "Delaynee Rodriguez",
+            "Bridget Bourque",
             "Isabella Magnelli",
-            "Kaila Lawrence"
+            "Sharon Lee",
+            "Annie Riegert",
+            "Creslyn Brose",
+            "Arianna Patterson"
         ]
     },
     {
@@ -30,12 +30,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Beam",
         "gymnasts": [
-            "Claire Stippich",
-            "Bailey Bunn",
-            "Arianna Patterson",
-            "Bridget Bourque",
             "Creslyn Brose",
-            "Kaila Lawrence"
+            "Hailey Davis",
+            "Kaila Lawrence",
+            "Arianna Patterson",
+            "Makenzie Wilson",
+            "Bailey Bunn"
         ]
     },
     {
@@ -43,12 +43,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Bars",
         "gymnasts": [
+            "Bridget Bourque",
             "Cadence Gormley",
-            "Sharon Lee",
-            "Creslyn Brose",
-            "Annie Riegert",
-            "Raena Worley",
-            "Cecily Rizo"
+            "Hailey Davis",
+            "Delaynee Rodriguez",
+            "Carissa Clay",
+            "Makenzie Wilson"
         ]
     }
 ]

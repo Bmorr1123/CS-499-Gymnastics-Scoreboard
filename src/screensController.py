@@ -18,6 +18,26 @@ meetScores3 = 0
 scores4 = []
 meetScores4 = 0
 
+name1s = "Keee"
+class1s = ""
+major1s = ""
+avg1s = ""
+
+name2s = ""
+class2s = ""
+major2s = ""
+avg2s = ""
+
+name3s = ""
+class3s = ""
+major3s = ""
+avg3s = ""
+
+name4s = ""
+class4s = ""
+major4s = ""
+avg4s = ""
+
 
 def open_windows(check1, check2, check3, check4, formats, schools):
     global displayLogo
@@ -114,6 +134,40 @@ def update_score(team, score):
             meetScores4 += score
 
         arenaScreen.Window.update_scoreLabel4(aScreen, str(meetScores4))
+
+
+def update_gymnast1():
+    global name1s, class1s, major1s, avg1s
+
+    name1s = "90000"
+    class1s = "9999"
+    major1s = "9934"
+    avg1s = "pppjsf"
+    arenaScreen.Window.update_gymnast1(aScreen, name1s, class1s, major1s, avg1s)
+
+def update_gymnast2():
+    global name2s, class2s, major2s, avg2s
+    name2s = "90000"
+    class2s = "9999"
+    major2s = "9934"
+    avg2s = "pppjsf"
+    arenaScreen.Window.update_gymnast2(aScreen, name2s, class2s, major2s, avg2s)
+
+def update_gymnast3():
+    global name3s, class3s, major3s, avg3s
+    name3s = "90000"
+    class3s = "9999"
+    major3s = "9934"
+    avg3s = "pppjsf"
+    arenaScreen.Window.update_gymnast3(aScreen, name3s, class3s, major3s, avg3s)
+
+def update_gymnast4():
+    global name4s, class4s, major4s, avg4s
+    name4s = "90000"
+    class4s = "9999"
+    major4s = "9934"
+    avg4s = "pppjsf"
+    arenaScreen.Window.update_gymnast4(aScreen, name4s, class4s, major4s, avg4s)
 
 
 def drop_lowest(array, value):

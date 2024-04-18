@@ -73,38 +73,41 @@ class Window(QWidget):
         info3 = QVBoxLayout()
         info4 = QVBoxLayout()
         # create info for gymnast for teams
-        name1 = QLabel("Name")
-        name1.setFont(QFont('Arial', 20))
-        class1 = QLabel("Classification")
-        class1.setFont(QFont('Arial', 15))
-        major1 = QLabel("Major")
-        major1.setFont(QFont('Arial', 15))
-        avg1 = QLabel("Season Average")
-        avg1.setFont(QFont('Arial', 15))
-        name2 = QLabel("Name")
-        name2.setFont(QFont('Arial', 20))
-        class2 = QLabel("Classification")
-        class2.setFont(QFont('Arial', 15))
-        major2 = QLabel("Major")
-        major2.setFont(QFont('Arial', 15))
-        avg2 = QLabel("Season Average")
-        avg2.setFont(QFont('Arial', 15))
-        name3 = QLabel("Name")
-        name3.setFont(QFont('Arial', 20))
-        class3 = QLabel("Classification")
-        class3.setFont(QFont('Arial', 15))
-        major3 = QLabel("Major")
-        major3.setFont(QFont('Arial', 15))
-        avg3 = QLabel("Season Average")
-        avg3.setFont(QFont('Arial', 15))
-        name4 = QLabel("Name")
-        name4.setFont(QFont('Arial', 20))
-        class4 = QLabel("Classification")
-        class4.setFont(QFont('Arial', 15))
-        major4 = QLabel("Major")
-        major4.setFont(QFont('Arial', 15))
-        avg4 = QLabel("Season Average")
-        avg4.setFont(QFont('Arial', 15))
+
+
+        # create info for gymnast for teams
+        self.name1 = QLabel(screensController.name1s)
+        self.name1.setFont(QFont('Arial', 20))
+        self.class1 = QLabel(screensController.class1s)
+        self.class1.setFont(QFont('Arial', 15))
+        self.major1 = QLabel(screensController.major1s)
+        self.major1.setFont(QFont('Arial', 15))
+        self.avg1 = QLabel(screensController.avg1s)
+        self.avg1.setFont(QFont('Arial', 15))
+        self.name2 = QLabel(screensController.name2s)
+        self.name2.setFont(QFont('Arial', 20))
+        self.class2 = QLabel(screensController.class2s)
+        self.class2.setFont(QFont('Arial', 15))
+        self.major2 = QLabel(screensController.major2s)
+        self.major2.setFont(QFont('Arial', 15))
+        self.avg2 = QLabel(screensController.avg2s)
+        self.avg2.setFont(QFont('Arial', 15))
+        self.name3 = QLabel(screensController.name3s)
+        self.name3.setFont(QFont('Arial', 20))
+        self.class3 = QLabel(screensController.class3s)
+        self.class3.setFont(QFont('Arial', 15))
+        self.major3 = QLabel(screensController.major3s)
+        self.major3.setFont(QFont('Arial', 15))
+        self.avg3 = QLabel(screensController.avg3s)
+        self.avg3.setFont(QFont('Arial', 15))
+        self.name4 = QLabel(screensController.name4s)
+        self.name4.setFont(QFont('Arial', 20))
+        self.class4 = QLabel(screensController.class4s)
+        self.class4.setFont(QFont('Arial', 15))
+        self.major4 = QLabel(screensController.major4s)
+        self.major4.setFont(QFont('Arial', 15))
+        self.avg4 = QLabel(screensController.avg4s)
+        self.avg4.setFont(QFont('Arial', 15))
         # create image labels for gymnasts
         image1 = QLabel()
         image1.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
@@ -268,10 +271,10 @@ class Window(QWidget):
         imageScore1.addWidget(self.score1, 2)
 
         team1.addLayout(info1, 1, 0, 1, 1)
-        info1.addWidget(name1)
-        info1.addWidget(class1)
-        info1.addWidget(major1)
-        info1.addWidget(avg1)
+        info1.addWidget(self.name1)
+        info1.addWidget(self.class1)
+        info1.addWidget(self.major1)
+        info1.addWidget(self.avg1)
         team1.addWidget(image1, 1, 1)
 
         if screensController.displayOrder:
@@ -291,10 +294,10 @@ class Window(QWidget):
         imageScore2.addWidget(self.score2, 2)
 
         team2.addLayout(info2, 1, 0, 1, 1)
-        info2.addWidget(name2)
-        info2.addWidget(class2)
-        info2.addWidget(major2)
-        info2.addWidget(avg2)
+        info2.addWidget(self.name2)
+        info2.addWidget(self.class2)
+        info2.addWidget(self.major2)
+        info2.addWidget(self.avg2)
         team2.addWidget(image2, 1, 1)
 
         if screensController.displayOrder:
@@ -315,10 +318,10 @@ class Window(QWidget):
             imageScore3.addWidget(self.score3, 2)
 
             team3.addLayout(info3, 1, 0, 1, 1)
-            info3.addWidget(name3)
-            info3.addWidget(class3)
-            info3.addWidget(major3)
-            info3.addWidget(avg3)
+            info3.addWidget(self.name3)
+            info3.addWidget(self.class3)
+            info3.addWidget(self.major3)
+            info3.addWidget(self.avg3)
             team3.addWidget(image3, 1, 1)
 
             if screensController.displayOrder:
@@ -339,10 +342,10 @@ class Window(QWidget):
             imageScore4.addWidget(self.score4, 2)
 
             team4.addLayout(info4, 1, 0, 1, 1)
-            info4.addWidget(name4)
-            info4.addWidget(class4)
-            info4.addWidget(major4)
-            info4.addWidget(avg4)
+            info4.addWidget(self.name4)
+            info4.addWidget(self.class4)
+            info4.addWidget(self.major4)
+            info4.addWidget(self.avg4)
             team4.addWidget(image4, 1, 1)
 
             if screensController.displayOrder:
@@ -359,6 +362,30 @@ class Window(QWidget):
 
         # set the layout on the application's window
         self.setLayout(quadFormat)
+
+    def update_gymnast1(self, name, classification, major, average):
+        self.name1.setText(name)
+        self.class1.setText(classification)
+        self.major1.setText(major)
+        self.avg1.setText(average)
+
+    def update_gymnast2(self, name, classification, major, average):
+        self.name2.setText(name)
+        self.class2.setText(classification)
+        self.major2.setText(major)
+        self.avg2.setText(average)
+
+    def update_gymnast3(self, name, classification, major, average):
+        self.name3.setText(name)
+        self.class3.setText(classification)
+        self.major3.setText(major)
+        self.avg3.setText(average)
+
+    def update_gymnast4(self, name, classification, major, average):
+        self.name4.setText(name)
+        self.class4.setText(classification)
+        self.major4.setText(major)
+        self.avg4.setText(average)
 
     def update_scoreLabel1(self, score):
         self.score1.setText(score)
