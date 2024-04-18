@@ -40,7 +40,7 @@ class Gymnast(Models):
     school_id: Mapped[School] = mapped_column(ForeignKey(School.school_id))
     first_name: Mapped[str] = mapped_column(String(30))
     last_name: Mapped[str] = mapped_column(String(30))
-    major: Mapped[str] = mapped_column(String(50))
+    major: Mapped[str] = mapped_column(String(128))
     classification: Mapped[str] = mapped_column(String(30))
     gymnast_picture: Mapped[Optional[str]] = mapped_column(LargeBinary)
     # Leaving this here as an example for later
