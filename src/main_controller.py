@@ -8,7 +8,6 @@ import sys, ui
 
 def main():
     database_interface = DBInterface.get_interface("../db_setup/.env")
-    print("EIFJ)EJF)(SJF)D(")
 
     app = QApplication(sys.argv)
 

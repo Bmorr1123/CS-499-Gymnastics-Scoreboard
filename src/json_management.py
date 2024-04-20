@@ -267,6 +267,11 @@ def load_judges_from_file(db_int: DBInterface, path_to_file: str):
     insert_missing_judges(db_int, judges_data)
 
 
+def load_json_from_file(path_to_file: str):
+    with open(path_to_file, "r") as file:
+        return json.load(file)
+
+
 def load_image_from_file(path: str) -> bytes | None:
     if not path:
         return None

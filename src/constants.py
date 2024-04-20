@@ -16,3 +16,25 @@ MEET_TYPES = [
     MeetType("Tri", "Triangular", 3),
     MeetType("Quad", "Quadrangular", 4)
 ]
+
+
+class ApparatusType:
+    def __init__(
+            self,
+            abbreviation: str,
+            short_name: str,
+            full_names: str,
+            sub_options: list[str] | None
+    ):
+        self.abbreviation = abbreviation
+        self.short_name = short_name
+        self.full_names = full_names
+        self.sub_options = sub_options
+
+
+APPARATUS_TYPES = [
+    ApparatusType("Vt", "Vault", "Vault", None),
+    ApparatusType("Bs", "Bars", "Uneven Parallel Bars", None),
+    ApparatusType("Bm", "Beam", "Balance Beam", None),
+    ApparatusType("Fr", "Floor", "Floor Exercise", None),
+]

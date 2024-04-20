@@ -1,3 +1,4 @@
+import pprint
 import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -8,6 +9,7 @@ import constants
 import json_management
 from db_interface import DBInterface
 from data import MeetData
+from models import LineupEntry
 
 
 class SchoolSelection(QWidget):
@@ -58,11 +60,11 @@ class BlankLineups(QWidget):
 
 
 class LineupWidget(QWidget):
-    def __init__(self, school_number, parent, *args, **kwargs):
+    def __init__(self, school_number, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.db_interface = DBInterface.get_interface()
+        self.data = MeetData.get_data()
         self.school_number = school_number
-        self.parent = parent
 
         self.vertical_layout = QVBoxLayout()
         self.setLayout(self.vertical_layout)
@@ -80,10 +82,59 @@ class LineupWidget(QWidget):
 
         self.school_selector = SchoolSelection(school_number)
 
+    def validate_lineups(self, school_object, lineup_objects, lineup_entry_objects) -> bool:
+        # Validating lineup_objects
+        valid_app_names = [apparatus_type.short_name for apparatus_type in constants.APPARATUS_TYPES]
+        app_names = []
+        for lineup_object in lineup_objects:
+            if lineup_object.school_id != school_object.school_id:
+                self.lineup_label.setText(f"One or more lineups in the file are for the incorrect school!")
+                return False
+            if lineup_object.apparatus_name not in valid_app_names:
+                self.lineup_label.setText(f"Invalid apparatus name \"{lineup_object.apparatus_name}\"!")
+                return False
+            app_names.append(lineup_object.apparatus_name)
+
+        for i in range(len(app_names)):
+            if app_names.count(app_names[i]) > 1:
+                self.lineup_label.setText(f"File contains multiple lineups for event \"{app_names[i]}\"!")
+                return False
+
+        if len(lineup_objects) != 4:
+            self.lineup_label.setText(f"File does not contain 4 lineups!")
+            return False
+
+        lineup_entry_counts = {}
+        for lineup_entry in lineup_entry_objects:
+            if lineup_entry.lineup_id.apparatus_name not in lineup_entry_counts:
+                lineup_entry_counts[lineup_entry.lineup_id.apparatus_name] = 0
+            lineup_entry_counts[lineup_entry.lineup_id.apparatus_name] += 1
+        pprint.pp(lineup_entry_counts)
+        # Validating lineup_entry_objects
+        if len(lineup_entry_objects) != 24:
+            self.lineup_label.setText(f"File does not contain 24 lineup entries!")
+
     def getFile(self):
-        fileName, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
-        if fileName:
-            self.lineup_label.setText(fileName)
+        if not self.data.schools[self.school_number]:
+            self.lineup_label.setText(f"You must select a school before loading a lineup!")
+            return
+
+        school_name = self.data.schools[self.school_number]
+        matching_schools = self.db_interface.get_school_by_name(school_name)
+        assert len(matching_schools) == 1, "Duplicate school in DB"
+
+        school_object = matching_schools[0]
+
+        file_name, *_ = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', "JSON files (*.json)")
+        if file_name:
+            self.lineup_label.setText(file_name)
+            json_data = json_management.load_json_from_file(file_name)
+            lineup_objects, lineup_entry_objects = json_management.convert_json_to_lineups_and_lineup_entries(
+                DBInterface.get_interface(),
+                json_data
+            )
+            self.validate_lineups(school_object, lineup_objects, lineup_entry_objects)
+
             # json_management.load_lineups_from_file(setupController.db_int, fileName)  UNCOMMENT ME
         else:
             self.lineup_label.setText(f"Lineup {self.school_number}")
@@ -96,7 +147,7 @@ class LineupSetupLayout(QStackedLayout):
     def __init__(self, school_number):
         super().__init__()
         self.addWidget(BlankLineups())
-        self.addWidget(LineupWidget(school_number, self))
+        self.addWidget(LineupWidget(school_number))
         self.setCurrentIndex(0)
 
 

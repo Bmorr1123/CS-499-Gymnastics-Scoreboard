@@ -5,6 +5,7 @@ from pprint import pprint
 exit(0)
 APPEND_MODE = True
 
+
 with open("../resources/teams/auburn.json", "r") as file:
     data = json.load(file)
 
