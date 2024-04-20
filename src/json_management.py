@@ -25,6 +25,7 @@ def insert_missing_schools(db_int: DBInterface, school_names: [str]) -> [School]
 
     return list(db_int.get_schools_by_names(school_names))
 
+
 def convert_json_to_gymnasts(db_int, gymnasts_information) -> [Gymnast]:
     schools_in_db = {school.school_name: school for school in db_int.get_schools()}
 
@@ -49,11 +50,12 @@ def convert_json_to_gymnasts(db_int, gymnasts_information) -> [Gymnast]:
 
     return gymnasts
 
+
 def insert_missing_gymnasts(db_int: DBInterface, gymnast_objects: [Gymnast]) -> [Gymnast]:
     """
     This function inserts Gymnasts objects. It will only add unique Gymnasts.
     :param db_int: The Database Interface to use.
-    :param gymnast_objects: A list of Gymnasts objects..
+    :param gymnast_objects: A list of Gymnasts objects.
     :return: A list of Gymnast objects matching the input list.
     """
     # The line below this is evil. It gets Gymnasts by name and returns tuples of their names
@@ -74,6 +76,7 @@ def insert_missing_gymnasts(db_int: DBInterface, gymnast_objects: [Gymnast]) -> 
         [(gymnast.first_name, gymnast.last_name) for gymnast in gymnast_objects]
     ))
 
+
 def convert_json_to_events(events_information):
     return [
         Event(
@@ -83,6 +86,7 @@ def convert_json_to_events(events_information):
         )
         for event_info in events_information
     ]
+
 
 def insert_missing_events(db_int: DBInterface, event_information: [dict]):
     events = [event.event_name for event in db_int.get_events()]
@@ -121,59 +125,110 @@ def insert_missing_judges(db_int: DBInterface, judge_information: [dict]):
     return db_int.get_judges()
 
 
-def insert_missing_lineups(db_int: DBInterface, lineup_information: dict):
+def convert_json_to_lineups_and_lineup_entries(
+        db_int: DBInterface,
+        lineup_information: dict
+) -> ([Lineup], [LineupEntry]):
     events = {event.event_name: event for event in db_int.get_events()}
     schools = {school.school_name: school for school in db_int.get_schools()}
 
-    for lineup in lineup_information:
-        if lineup["event_id"] in events:  # Match the Lineup to the Event
-            lineup["event_id"] = events[lineup["event_id"]].event_id
-        if lineup["school_id"] in schools:  # Match the Lineup to the School
-            lineup["school_id"] = schools[lineup["school_id"]].school_id
+    lineups: [Lineup] = []
+    lineup_entries: [LineupEntry] = []
 
+    for lineup in lineup_information:
+        complete_lineup = True
+
+        if lineup["event_id"] in events and lineup["school_id"] in schools:  # Match the Lineup to the Event
+            lineup["event_id"] = events[lineup["event_id"]].event_id
+            lineup["school_id"] = schools[lineup["school_id"]].school_id
+        else:
+            complete_lineup = False
+
+        lineup_object = Lineup(
+            event_id=lineup["event_id"],
+            apparatus_name=lineup["apparatus_name"],
+            school_id=lineup["school_id"]
+        )
+
+        entries_for_current_lineup: [LineupEntry] = []
+        for gymnast_name in lineup["gymnasts"]:
+            gymnast: list[Gymnast] = db_int.get_gymnast_by_name(*gymnast_name.split(" "))
+            if len(gymnast) != 1:
+                print(f"No gymnast named \"{gymnast_name}\"!!!")
+                complete_lineup = False
+                continue
+            gymnast: Gymnast = gymnast[0]
+
+            lineup_entry = LineupEntry(
+                lineup_id=lineup_object,
+                gymnast_id=gymnast.gymnast_id,
+                score=0.00,
+                status="Incomplete"
+            )
+            entries_for_current_lineup.append(lineup_entry)
+
+        if complete_lineup:
+            lineups.append(lineup_object)
+            lineup_entries += entries_for_current_lineup
+        else:
+            print(f"Could not create lineup for School Id: {lineup_object.school_id} for Event: {lineup_object.event_id}")
+
+    return lineups, lineup_entries
+
+
+def insert_missing_lineups(
+        db_int: DBInterface,
+        lineups: list[Lineup],
+):
+    lineups_to_insert: list[Lineup] = []
+    for lineup in lineups:
+        lineup: Lineup = lineup
         # Pull matching lineups from DB
         matching_lineups = db_int.get_lineups_by_event_and_apparatus_and_school(
-            lineup["event_id"],
-            lineup["apparatus_name"],
-            lineup["school_id"]
+            lineup.event_id,
+            lineup.apparatus_name,
+            lineup.school_id
         )
 
         if len(matching_lineups) > 0:
             print(f"Lineup {matching_lineups[0]} already exists in database.")
-        else:
-            print("Inserting lineup...")
-            db_int.insert(Lineup(
-                event_id=lineup["event_id"],
-                apparatus_name=lineup["apparatus_name"],
-                school_id=lineup["school_id"]
-            ))
+            continue
 
+        lineups_to_insert.append(lineup)
+
+    print(f"Inserting {len(lineups_to_insert)} lineups...")
+    db_int.insert(*lineups_to_insert)
+
+
+def insert_missing_lineup_entries(
+        db_int: DBInterface,
+        lineup_entries: list[LineupEntry]
+):
+    lineup_entries_to_insert: list[LineupEntry] = []
+    for lineup_entry in lineup_entries:
+        lineup: Lineup = lineup_entry.lineup_id
+        # Get the lineup object after insertion, so we can insert the proper lineup_id
         matching_lineups = db_int.get_lineups_by_event_and_apparatus_and_school(
-            lineup["event_id"],
-            lineup["apparatus_name"],
-            lineup["school_id"]
+            lineup.event_id,
+            lineup.apparatus_name,
+            lineup.school_id
         )
         assert len(matching_lineups) == 1, f"Expected 1 lineup, got {len(matching_lineups)}."
-        lineup_obj = matching_lineups[0]
+        matching_lineup: Lineup = matching_lineups[0]
+        lineup_entry.lineup_id = matching_lineup.lineup_id
 
-        lineup_entries_in_db = [entry.gymnast_id for entry in db_int.get_lineup_entries_from_lineup(lineup_obj)]
-        # Handling the missing LineupEntries
-        for gymnast_name in lineup["gymnasts"]:
-            gymnast = db_int.get_gymnast_by_name(*gymnast_name.split(" "))
-            assert len(gymnast) == 1, f"Expected 1 gymnast named {gymnast_name}, got {len(gymnast)}."
-            gymnast_obj = gymnast[0]
+        # Checking to see if the LineupEntry already exists
+        duplicate_found = False
+        matching_lineup_entries: list[LineupEntry] = db_int.get_lineup_entries_from_lineup(matching_lineup)
+        for matched_lineup_entry in matching_lineup_entries:
+            if matched_lineup_entry.gymnast_id == lineup_entry.gymnast_id:
+                print(f"LineupEntry for Gymnast Id {lineup_entry.gymnast_id} and Lineup Id {lineup_entry.lineup_id} already exists!")
+                duplicate_found = True
+                break
+        if not duplicate_found:
+            lineup_entries_to_insert.append(lineup_entry)
 
-            if gymnast_obj.gymnast_id not in lineup_entries_in_db:
-                db_int.insert(LineupEntry(
-                    gymnast_id=gymnast_obj.gymnast_id,
-                    lineup_id=lineup_obj.lineup_id,
-                    status="Incomplete",
-                    score=0
-                ))
-            else:
-                print(f"LineupEntry for gymnast {gymnast_obj} already exists in lineup {lineup_obj}.")
-
-    return db_int.get_lineups()
+    db_int.insert(*lineup_entries)
 
 
 def load_teams_from_directory(db_int: DBInterface, path_to_directory: str) -> ([School], [Gymnast]):
@@ -206,7 +261,7 @@ def load_lineups_from_file(db_int: DBInterface, path_to_file: str):
     insert_missing_lineups(db_int, lineup_data)
 
 
-def load_judges_from_file (db_int: DBInterface, path_to_file: str):
+def load_judges_from_file(db_int: DBInterface, path_to_file: str):
     judges_data = json.load(open(path_to_file, "r"))
 
     insert_missing_judges(db_int, judges_data)
@@ -221,5 +276,3 @@ def load_image_from_file(path: str) -> bytes | None:
     except FileNotFoundError:
         print(f"Could not find path \"{path}\".")
         return None
-
-
