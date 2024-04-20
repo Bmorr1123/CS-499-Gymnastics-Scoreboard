@@ -109,10 +109,17 @@ class LineupWidget(QWidget):
             if lineup_entry.lineup_id.apparatus_name not in lineup_entry_counts:
                 lineup_entry_counts[lineup_entry.lineup_id.apparatus_name] = 0
             lineup_entry_counts[lineup_entry.lineup_id.apparatus_name] += 1
-        pprint.pp(lineup_entry_counts)
+
+        for lineup_entry_count in lineup_entry_counts:
+            if lineup_entry_counts[lineup_entry_count] != 6:
+                print(f"Apparatus \"{lineup_entry_count}\" has the incorrect amount of gymnasts!")
+                return False
+
         # Validating lineup_entry_objects
         if len(lineup_entry_objects) != 24:
             self.lineup_label.setText(f"File does not contain 24 lineup entries!")
+            return False
+        return True
 
     def getFile(self):
         if not self.data.schools[self.school_number]:
