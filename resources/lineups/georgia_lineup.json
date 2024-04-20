@@ -1,0 +1,54 @@
+[
+    {
+        "school_id": "University of Georgia",
+        "event_id": "Test Event",
+        "apparatus_name": "Vault",
+        "gymnasts": [
+            "Lily Smith",
+            "Eryn Williams",
+            "Anya Turner",
+            "Nicole King",
+            "JaFree Scott",
+            "Naya Howard"
+        ]
+    },
+    {
+        "school_id": "University of Georgia",
+        "event_id": "Test Event",
+        "apparatus_name": "Floor",
+        "gymnasts": [
+            "Jaydah Battle",
+            "Katie Finnegan",
+            "Nicole King",
+            "Haley de Jong",
+            "Ady Wahl",
+            "Anya Turner"
+        ]
+    },
+    {
+        "school_id": "University of Georgia",
+        "event_id": "Test Event",
+        "apparatus_name": "Beam",
+        "gymnasts": [
+            "Zora Morgan",
+            "Lily Smith",
+            "Eryn Williams",
+            "Ashlyn LaClair",
+            "Sidney Fitzgerald",
+            "Anya Turner"
+        ]
+    },
+    {
+        "school_id": "University of Georgia",
+        "event_id": "Test Event",
+        "apparatus_name": "Bars",
+        "gymnasts": [
+            "Kelsey Lee",
+            "Lily Smith",
+            "Zora Morgan",
+            "Naya Howard",
+            "Eryn Williams",
+            "Ady Wahl"
+        ]
+    }
+]

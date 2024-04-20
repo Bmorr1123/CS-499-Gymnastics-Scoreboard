@@ -17,11 +17,14 @@ class DBInterface:
     interface = None
 
     @classmethod
-    def get_interface(cls, path_to_dot_env: str):
+    def get_interface(cls, path_to_dot_env: str | None = None):
         if DBInterface.interface:
             return DBInterface.interface
+        elif path_to_dot_env:
+            DBInterface.interface = DBInterface(path_to_dot_env)
+            return DBInterface.interface
         else:
-            return DBInterface(path_to_dot_env)
+            raise Exception("No DBInstance could be found. Make sure to instantiate DBInterface at the start of program.")
 
     def __init__(self, path_to_dotenv: str | None = None):
         load_dotenv(path_to_dotenv)  # This loads our .env file so that os can use it.

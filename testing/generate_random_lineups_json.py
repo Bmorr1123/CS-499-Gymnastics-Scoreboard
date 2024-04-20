@@ -1,10 +1,19 @@
 import json, random
 from pprint import pprint
 
-with open("../resources/teams/uky.json", "r") as file:
+
+exit(0)
+APPEND_MODE = True
+
+
+with open("../resources/teams/auburn.json", "r") as file:
     data = json.load(file)
 
-lineup_data = []
+if APPEND_MODE:
+    with open("../resources/lineups/lineups.json", "r") as file:
+        lineup_data = json.load(file)
+else:
+    lineup_data = []
 
 for event in ("Vault", "Floor", "Beam", "Bars"):
     gymnast_list = []
@@ -17,7 +26,7 @@ for event in ("Vault", "Floor", "Beam", "Bars"):
 
     lineup_data.append(
         {
-            "school_id": "University of Kentucky",
+            "school_id": data["school_name"],
             "event_id": "Test Event",
             "apparatus_name": event,
             "gymnasts": gymnast_list
