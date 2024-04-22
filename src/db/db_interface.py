@@ -1,3 +1,5 @@
+from PyQt5.QtGui import QImage
+from pickle import dumps, loads
 from sqlalchemy import create_engine, URL, select, union_all, Select
 from sqlalchemy.orm import Session
 from os import getenv
@@ -87,32 +89,32 @@ class DBInterface:
         return list(session.scalars(select_statement))
 
     # ---------------------------------------------------------------------------------------------- Gymnast Queries ---
-    def get_gymnasts(self) -> [Gymnast]:
+    def get_gymnasts(self) -> list[Gymnast]:
         session = self.get_session()
         select_statement = select(Gymnast)
         return list(session.scalars(select_statement))
 
-    def get_gymnasts_from_school(self, school: School) -> [Gymnast]:
+    def get_gymnasts_from_school(self, school: School) -> list[Gymnast]:
         session = self.get_session()
         select_statement = select(Gymnast).where(Gymnast.school_id == school.school_id)
         return list(session.scalars(select_statement))
 
-    def get_gymnasts_from_school_id(self, school_id: int) -> [Gymnast]:
+    def get_gymnasts_from_school_id(self, school_id: int) -> list[Gymnast]:
         session = self.get_session()
         select_statement = select(Gymnast).where(Gymnast.school_id == school_id)
         return list(session.scalars(select_statement))
 
-    def get_gymnast_by_id(self, gymnast_id: int) -> [Gymnast]:
+    def get_gymnast_by_id(self, gymnast_id: int) -> list[Gymnast]:
         session = self.get_session()
         select_statement = select(Gymnast).where(Gymnast.gymnast_id == gymnast_id)
         return list(session.scalars(select_statement))
 
-    def get_gymnast_by_name(self, first_name: str, last_name: str) -> [Gymnast]:
+    def get_gymnast_by_name(self, first_name: str, last_name: str) -> list[Gymnast]:
         session = self.get_session()
         select_statement = select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
         return list(session.scalars(select_statement))
 
-    def get_gymnasts_by_names(self, names: list[tuple[str, str]]) -> [Gymnast]:
+    def get_gymnasts_by_names(self, names: list[tuple[str, str]]) -> list[Gymnast]:
         session = self.get_session()
         select_statements = union_all(*(
             select(Gymnast).where(Gymnast.first_name == first_name, Gymnast.last_name == last_name)
@@ -123,6 +125,32 @@ class DBInterface:
         # This select statement will get all the gymnast information.
         select_statements = session.query(Gymnast).filter(Gymnast.gymnast_id.in_(gymnasts_ids))
         return list(session.scalars(select_statements))
+
+    # def insert_gymnast_photo(self, gymnast: int | Gymnast, gymnast_photo: QImage) -> bool:
+    #     if isinstance(gymnast, Gymnast):
+    #         gymnast = gymnast.gymnast_id
+    #
+    #     gymnast_obj: list[Gymnast] = self.get_gymnast_by_id(gymnast)
+    #
+    #     if len(gymnast_obj) != 1:
+    #         return False
+    #
+    #     gymnast_obj: Gymnast = gymnast_obj[0]
+    #     gymnast_obj.gymnast_picture = dumps(gymnast_photo)
+    #
+    #     return True
+    #
+    # def get_gymnast_photo(self, gymnast: int | Gymnast) -> QImage | None:
+    #     if isinstance(gymnast, Gymnast):
+    #         gymnast = gymnast.gymnast_id
+    #
+    #     gymnast_obj: list[Gymnast] = self.get_gymnast_by_id(gymnast)
+    #
+    #     if len(gymnast_obj) != 1:
+    #         return None
+    #
+    #     gymnast_obj: Gymnast = gymnast_obj[0]
+    #     return loads(gymnast_obj.gymnast_picture)
 
     # ----------------------------------------------------------------------------------------------- Lineup Queries ---
     def get_lineups(self) -> [Lineup]:

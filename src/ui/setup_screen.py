@@ -7,17 +7,19 @@ from PyQt5.QtWidgets import *
 import arena_screen
 import constants
 import json_management
+import scorekeeper_screen
 from db_interface import DBInterface
 from data import MeetData
 from models import LineupEntry
 
 
 class SchoolSelection(QWidget):
-    def __init__(self, school_num):
+    def __init__(self, school_num, parent):
         super().__init__()
         self.school_num = school_num
         self.db_interface = DBInterface.get_interface()
         self.selected_school: str | None = None
+        self.parent: QWidget = parent
 
         self.setWindowTitle("Schools")
 
@@ -42,6 +44,7 @@ class SchoolSelection(QWidget):
         print("Selected:", clicked_item.text())
         self.selected_school = clicked_item.text()
         MeetData.get_data().schools[self.school_num] = self.selected_school
+        self.parent.school1.setText(f"Change from \"{self.selected_school}\"")
         print(MeetData.get_data().schools)
         self.close()
 
@@ -69,7 +72,7 @@ class LineupWidget(QWidget):
         self.vertical_layout = QVBoxLayout()
         self.setLayout(self.vertical_layout)
 
-        self.school1 = QPushButton(f"Select School {self.school_number + 1}")
+        self.school1 = QPushButton(f"Select School #{self.school_number + 1}")
         self.school1.clicked.connect(self.show_schools)
         self.insert_lineup_button = QPushButton(f"Insert Lineup {self.school_number + 1} File")
         self.lineup_label = QLabel(f"Lineup {self.school_number + 1}")
@@ -80,7 +83,7 @@ class LineupWidget(QWidget):
         self.vertical_layout.addWidget(self.insert_lineup_button)
         self.vertical_layout.addWidget(self.lineup_label)
 
-        self.school_selector = SchoolSelection(school_number)
+        self.school_selector = SchoolSelection(school_number, self)
 
     def validate_lineups(self, school_object, lineup_objects, lineup_entry_objects) -> bool:
         # Validating lineup_objects
@@ -109,10 +112,17 @@ class LineupWidget(QWidget):
             if lineup_entry.lineup_id.apparatus_name not in lineup_entry_counts:
                 lineup_entry_counts[lineup_entry.lineup_id.apparatus_name] = 0
             lineup_entry_counts[lineup_entry.lineup_id.apparatus_name] += 1
-        pprint.pp(lineup_entry_counts)
+
+        for lineup_entry_count in lineup_entry_counts:
+            if lineup_entry_counts[lineup_entry_count] != 6:
+                print(f"Apparatus \"{lineup_entry_count}\" has the incorrect amount of gymnasts!")
+                return False
+
         # Validating lineup_entry_objects
         if len(lineup_entry_objects) != 24:
             self.lineup_label.setText(f"File does not contain 24 lineup entries!")
+            return False
+        return True
 
     def getFile(self):
         if not self.data.schools[self.school_number]:
@@ -210,12 +220,14 @@ class SetupScreen(QWidget):
         formatTitle.setAlignment(Qt.AlignCenter)
         self.meet_format_selection_layout.addWidget(formatTitle)
 
+        self.meet_type_selection_buttons = []
         for meet_type in constants.MEET_TYPES:
             button = QRadioButton(meet_type.short_name)
             button.setChecked(False)
             button.toggled.connect(
                 lambda _, x=meet_type.team_count: self.change_meet_format(x)
             )
+            self.meet_type_selection_buttons.append(button)
             self.meet_format_buttons_layout.addWidget(button)
 
         self.meet_format_selection_layout.addLayout(self.meet_format_buttons_layout)
@@ -245,9 +257,9 @@ class SetupScreen(QWidget):
         self.judgesInsert.addWidget(self.judgesLabel)
 
         # create & add necessary widgets to the other buttons layout
-        self.resetButton = QPushButton("Reset Selections")
-        self.resetButton.clicked.connect(self.resetSelections)
-        self.otherButtons.addWidget(self.resetButton)
+        # self.resetButton = QPushButton("Reset Selections")
+        # self.resetButton.clicked.connect(self.reset_selections)
+        # self.otherButtons.addWidget(self.resetButton)
         self.doneButton = QPushButton("Finish Setup")
         # NEED TO ADD FUNCTION ONCE SCOREKEEPER IS DONE
         self.doneButton.clicked.connect(self.doneClicked)
@@ -256,7 +268,7 @@ class SetupScreen(QWidget):
         # set the main layout on the application's window
         self.setLayout(self.grid_format)
         self._arena_screen = None
-
+        self._scorekeeper_screen = None
 
     def doneClicked(self):
         current_data = MeetData.get_data()
@@ -283,23 +295,20 @@ class SetupScreen(QWidget):
         self.close()
         self._arena_screen = arena_screen.ArenaScreen()
         self._arena_screen.show()
+        self._scorekeeper_screen = scorekeeper_screen.ScorekeeperScreen()
+        self._scorekeeper_screen.show()
 
-
-
-    def resetSelections(self):
+    def reset_selections(self):
         self.logoCheckbox.setChecked(False)
         self.orderCheckbox.setChecked(False)
         self.svCheckbox.setChecked(False)
         self.judgesCheckbox.setChecked(False)
 
-        self.button.setChecked(False)
-        self.triButton.setChecked(False)
-        self.quadButton.setChecked(False)
+        # for button in self.meet_type_selection_buttons:
+        #     button.setChecked(False)
 
-        self.lineup1.setCurrentIndex(0)
-        self.lineup2.setCurrentIndex(0)
-        self.lineup3.setCurrentIndex(0)
-        self.lineup4.setCurrentIndex(0)
+        for lineup in self.lineups:
+            lineup.setCurrentIndex(0)
 
         self.judgesLabel.setText("List of Judges")
 

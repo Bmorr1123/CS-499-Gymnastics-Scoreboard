@@ -33,13 +33,19 @@ def main():
             }
         ]
     )
-    json_management.load_lineups_from_file(
-        database_interface,
-        "../resources/lineups/lineups.json"
+    lineup_json = json_management.load_json_from_file(
+        "../resources/lineups/kentucky_lineup.json"
     )
+    lineup_objects, lineup_entry_objects = json_management.convert_json_to_lineups_and_lineup_entries(
+        db_int=database_interface,
+        lineup_information=lineup_json
+    )
+    json_management.insert_missing_lineups(database_interface, lineup_objects)
+    json_management.insert_missing_lineup_entries(database_interface, lineup_entry_objects)
 
     if WIPE_DB_AFTER:
         wipe_database(database_interface)
+
 
 def wipe_database(db_interface: DBInterface):
     db_interface.delete(*db_interface.get_judges())

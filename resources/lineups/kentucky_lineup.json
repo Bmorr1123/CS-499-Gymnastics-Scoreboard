@@ -4,12 +4,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Vault",
         "gymnasts": [
-            "Cadence Gormley",
-            "Cecily Rizo",
-            "Makenzie Wilson",
-            "Claire Stippich",
-            "Bailey Bunn",
-            "Kaila Lawrence"
+            "Delaynee|Rodriguez",
+            "Hailey|Davis",
+            "Bridget|Bourque",
+            "Isabella|Magnelli",
+            "Samantha|Forman",
+            "Cadence|Gormley"
         ]
     },
     {
@@ -17,12 +17,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Floor",
         "gymnasts": [
-            "Jillian Procasky",
-            "Arianna Patterson",
-            "Bailey Bunn",
-            "Delaynee Rodriguez",
-            "Isabella Magnelli",
-            "Kaila Lawrence"
+            "Jillian|Procasky",
+            "Bailey|Bunn",
+            "Bridget|Bourque",
+            "Delaynee|Rodriguez",
+            "Makenzie|Wilson",
+            "Cadence|Gormley"
         ]
     },
     {
@@ -30,12 +30,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Beam",
         "gymnasts": [
-            "Claire Stippich",
-            "Bailey Bunn",
-            "Arianna Patterson",
-            "Bridget Bourque",
-            "Creslyn Brose",
-            "Kaila Lawrence"
+            "Sharon|Lee",
+            "Bridget|Bourque",
+            "Annie|Riegert",
+            "Carissa|Clay",
+            "Arianna|Patterson",
+            "Jillian|Procasky"
         ]
     },
     {
@@ -43,12 +43,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Bars",
         "gymnasts": [
-            "Cadence Gormley",
-            "Sharon Lee",
-            "Creslyn Brose",
-            "Annie Riegert",
-            "Raena Worley",
-            "Cecily Rizo"
+            "Hailey|Davis",
+            "Bailey|Bunn",
+            "Creslyn|Brose",
+            "Kaila|Lawrence",
+            "Isabella|Magnelli",
+            "Cadence|Gormley"
         ]
     }
 ]

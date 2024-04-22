@@ -41,8 +41,9 @@ class Gymnast(Models):
     first_name: Mapped[str] = mapped_column(String(30))
     last_name: Mapped[str] = mapped_column(String(30))
     major: Mapped[str] = mapped_column(String(128))
-    classification: Mapped[str] = mapped_column(String(30))
-    gymnast_picture: Mapped[Optional[str]] = mapped_column(LargeBinary)
+    classification: Mapped[str] = mapped_column(String(128))
+    # gymnast_picture: Mapped[Optional[LargeBinary]] = mapped_column(LargeBinary)
+    gymnast_picture_path: Mapped[Optional[str]] = mapped_column(String(256))
     # Leaving this here as an example for later
     # addresses: Mapped[List["Address"]] = relationship(
     #     back_populates="user", cascade="all, delete-orphan"
