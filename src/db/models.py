@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column, declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import LargeBinary, Float
+from sqlalchemy.types import LargeBinary, Float, Integer
 
 
 class Models(DeclarativeBase):
@@ -71,9 +71,10 @@ class LineupEntry(Models):
     gymnast_id: Mapped[int] = mapped_column(ForeignKey(Gymnast.gymnast_id))
     score: Mapped[float] = mapped_column(Float)
     status: Mapped[str] = mapped_column(String(30))
+    order: Mapped[int] = mapped_column(Integer)
 
     def __repr__(self) -> str:
-        return f"LineupEntry(lineyp_entry_id={self.lineup_entry_id!r}, gymnast_id={self.gymnast_id!r}, lineup_id={self.lineup_id!r}, score={self.score!r}, status={self.status!r})"
+        return f"LineupEntry(lineyp_entry_id={self.lineup_entry_id!r}, gymnast_id={self.gymnast_id!r}, lineup_id={self.lineup_id!r}, score={self.score!r}, status={self.status!r}, order={self.order!r})"
 
 
 class Judge(Models):
