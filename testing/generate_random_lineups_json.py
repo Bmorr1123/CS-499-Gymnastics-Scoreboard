@@ -3,14 +3,14 @@ from pprint import pprint
 
 
 exit(0)
-APPEND_MODE = True
+APPEND_MODE = False
+SCHOOL_FILE_PATH = "georgia"
 
-
-with open("../resources/teams/auburn.json", "r") as file:
+with open(f"../resources/teams/{SCHOOL_FILE_PATH}.json", "r") as file:
     data = json.load(file)
 
 if APPEND_MODE:
-    with open("../resources/lineups/lineups.json", "r") as file:
+    with open(f"../resources/lineups/{SCHOOL_FILE_PATH}_lineup.json", "r") as file:
         lineup_data = json.load(file)
 else:
     lineup_data = []
@@ -22,7 +22,7 @@ for event in ("Vault", "Floor", "Beam", "Bars"):
         if gymnast not in gymnast_list:
             gymnast_list.append(gymnast)
 
-    gymnast_list = [f"{gymnast["first_name"]} {gymnast["last_name"]}" for gymnast in gymnast_list]
+    gymnast_list = [f"{gymnast["first_name"]}|{gymnast["last_name"]}" for gymnast in gymnast_list]
 
     lineup_data.append(
         {
@@ -33,4 +33,4 @@ for event in ("Vault", "Floor", "Beam", "Bars"):
         }
     )
 
-json.dump(lineup_data, open("../resources/lineups/lineups.json", "w+"), indent=4)
+json.dump(lineup_data, open(f"../resources/lineups/{SCHOOL_FILE_PATH}_lineup.json", "w+"), indent=4)

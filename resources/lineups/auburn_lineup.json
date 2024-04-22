@@ -4,12 +4,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Vault",
         "gymnasts": [
-            "Emma Grace Boyd",
-            "Hannah Hagle",
-            "Olivia Greaves",
-            "Anna Hill",
-            "Aria Brusch",
-            "Hailey John"
+            "Madelynn|Crow",
+            "Julianne|Huff",
+            "Aria|Brusch",
+            "Emma Grace|Boyd",
+            "Anna|Hill",
+            "Olivia|Greaves"
         ]
     },
     {
@@ -17,12 +17,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Floor",
         "gymnasts": [
-            "Cassie Stevens",
-            "Aria Brusch",
-            "Hannah Hagle",
-            "Jersie Woolsey",
-            "Lila Smith",
-            "Gabby McLaughlin"
+            "Hailey|John",
+            "Emma Grace|Boyd",
+            "Jersie|Woolsey",
+            "Madelynn|Crow",
+            "Ananda|Brown",
+            "Paige|Zancan"
         ]
     },
     {
@@ -30,12 +30,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Beam",
         "gymnasts": [
-            "Jersie Woolsey",
-            "Julianne Huff",
-            "Gabby McLaughlin",
-            "Cassie Stevens",
-            "Sophia Greaves",
-            "Olivia Hollingsworth"
+            "Lila|Smith",
+            "Ananda|Brown",
+            "Hailey|John",
+            "Hannah|Hagle",
+            "Sophia|Greaves",
+            "Anna|Hill"
         ]
     },
     {
@@ -43,12 +43,12 @@
         "event_id": "Test Event",
         "apparatus_name": "Bars",
         "gymnasts": [
-            "Anna Hill",
-            "Paige Zancan",
-            "Sara Hubbard",
-            "Ananda Brown",
-            "Emma Grace Boyd",
-            "Lila Smith"
+            "Paige|Zancan",
+            "Sydney|Schumaker",
+            "Olivia|Greaves",
+            "Jersie|Woolsey",
+            "Sara|Hubbard",
+            "Hannah|Hagle"
         ]
     }
 ]

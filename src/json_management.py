@@ -46,7 +46,7 @@ def convert_json_to_gymnasts(db_int, gymnasts_information) -> [Gymnast]:
         gymnasts.append(gymnast_object)
 
         if "gymnast_picture" in gymnast:
-            gymnast_object.gymnast_picture = load_image_from_file(gymnast["gymnast_picture"])
+            gymnast_object.gymnast_picture_path = get_absolute_path_for_image_file(gymnast["gymnast_picture"])
 
     return gymnasts
 
@@ -152,7 +152,8 @@ def convert_json_to_lineups_and_lineup_entries(
 
         entries_for_current_lineup: [LineupEntry] = []
         for gymnast_name in lineup["gymnasts"]:
-            gymnast: list[Gymnast] = db_int.get_gymnast_by_name(*gymnast_name.split(" "))
+            print(gymnast_name.split("|", 1))
+            gymnast: list[Gymnast] = db_int.get_gymnast_by_name(*gymnast_name.split("|", 1))
             if len(gymnast) != 1:
                 print(f"No gymnast named \"{gymnast_name}\"!!!")
                 complete_lineup = False
@@ -247,18 +248,14 @@ def load_teams_from_directory(db_int: DBInterface, path_to_directory: str) -> ([
         file.close()
 
     schools = insert_missing_schools(db_int, team_info)
-    gymnasts = insert_missing_gymnasts(db_int, gymnast_info)
+    # gymnasts = insert_missing_gymnasts(db_int, gymnast_info)
+    gymnasts = convert_json_to_gymnasts(db_int, gymnast_info)
+    insert_missing_gymnasts(db_int, gymnasts)
 
     assert len(schools) == len(team_info), f"Found {len(schools)} schools in the DB matching the names. Expected {len(team_info)}."
-    assert len(gymnasts) == len(gymnast_info), f"Found {len(gymnasts)} gymnasts in the DB matching the names. Expected {len(gymnast_info)}."
+    # assert len(gymnasts) == len(gymnast_info), f"Found {len(gymnasts)} gymnasts in the DB matching the names. Expected {len(gymnast_info)}."
 
     return schools, gymnasts
-
-
-def load_lineups_from_file(db_int: DBInterface, path_to_file: str):
-    lineup_data = json.load(open(path_to_file, "r"))
-
-    insert_missing_lineups(db_int, lineup_data)
 
 
 def load_judges_from_file(db_int: DBInterface, path_to_file: str):
@@ -272,12 +269,13 @@ def load_json_from_file(path_to_file: str):
         return json.load(file)
 
 
-def load_image_from_file(path: str) -> bytes | None:
+def get_absolute_path_for_image_file(path: str) -> str | None:
     if not path:
         return None
     try:
-        with open(f"../resources/images/{path}", "rb") as file:
-            return file.read()
+        return os.path.abspath(f"../resources/images/{path}")
+        # return QImage(f"../resources/images/{path}")
+        # with open(f"../resources/images/{path}", "rb") as file:
     except FileNotFoundError:
         print(f"Could not find path \"{path}\".")
         return None
