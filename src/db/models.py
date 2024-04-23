@@ -44,6 +44,10 @@ class Gymnast(Models):
     classification: Mapped[str] = mapped_column(String(128))
     # gymnast_picture: Mapped[Optional[LargeBinary]] = mapped_column(LargeBinary)
     gymnast_picture_path: Mapped[Optional[str]] = mapped_column(String(256))
+    vault_avg: Mapped[Float] = mapped_column(Float)
+    bars_avg: Mapped[Float] = mapped_column(Float)
+    beam_avg: Mapped[Float] = mapped_column(Float)
+    floor_avg: Mapped[Float] = mapped_column(Float)
     # Leaving this here as an example for later
     # addresses: Mapped[List["Address"]] = relationship(
     #     back_populates="user", cascade="all, delete-orphan"
