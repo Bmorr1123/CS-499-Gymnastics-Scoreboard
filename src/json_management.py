@@ -151,7 +151,7 @@ def convert_json_to_lineups_and_lineup_entries(
         )
 
         entries_for_current_lineup: [LineupEntry] = []
-        for gymnast_name in lineup["gymnasts"]:
+        for order_index, gymnast_name in enumerate(lineup["gymnasts"]):
             print(gymnast_name.split("|", 1))
             gymnast: list[Gymnast] = db_int.get_gymnast_by_name(*gymnast_name.split("|", 1))
             if len(gymnast) != 1:
@@ -164,7 +164,8 @@ def convert_json_to_lineups_and_lineup_entries(
                 lineup_id=lineup_object,
                 gymnast_id=gymnast.gymnast_id,
                 score=0.00,
-                status="Incomplete"
+                status="Incomplete",
+                order=order_index
             )
             entries_for_current_lineup.append(lineup_entry)
 

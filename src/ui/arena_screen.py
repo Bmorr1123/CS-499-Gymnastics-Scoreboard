@@ -1,3 +1,4 @@
+import os
 import sys
 
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QPushButton, QWidget, QHBoxLayout, QLabel,)
@@ -11,6 +12,7 @@ from PyQt5.QtGui import QColor
 from db_interface import DBInterface
 from data import MeetData
 from models import Gymnast
+from pickle import loads
 
 
 class TeamLayout(QGridLayout):
@@ -22,6 +24,7 @@ class TeamLayout(QGridLayout):
         self.team_number = team_number
         self.db_interface = DBInterface.get_interface()
         self.data = MeetData.get_data()
+        print(self.data.schools[self.team_number])
         self.school = self.db_interface.get_school_by_name(self.data.schools[self.team_number])[0]
         self.gymnasts_data: [Gymnast] = self.db_interface.get_gymnasts_from_school(self.school)
         self.current_gymnast_index = 4
@@ -35,16 +38,13 @@ class TeamLayout(QGridLayout):
         self.score_label.setFont(QFont('Arial', 50))
         self.score_label.setAlignment(Qt.AlignCenter)
         if self.display_settings.display_logo:
-            gymnast_logo: bytes | None = self.gymnasts_data[self.current_gymnast_index].gymnast_picture
             self.logo_label = QLabel()
             self.logo_label.pixmap = QPixmap('exampleLogo.jpg')  # will need to transfer school logo in
-            # if gymnast_logo:
-            #     self.logo_label.pixmap = QPixmap().fromImage(QImage().loadFromData(data=gymnast_logo))
             self.logo_label.setPixmap(self.logo_label.pixmap.scaled(150, 150))
             self.logo_label.setAlignment(Qt.AlignCenter)
             self.image_score_layout.addWidget(self.logo_label, 1)
         self.info_layout = QVBoxLayout()
-        self.name_label = QLabel(f"{gymnast.first_name} {gymnast.last_name}")
+        self.name_label = QLabel(f"Gymnast Name")
         self.name_label.setFont(QFont('Arial', 20))
         self.classification_label = QLabel(f"{gymnast.classification}")
         self.classification_label.setFont(QFont('Arial', 15))
@@ -54,6 +54,7 @@ class TeamLayout(QGridLayout):
         self.season_avg_label.setFont(QFont('Arial', 15))
         self.gymnast_image_label = QLabel()
         self.gymnast_image_label.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
+
         self.gymnast_image_label.setPixmap(self.gymnast_image_label.pixmap.scaled(150, 150))
         self.gymnast_image_label.setAlignment(Qt.AlignCenter)
         self.order_label = QLabel("Order: " + "1st")  # will need to be replaced with attribute
@@ -109,6 +110,26 @@ class TeamLayout(QGridLayout):
 
         self.flash_timer = QTimer(self)
         self.stop_timer = QTimer(self)
+        self.load_gymnast_information()
+
+    def get_current_gymnast(self) -> Gymnast:
+        return self.gymnasts_data[self.current_gymnast_index]
+
+    def load_gymnast_information(self):
+        gymnast = self.get_current_gymnast()
+        if gymnast.gymnast_picture_path:
+            try:
+                qimage = QImage(gymnast.gymnast_picture_path)
+                # with open(, "rb") as file:
+                #     qimage = QImage
+                print(gymnast.gymnast_picture_path)
+                self.gymnast_image_label.pixmap = QPixmap(gymnast.gymnast_picture_path)
+                self.gymnast_image_label.setPixmap(self.gymnast_image_label.pixmap.scaled(150, 150))
+                self.gymnast_image_label.setAlignment(Qt.AlignCenter)
+                # .fromImage(qimage, flags=None)
+            except Exception as e:
+                print("EXCEPTION:", e)
+        self.name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
 
     def update_score_label(self, score):
         self.score_label.setText(score)
@@ -150,6 +171,13 @@ class ArenaScreen(QWidget):
 
 
 if __name__ == "__main__":
+    print(os.listdir())
+    db_interface = DBInterface.get_interface("../../db_setup/.env")
+
+    meet_data = MeetData.get_data()
+    meet_data.meet_format = 2
+    meet_data.schools[0] = "University of Kentucky"
+    meet_data.schools[1] = "The University of Alabama"
     app = QApplication(sys.argv)
     arena = ArenaScreen()
     arena.show()
