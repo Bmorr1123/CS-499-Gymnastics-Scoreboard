@@ -116,6 +116,7 @@ class TeamLayout(QGridLayout):
     def get_current_gymnast(self) -> Gymnast:
         return self.gymnasts_data[self.current_gymnast_index]
 
+
     def load_gymnast_information(self):
         gymnast = self.get_current_gymnast()
         if gymnast.gymnast_picture_path:
@@ -133,13 +134,13 @@ class TeamLayout(QGridLayout):
         self.name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
         self.classification_label.setText(f"{gymnast.classification}")
         self.major_label.setText(f"{gymnast.major}")
-        if self.current_gymnast_index == 1:
+        if self.current_apparatus_index == 1:
             self.season_avg_label.setText(f"{gymnast.bars_avg}")
-        if self.current_gymnast_index == 2:
+        if self.current_apparatus_index == 2:
             self.season_avg_label.setText(f"{gymnast.beam_avg}")
-        if self.current_gymnast_index == 3:
+        if self.current_apparatus_index == 3:
             self.season_avg_label.setText(f"{gymnast.floor_avg}")
-        if self.current_gymnast_index == 4:
+        if self.current_apparatus_index == 4:
             self.season_avg_label.setText(f"{gymnast.vault_avg}")
 
     def update_score_label(self, score):
