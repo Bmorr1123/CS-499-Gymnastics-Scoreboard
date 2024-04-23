@@ -285,22 +285,42 @@ class SetupScreen(QWidget):
         current_data = MeetData.get_data()
         if not current_data.meet_format:
             print("NEED TO SELECT MEET FORMAT BEFORE PROCEEDING")
+            format_msg = QMessageBox()
+            format_msg.setIcon(QMessageBox.Critical)
+            format_msg.setText("NEED TO SELECT MEET FORMAT BEFORE PROCEEDING")
+            format_msg.setWindowTitle("Select Meet Format")
+            show_msg = format_msg.exec()
             return
 
         school_slots_filled = [bool(school) for school in current_data.schools[0:current_data.meet_format]]
         if not all(school_slots_filled):
-            print(f"NEED TO SELECT SCHOOLS BEFORE PROCEEDING Got: {sum(school_slots_filled)} Expected: {current_data.meet_format}.")
+            print(f"NEED TO SELECT SCHOOLS BEFORE PROCEEDING GOT: {sum(school_slots_filled)} EXPECTED: {current_data.meet_format}.")
+            school_msg = QMessageBox()
+            school_msg.setIcon(QMessageBox.Critical)
+            school_msg.setText(f"NEED TO SELECT SCHOOLS BEFORE PROCEEDING GOT: {sum(school_slots_filled)} EXPECTED: {current_data.meet_format}.")
+            school_msg.setWindowTitle("Select Schools")
+            show_msg = school_msg.exec()
             return
 
         for i, school in enumerate(current_data.schools):
             if school is not None and current_data.schools.count(school) > 1:
                 print(f"FOUND A DUPLICATE SCHOOL: \"{school}\"")
+                duplicate_msg = QMessageBox()
+                duplicate_msg.setIcon(QMessageBox.Critical)
+                duplicate_msg.setText("FOUND A DUPLICATE SCHOOL")
+                duplicate_msg.setWindowTitle("Duplicate School")
+                show_msg = duplicate_msg.exec()
                 return
 
         lineups_and_entries: list[tuple[list[Lineup], list[LineupEntry]]] = []
         for i in range(current_data.meet_format):
             if not self.lineups[i].has_lineups():
-                print(f"School #{i + 1} does not have a lineup.")
+                print(f"SCHOOL #{i + 1} DOES NOT HAVE A LINEUP.")
+                lineup_msg = QMessageBox()
+                lineup_msg.setIcon(QMessageBox.Critical)
+                lineup_msg.setText(f"SCHOOL #{i + 1} DOES NOT HAVE A LINEUP.")
+                lineup_msg.setWindowTitle("No Lineup Selected")
+                show_msg = lineup_msg.exec()
                 return
             lineups_and_entries.append(self.lineups[i].get_lineups_and_entries())
 
