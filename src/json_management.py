@@ -119,7 +119,10 @@ def insert_missing_judges(db_int: DBInterface, judge_information: [dict]):
             else:
                 judge["event_id"] = events[judge["event_id"]].event_id
                 judges_to_insert.append(Judge(
-                    **judge
+                    first_name=judge["first_name"],
+                    last_name=judge["last_name"],
+                    event_id=judge["event_id"],
+                    apparatus_name=judge["apparatus_name"],
                 ))
         else:
             print(f"Event \"{judge["event_id"]}\" does not exist in database.")
