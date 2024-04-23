@@ -11,7 +11,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from data import MeetData
+from data import MeetData, EventLineupManager
 from db_interface import DBInterface
 
 
@@ -113,6 +113,12 @@ class ScorekeeperQuadrant(QGridLayout):
         super().__init__()
         self.data = MeetData.get_data()
         self.team_num = team_num
+
+        self.event_lineup_manager: EventLineupManager = self.data.event_lineup_managers[self.team_num]
+        # for lineup in self.event_lineup_manager.lineup_objects:
+        #     print(lineup)
+        # for lineup_entry in self.event_lineup_manager.lineup_entry_objects:
+        #     print(lineup_entry)
 
         scoreInfo1 = QVBoxLayout()
         self.schoolName1 = QLabel(self.data.schools[self.team_num])
