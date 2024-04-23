@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PyQt5.QtWidgets import (QApplication, QGridLayout, QPushButton, QWidget, QHBoxLayout, QLabel,)
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QPushButton, QWidget, QHBoxLayout, QLabel, )
 from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import *
@@ -28,6 +28,7 @@ class TeamLayout(QGridLayout):
         self.school = self.db_interface.get_school_by_name(self.data.schools[self.team_number])[0]
         self.gymnasts_data: [Gymnast] = self.db_interface.get_gymnasts_from_school(self.school)
         self.current_gymnast_index = 4
+        self.current_apparatus_index = 1
         gymnast = self.gymnasts_data[self.current_gymnast_index]
 
         self.display_settings = self.data.display_settings
@@ -130,6 +131,16 @@ class TeamLayout(QGridLayout):
             except Exception as e:
                 print("EXCEPTION:", e)
         self.name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
+        self.classification_label.setText(f"{gymnast.classification}")
+        self.major_label.setText(f"{gymnast.major}")
+        if self.current_gymnast_index == 1:
+            self.season_avg_label.setText(f"{gymnast.bars_avg}")
+        if self.current_gymnast_index == 2:
+            self.season_avg_label.setText(f"{gymnast.beam_avg}")
+        if self.current_gymnast_index == 3:
+            self.season_avg_label.setText(f"{gymnast.floor_avg}")
+        if self.current_gymnast_index == 4:
+            self.season_avg_label.setText(f"{gymnast.vault_avg}")
 
     def update_score_label(self, score):
         self.score_label.setText(score)
