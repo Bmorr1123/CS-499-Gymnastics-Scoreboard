@@ -41,6 +41,10 @@ def convert_json_to_gymnasts(db_int, gymnasts_information) -> [Gymnast]:
             last_name=gymnast["last_name"],
             major=gymnast["major"],
             classification=gymnast["classification"],
+            vault_avg=gymnast["vault_avg"],
+            bars_avg=gymnast["bars_avg"],
+            beam_avg=gymnast["beam_avg"],
+            floor_avg=gymnast["floor_avg"],
             school_id=schools_in_db[school_name].school_id
         )
         gymnasts.append(gymnast_object)
