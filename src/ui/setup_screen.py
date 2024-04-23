@@ -9,7 +9,7 @@ import constants
 import json_management
 import scorekeeper_screen
 from db_interface import DBInterface
-from data import MeetData
+from data import MeetData, EventLineupManager
 from models import Lineup, LineupEntry
 
 
@@ -324,9 +324,11 @@ class SetupScreen(QWidget):
                 return
             lineups_and_entries.append(self.lineups[i].get_lineups_and_entries())
 
-        for lineups, lineup_entries in lineups_and_entries:
+        for i, (lineups, lineup_entries) in enumerate(lineups_and_entries):
             json_management.insert_missing_lineups(self.db_interface, lineups)
             json_management.insert_missing_lineup_entries(self.db_interface, lineup_entries)
+
+            current_data.event_lineup_managers[i] = EventLineupManager(lineups, lineup_entries)
 
         current_data.display_settings.display_logo = self.logoCheckbox.isChecked()
         current_data.display_settings.display_order = self.orderCheckbox.isChecked()

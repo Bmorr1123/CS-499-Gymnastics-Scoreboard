@@ -137,8 +137,8 @@ class MeetData:
     def __init__(self):
         self.meet_format: constants.MeetType | None = None
         self.event_id: int | None = None
-        self.schools: [db.models.School] = [None for i in range(4)]
-        self.event_lineup_managers: list[EventLineupManager | None] = [None] * 4
+        self.schools: list[str | None] = [None for i in range(4)]
+        self.event_lineup_managers: list[EventLineupManager | None] = [None for i in range(4)]
         self.gymnasts: [db.models.Gymnast] = []
         self.display_settings: DisplaySettings = DisplaySettings()
 
