@@ -10,7 +10,7 @@ import json_management
 import scorekeeper_screen
 from db_interface import DBInterface
 from data import MeetData
-from models import LineupEntry
+from models import Lineup, LineupEntry
 
 
 class SchoolSelection(QWidget):
@@ -84,6 +84,8 @@ class LineupWidget(QWidget):
         self.vertical_layout.addWidget(self.lineup_label)
 
         self.school_selector = SchoolSelection(school_number, self)
+        self.lineup_objects: None | list[Lineup] = None
+        self.lineup_entry_objects: None | list[LineupEntry] = None
 
     def validate_lineups(self, school_object, lineup_objects, lineup_entry_objects) -> bool:
         # Validating lineup_objects
@@ -115,7 +117,7 @@ class LineupWidget(QWidget):
 
         for lineup_entry_count in lineup_entry_counts:
             if lineup_entry_counts[lineup_entry_count] != 6:
-                print(f"Apparatus \"{lineup_entry_count}\" has the incorrect amount of gymnasts!")
+                self.lineup_label.setText(f"Apparatus \"{lineup_entry_count}\" has the incorrect amount of gymnasts!")
                 return False
 
         # Validating lineup_entry_objects
@@ -143,7 +145,8 @@ class LineupWidget(QWidget):
                 DBInterface.get_interface(),
                 json_data
             )
-            self.validate_lineups(school_object, lineup_objects, lineup_entry_objects)
+            if self.validate_lineups(school_object, lineup_objects, lineup_entry_objects):
+                self.lineup_objects, self.lineup_entry_objects = lineup_objects, lineup_entry_objects
 
             # json_management.load_lineups_from_file(setupController.db_int, fileName)  UNCOMMENT ME
         else:
@@ -157,8 +160,16 @@ class LineupSetupLayout(QStackedLayout):
     def __init__(self, school_number):
         super().__init__()
         self.addWidget(BlankLineups())
-        self.addWidget(LineupWidget(school_number))
+        self.lineup_widget = LineupWidget(school_number)
+        self.addWidget(self.lineup_widget)
         self.setCurrentIndex(0)
+
+    def has_lineups(self) -> bool:
+        # Check if both are filled
+        return bool(self.lineup_widget.lineup_objects and self.lineup_widget.lineup_entry_objects)
+
+    def get_lineups_and_entries(self) -> tuple[list[Lineup], list[LineupEntry]]:
+        return self.lineup_widget.lineup_objects, self.lineup_widget.lineup_entry_objects
 
 
 class SetupScreen(QWidget):
@@ -281,10 +292,21 @@ class SetupScreen(QWidget):
             print(f"NEED TO SELECT SCHOOLS BEFORE PROCEEDING Got: {sum(school_slots_filled)} Expected: {current_data.meet_format}.")
             return
 
-        for school in current_data.schools:
+        for i, school in enumerate(current_data.schools):
             if school is not None and current_data.schools.count(school) > 1:
                 print(f"FOUND A DUPLICATE SCHOOL: \"{school}\"")
                 return
+
+        lineups_and_entries: list[tuple[list[Lineup], list[LineupEntry]]] = []
+        for i in range(current_data.meet_format):
+            if not self.lineups[i].has_lineups():
+                print(f"School #{i + 1} does not have a lineup.")
+                return
+            lineups_and_entries.append(self.lineups[i].get_lineups_and_entries())
+
+        for lineups, lineup_entries in lineups_and_entries:
+            json_management.insert_missing_lineups(self.db_interface, lineups)
+            json_management.insert_missing_lineup_entries(self.db_interface, lineup_entries)
 
         current_data.display_settings.display_logo = self.logoCheckbox.isChecked()
         current_data.display_settings.display_order = self.orderCheckbox.isChecked()
@@ -295,7 +317,7 @@ class SetupScreen(QWidget):
         self.close()
         self._arena_screen = arena_screen.ArenaScreen()
         self._arena_screen.show()
-        self._scorekeeper_screen = scorekeeper_screen.ScorekeeperScreen()
+        self._scorekeeper_screen = scorekeeper_screen.NewScorekeeperScreen()
         self._scorekeeper_screen.show()
 
     def reset_selections(self):
