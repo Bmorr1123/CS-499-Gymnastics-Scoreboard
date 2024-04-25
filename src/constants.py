@@ -38,3 +38,40 @@ APPARATUS_TYPES = [
     ApparatusType("Bm", "Beam", "Balance Beam", None),
     ApparatusType("Fr", "Floor", "Floor Exercise", None),
 ]
+"""
+Format:
+    0 is Home Team
+    1-3 is Visitor Team 1-3
+
+Dual Meet:
+    Home - Vault, Bar, HALFTIME, Beam, Floor
+    Visitor - Bars, Vault, HALFTIME, Floor, Beam 
+
+Tri Meet:
+    Home - Vault, Bars, NOTHING, Beam, NOTHING, Floor
+    Visitor 1 - Bars, NOTHING, Vaults, NOTHING, Floor, Beam
+    Visitor 2 - NOTHING, Vault, Bars, Floor, Beam, NOTHING
+
+Quad Meet:
+    Home - Vault, Bars, Beam, Floor
+    Visitor 1 - Floor, Vault, Bars, Beam
+    Visitor 2 - Beam, Floor, Vault, Bars
+    Visitor 3 -  Bars, Beam, Floor, Vault
+"""
+APPARATUS_ORDERING = {
+    2: {
+        0: ["Vault", "Bars", "Break", "Beam", "Floor"],
+        1: ["Bars", "Vault", "Break", "Floor", "Beam"]
+    },
+    3: {
+        0: ["Vault", "Bars", "Break", "Beam", "Break", "Floor"],
+        1: ["Bars", "Break", "Vaults", "Break", "Floor", "Beam"],
+        2: ["Break", "Vault", "Bars", "Floor", "Beam", "Break"]
+    },
+    4: {
+        0: ["Vault", "Bars", "Beam", "Floor"],
+        1: ["Floor", "Vault", "Bars", "Beam"],
+        2: ["Beam", "Floor", "Vault", "Bars"],
+        3: ["Bars", "Beam", "Floor", "Vault"]
+    }
+}
