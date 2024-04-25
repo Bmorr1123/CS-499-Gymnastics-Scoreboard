@@ -136,7 +136,7 @@ class ScorekeeperQuadrant(QGridLayout):
         self.enterScore1.setMaxLength(6)
         self.enterScore1.setAlignment(Qt.AlignLeft)
         self.enterScore1.setFont(QFont('Arial', 15))
-        self.enterScore1.returnPressed.connect(lambda: self.update_Score(self.enterScore1.text(), 1))
+        self.enterScore1.returnPressed.connect(lambda: self.update_score(self.enterScore1.text()))
         # self.enterScore1.returnPressed.connect(lambda: self.enterPressed())
         scoreForm1 = QFormLayout()
         scoreForm1.addRow("Enter Score", self.enterScore1)
@@ -202,6 +202,28 @@ class ScorekeeperQuadrant(QGridLayout):
     def activated1(self):
         self.orderSelect1.setCurrentIndex(1)
 
+    def update_score(self, score):
+        score: float = float(score)
+        if not (0 <= score <= 10):
+            print("Score cannot be outside of range [0, 10]")
+            return
+
+        lineup_entry: LineupEntry | None = self.event_lineup_manager.get_current_lineup_entry()
+        if not lineup_entry:
+            print("No Active LineupEntry")
+            return
+
+        if lineup_entry.status != "Incomplete":
+            print(f"Cannot change score on LineupEntry with status {lineup_entry.status}!!!")
+            return
+
+        lineup_entry.score = float(score)
+        lineup_entry.status = "Complete"
+        self.db_interface.insert(lineup_entry)
+        self.enterScore1.setText("")
+
+        # screensController.update_score(team, float(score))
+
 
 class NewScorekeeperScreen(QWidget):
     def __init__(self):
@@ -246,10 +268,6 @@ class NewScorekeeperScreen(QWidget):
 
         for quadrant in self.quadrants:
             quadrant.refresh_ui()
-
-    def update_Score(self, score, team):
-        print(float(score))
-        # screensController.update_score(team, float(score))
 
     def meetDone(self):
         # screensController.close_windows()

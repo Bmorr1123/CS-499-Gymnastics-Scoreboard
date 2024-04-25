@@ -46,7 +46,6 @@ class EventLineupManager:
         self.current_apparatus_index = -1
 
         self.next_apparatus()
-        self.next_gymnast()
 
         self.get_current_lineup()
         self.get_current_lineup_entries()
@@ -70,7 +69,7 @@ class EventLineupManager:
             if lineup_entry.lineup_id == current_lineup.lineup_id:
                 current_lineup_entries.append(lineup_entry)
 
-        current_lineup_entries.sort(key=lambda lineup_entry: lineup_entry.order, reverse=True)
+        current_lineup_entries.sort(key=lambda lineup_entry: lineup_entry.order, reverse=False)
         return current_lineup_entries
 
     def get_current_lineup(self) -> db.models.Lineup | None:
@@ -95,6 +94,17 @@ class EventLineupManager:
             return None
 
         return entries[self.current_gymnast_index].gymnast_id
+
+    def get_current_lineup_entry(self) -> db.models.LineupEntry | None:
+        if self.current_gymnast_index is None or self.current_apparatus_index is None:
+            return None
+        if self.current_gymnast_index < 0:
+            return None
+        entries = self.get_current_lineup_entries()
+        if not entries:
+            return None
+
+        return entries[self.current_gymnast_index]
 
     def get_current_apparatus_name(self) -> str | None:
         if self.current_apparatus_index is None or not self.apparatus_order:
@@ -134,6 +144,7 @@ class EventLineupManager:
         self.current_gymnast_index = -1
         self._current_lineup = None
         self._current_lineup_entries = None
+        self.next_gymnast()
         return True
 
 
