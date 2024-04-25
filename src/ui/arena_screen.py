@@ -118,9 +118,32 @@ class TeamLayout(QGridLayout):
         gymnasts = self.db_interface.get_gymnast_by_id(gymnast_id)
         return gymnasts[0] if len(gymnasts) == 1 else None
 
+    def populate_empty_fields(self):
+        self.score_label.setText("0.00")
+        self.gymnast_image_label.setPixmap(QPixmap())
+        self.name_label.setText(f"Gymnast Name")
+        self.classification_label.setText("Classification")
+        self.major_label.setText("Major")
+        self.season_avg_label.setText("Season Average")
+        self.order_label.setText("Order: " + "1st")
+        self.apparatus_label.setText("No Apparatus")
+        if self.display_settings.display_start_value:
+            self.start_value_label.setText("SV")
+        self.vault_name_label.setText("Vault Name")
+        current_apparatus = self.event_lineup_manager.get_current_apparatus_name()
+        if current_apparatus:
+            self.apparatus_label.setText(current_apparatus)
+        if self.display_settings.display_judges:
+            self.judge_title_label.setText("Judges: ")
+            self.judge_label_1.setText("Judge 1")
+            self.judge_label_2.setText("Judge 2")
+            self.judge_label_3.setText("Judge 3")
+        # self.timer_label.setText("--:--")
+
     def load_gymnast_information(self):
         gymnast = self.get_current_gymnast()
         if not gymnast:
+            self.populate_empty_fields()
             return
         if gymnast == self.last_gymnast:
             return
@@ -141,6 +164,7 @@ class TeamLayout(QGridLayout):
         self.major_label.setText(f"{gymnast.major}")
 
         current_apparatus = self.event_lineup_manager.get_current_apparatus_name()
+        self.apparatus_label.setText(current_apparatus)
         if current_apparatus == "Bars":
             self.season_avg_label.setText(f"{gymnast.bars_avg:.03f}")
         elif current_apparatus == "Beam":
@@ -150,6 +174,7 @@ class TeamLayout(QGridLayout):
         elif current_apparatus == "Vault":
             self.season_avg_label.setText(f"{gymnast.vault_avg:.03f}")
         else:
+            self.apparatus_label.setText("No Apparatus")
             self.season_avg_label.setText("N/A")
         self.last_gymnast = gymnast
 

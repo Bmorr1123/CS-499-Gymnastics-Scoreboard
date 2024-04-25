@@ -88,9 +88,13 @@ class EventLineupManager:
     def get_current_gymnast_id(self) -> int | None:
         if self.current_gymnast_index is None or self.current_apparatus_index is None:
             return None
+        if self.current_gymnast_index < 0:
+            return None
         entries = self.get_current_lineup_entries()
         if not entries:
             return None
+
+        print(self.current_gymnast_index)
         return entries[self.current_gymnast_index].gymnast_id
 
     def get_current_apparatus_name(self) -> str | None:
@@ -128,7 +132,7 @@ class EventLineupManager:
         if len(self.apparatus_order) <= self.current_apparatus_index + 1:
             return False
         self.current_apparatus_index += 1
-        self.current_gymnast_index = 0
+        self.current_gymnast_index = -1
         self._current_lineup = None
         self._current_lineup_entries = None
         return True
