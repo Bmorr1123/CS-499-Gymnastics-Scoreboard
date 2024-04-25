@@ -188,7 +188,7 @@ def convert_json_to_lineups_and_lineup_entries(
 def insert_missing_lineups(
         db_int: DBInterface,
         lineups: list[Lineup],
-):
+) -> list[Lineup]:
     lineups_to_insert: list[Lineup] = []
     for lineup in lineups:
         lineup: Lineup = lineup
@@ -198,7 +198,6 @@ def insert_missing_lineups(
             lineup.apparatus_name,
             lineup.school_id
         )
-
         if len(matching_lineups) > 0:
             print(f"Lineup {matching_lineups[0]} already exists in database.")
             continue
@@ -207,6 +206,12 @@ def insert_missing_lineups(
 
     print(f"Inserting {len(lineups_to_insert)} lineups...")
     db_int.insert(*lineups_to_insert)
+
+    ret = []
+    if len(lineups) > 0:
+        ret += db_int.get_lineups_by_event_id(lineups[0].event_id)
+
+    return ret
 
 
 def insert_missing_lineup_entries(
@@ -237,7 +242,7 @@ def insert_missing_lineup_entries(
         if not duplicate_found:
             lineup_entries_to_insert.append(lineup_entry)
 
-    db_int.insert(*lineup_entries)
+    db_int.insert(*lineup_entries_to_insert)
 
 
 def load_teams_from_directory(db_int: DBInterface, path_to_directory: str) -> ([School], [Gymnast]):

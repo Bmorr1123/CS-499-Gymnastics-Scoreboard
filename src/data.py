@@ -37,8 +37,7 @@ class EventLineupManager:
         self._current_lineup_entries: list[db.models.LineupEntry] | None = None
 
     def start_event(self, apparatus_order: list[str]):
-        assert len(apparatus_order) == 4, "Incorrect apparatus count."
-        apparatus_names = [app.short_name for app in constants.APPARATUS_TYPES]
+        apparatus_names = [app.short_name for app in constants.APPARATUS_TYPES] + ["Break"]
         for apparatus in apparatus_order:
             assert apparatus in apparatus_names, f"Apparatus with name \"{apparatus}\" could not be found."
 
@@ -92,7 +91,6 @@ class EventLineupManager:
         entries = self.get_current_lineup_entries()
         if not entries:
             return None
-
         return entries[self.current_gymnast_index].gymnast_id
 
     def get_current_apparatus_name(self) -> str | None:
@@ -100,6 +98,15 @@ class EventLineupManager:
             return None
 
         return self.apparatus_order[self.current_apparatus_index]
+
+    def get_next_apparatus_name(self) -> str | None:
+        if self.current_apparatus_index is None or not self.apparatus_order:
+            return None
+
+        if len(self.apparatus_order) <= self.current_apparatus_index + 1:
+            return "Finished"
+
+        return self.apparatus_order[self.current_apparatus_index + 1]
 
     def next_gymnast(self) -> bool:
         if self.current_gymnast_index is None or self.current_apparatus_index is None:
@@ -110,6 +117,7 @@ class EventLineupManager:
 
         if len(entries) <= self.current_gymnast_index + 1:
             return False
+
         self.current_gymnast_index += 1
         return True
 
@@ -120,6 +128,9 @@ class EventLineupManager:
         if len(self.apparatus_order) <= self.current_apparatus_index + 1:
             return False
         self.current_apparatus_index += 1
+        self.current_gymnast_index = 0
+        self._current_lineup = None
+        self._current_lineup_entries = None
         return True
 
 

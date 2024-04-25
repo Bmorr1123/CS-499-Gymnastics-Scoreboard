@@ -26,10 +26,7 @@ class TeamLayout(QGridLayout):
         self.data = MeetData.get_data()
         print(self.data.schools[self.team_number])
         self.school = self.db_interface.get_school_by_name(self.data.schools[self.team_number])[0]
-        self.gymnasts_data: [Gymnast] = self.db_interface.get_gymnasts_from_school(self.school)
-        self.current_gymnast_index = 4
-        self.current_apparatus_index = 1
-        gymnast = self.gymnasts_data[self.current_gymnast_index]
+        self.event_lineup_manager = self.data.event_lineup_managers[self.team_number]
 
         self.display_settings = self.data.display_settings
         print(self.display_settings)
@@ -47,14 +44,14 @@ class TeamLayout(QGridLayout):
         self.info_layout = QVBoxLayout()
         self.name_label = QLabel(f"Gymnast Name")
         self.name_label.setFont(QFont('Arial', 20))
-        self.classification_label = QLabel(f"{gymnast.classification}")
+        self.classification_label = QLabel("Classification")
         self.classification_label.setFont(QFont('Arial', 15))
         self.major_label = QLabel("Major")
         self.major_label.setFont(QFont('Arial', 15))
         self.season_avg_label = QLabel("Season Average")
         self.season_avg_label.setFont(QFont('Arial', 15))
         self.gymnast_image_label = QLabel()
-        self.gymnast_image_label.pixmap = QPixmap('proPic.jpg')  # will need to transfer current gymnast pic in
+        self.gymnast_image_label.pixmap = QPixmap()  # will need to transfer current gymnast pic in
 
         self.gymnast_image_label.setPixmap(self.gymnast_image_label.pixmap.scaled(150, 150))
         self.gymnast_image_label.setAlignment(Qt.AlignCenter)
@@ -111,14 +108,22 @@ class TeamLayout(QGridLayout):
 
         self.flash_timer = QTimer(self)
         self.stop_timer = QTimer(self)
-        self.load_gymnast_information()
+        self.refresh_timer = QTimer(self)
+        self.refresh_timer.timeout.connect(self.refresh_ui)
+        self.last_gymnast = None
+        self.refresh_ui()
 
-    def get_current_gymnast(self) -> Gymnast:
-        return self.gymnasts_data[self.current_gymnast_index]
-
+    def get_current_gymnast(self) -> Gymnast | None:
+        gymnast_id = self.event_lineup_manager.get_current_gymnast_id()
+        gymnasts = self.db_interface.get_gymnast_by_id(gymnast_id)
+        return gymnasts[0] if len(gymnasts) == 1 else None
 
     def load_gymnast_information(self):
         gymnast = self.get_current_gymnast()
+        if not gymnast:
+            return
+        if gymnast == self.last_gymnast:
+            return
         if gymnast.gymnast_picture_path:
             try:
                 qimage = QImage(gymnast.gymnast_picture_path)
@@ -134,14 +139,23 @@ class TeamLayout(QGridLayout):
         self.name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
         self.classification_label.setText(f"{gymnast.classification}")
         self.major_label.setText(f"{gymnast.major}")
-        if self.current_apparatus_index == 1:
-            self.season_avg_label.setText(f"{gymnast.bars_avg}")
-        if self.current_apparatus_index == 2:
-            self.season_avg_label.setText(f"{gymnast.beam_avg}")
-        if self.current_apparatus_index == 3:
-            self.season_avg_label.setText(f"{gymnast.floor_avg}")
-        if self.current_apparatus_index == 4:
-            self.season_avg_label.setText(f"{gymnast.vault_avg}")
+
+        current_apparatus = self.event_lineup_manager.get_current_apparatus_name()
+        if current_apparatus == "Bars":
+            self.season_avg_label.setText(f"{gymnast.bars_avg:.03f}")
+        elif current_apparatus == "Beam":
+            self.season_avg_label.setText(f"{gymnast.beam_avg:.03f}")
+        elif current_apparatus == "Floor":
+            self.season_avg_label.setText(f"{gymnast.floor_avg:.03f}")
+        elif current_apparatus == "Vault":
+            self.season_avg_label.setText(f"{gymnast.vault_avg:.03f}")
+        else:
+            self.season_avg_label.setText("N/A")
+        self.last_gymnast = gymnast
+
+    def refresh_ui(self):
+        self.load_gymnast_information()
+        self.refresh_timer.start(100)
 
     def update_score_label(self, score):
         self.score_label.setText(score)

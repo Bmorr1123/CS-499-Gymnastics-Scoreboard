@@ -328,13 +328,24 @@ class SetupScreen(QWidget):
             json_management.insert_missing_lineups(self.db_interface, lineups)
             json_management.insert_missing_lineup_entries(self.db_interface, lineup_entries)
 
-            current_data.event_lineup_managers[i] = EventLineupManager(lineups, lineup_entries)
+            # Querying the Lineups and LineupEntries
+            event_ids = {lineup.event_id for lineup in lineups}
+            school_ids = {lineup.school_id for lineup in lineups}
+            assert len(event_ids) == 1, "I have no idea how lineups for 2 different events were loaded."
+            assert len(school_ids) == 1, "I have no idea how lineups for 2 different schools were loaded."
+
+            db_lineups = self.db_interface.get_lineups_by_event_id_and_school_id(event_ids.pop(), school_ids.pop())
+            db_lineup_entries = []
+            for lineup in db_lineups:
+                db_lineup_entries += self.db_interface.get_lineup_entries_from_lineup(lineup)
+
+            current_data.event_lineup_managers[i] = EventLineupManager(db_lineups, db_lineup_entries)
 
         current_data.display_settings.display_logo = self.logoCheckbox.isChecked()
         current_data.display_settings.display_order = self.orderCheckbox.isChecked()
         current_data.display_settings.display_start_value = self.svCheckbox.isChecked()
         current_data.display_settings.display_judges = self.judgesCheckbox.isChecked()
-        print(current_data.display_settings)
+        # print(current_data.display_settings)
 
         self.close()
         self._arena_screen = arena_screen.ArenaScreen()

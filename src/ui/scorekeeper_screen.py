@@ -1,5 +1,6 @@
 import sys
 
+import constants
 import screensController
 import postController
 import updateController
@@ -13,6 +14,7 @@ from PyQt5.QtWidgets import *
 
 from data import MeetData, EventLineupManager
 from db_interface import DBInterface
+from db.models import Gymnast, Event, Lineup, LineupEntry
 
 
 class SubstitutionWidget(QWidget):
@@ -111,6 +113,7 @@ class SubstitutionWidget(QWidget):
 class ScorekeeperQuadrant(QGridLayout):
     def __init__(self, team_num: int):
         super().__init__()
+        self.db_interface = DBInterface.get_interface()
         self.data = MeetData.get_data()
         self.team_num = team_num
 
@@ -124,9 +127,9 @@ class ScorekeeperQuadrant(QGridLayout):
         self.schoolName1 = QLabel(self.data.schools[self.team_num])
         self.schoolName1.setFont(QFont('Arial', 12))
         scoreInfo1.addWidget(self.schoolName1)
-        self.name1 = QLabel("Gymnast Name")
-        self.name1.setFont(QFont('Arial', 15))
-        scoreInfo1.addWidget(self.name1)
+        self.current_gymnast_name_label = QLabel("Gymnast Name")
+        self.current_gymnast_name_label.setFont(QFont('Arial', 15))
+        scoreInfo1.addWidget(self.current_gymnast_name_label)
         self.enterScore1 = QLineEdit()
         self.enterScore1.setFixedWidth(300)
         self.enterScore1.setValidator(QDoubleValidator())
@@ -164,8 +167,9 @@ class ScorekeeperQuadrant(QGridLayout):
         self.update1 = QPushButton("Update Lineup")
         topButtons1.addWidget(self.update1)
         self.update1.clicked.connect(self.lineupChange)
-        self.nextGymnast1 = QPushButton("Next Gymnast")
-        topButtons1.addWidget(self.nextGymnast1)
+        self.next_gymnast_button = QPushButton("Next Gymnast")
+        topButtons1.addWidget(self.next_gymnast_button)
+        self.next_gymnast_button.clicked.connect(self.next_gymnast)
 
         self.orderButton1.clicked.connect(self.activated1)
 
@@ -176,11 +180,29 @@ class ScorekeeperQuadrant(QGridLayout):
 
         self.substitution_widget = None
 
+    def refresh_ui(self):
+        gymnast_id: int | None = self.event_lineup_manager.get_current_gymnast_id()
+        if gymnast_id is not None:
+            gymnast: Gymnast = self.db_interface.get_gymnast_by_id(gymnast_id)[0]
+            print(gymnast)
+            self.current_gymnast_name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
+        else:
+            self.current_gymnast_name_label.setText("No Gymnast currently.")
+
+    def next_gymnast(self):
+        if self.event_lineup_manager.next_gymnast():
+            print("Successful transition to next Gymnast")
+            self.refresh_ui()
+        else:
+            print("Failed to go to next Gymnast")
+
     def lineupChange(self):
         self.substitution_widget = SubstitutionWidget(self.team_num)
         self.substitution_widget.show()
+
     def activated1(self):
         self.orderSelect1.setCurrentIndex(1)
+
 
 class NewScorekeeperScreen(QWidget):
     def __init__(self):
@@ -190,11 +212,12 @@ class NewScorekeeperScreen(QWidget):
         mainLayout = QVBoxLayout()
 
         self.quadrants = [ScorekeeperQuadrant(i) for i in range(self.data.meet_format)]
-
         # create 'next event' and 'finish meet' buttons
         nextButtons = QHBoxLayout()
-        self.nextEvent = QPushButton("Next Event")
+        self.nextEvent = QPushButton("Start Event")
         nextButtons.addWidget(self.nextEvent)
+        self.nextEvent.clicked.connect(self.next_event)
+
         self.finish = QPushButton("Finish Meet")
         nextButtons.addWidget(self.finish)
         self.finish.clicked.connect(self.meetDone)
@@ -203,13 +226,34 @@ class NewScorekeeperScreen(QWidget):
             mainLayout.addLayout(layout)
         mainLayout.addLayout(nextButtons)
         self.setLayout(mainLayout)
+        self.is_started = False
+
+    def start_event(self):
+        apparatus_orders: dict[int, list] = constants.APPARATUS_ORDERING[self.data.meet_format]
+        for i, quadrant in enumerate(self.quadrants):
+            quadrant.event_lineup_manager.start_event(apparatus_orders[i])
+
+        self.is_started = True
+
+    def next_event(self):
+        if not self.is_started:
+            self.start_event()
+        else:
+            for quadrant in self.quadrants:
+                quadrant.event_lineup_manager.next_apparatus()
+
+        next_apps = ", ".join([quadrant.event_lineup_manager.get_next_apparatus_name() for quadrant in self.quadrants])
+        self.nextEvent.setText(f"Next Event ({next_apps})")
+
+        for quadrant in self.quadrants:
+            quadrant.refresh_ui()
 
     def update_Score(self, score, team):
         print(float(score))
-        screensController.update_score(team, float(score))
+        # screensController.update_score(team, float(score))
 
     def meetDone(self):
-        screensController.close_windows()
+        # screensController.close_windows()
         postController.open_window()
 
 
