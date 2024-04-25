@@ -1,9 +1,6 @@
 import sys
 
 import constants
-import screensController
-import postController
-import updateController
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -15,6 +12,7 @@ from PyQt5.QtWidgets import *
 from data import MeetData, EventLineupManager
 from db_interface import DBInterface
 from db.models import Gymnast, Event, Lineup, LineupEntry
+from ui import PostScreen
 
 
 class SubstitutionWidget(QWidget):
@@ -248,6 +246,7 @@ class NewScorekeeperScreen(QWidget):
         mainLayout.addLayout(nextButtons)
         self.setLayout(mainLayout)
         self.is_started = False
+        self._post_screen = None
 
     def start_event(self):
         apparatus_orders: dict[int, list] = constants.APPARATUS_ORDERING[self.data.meet_format]
@@ -271,8 +270,8 @@ class NewScorekeeperScreen(QWidget):
 
     def meetDone(self):
         # screensController.close_windows()
-        postController.open_window()
-
+        self._post_screen = PostScreen()
+        self._post_screen.show()
 
 if __name__ == "__main__":
     db_interface = DBInterface.get_interface("../../db_setup/.env")
