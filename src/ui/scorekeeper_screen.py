@@ -184,7 +184,6 @@ class ScorekeeperQuadrant(QGridLayout):
         gymnast_id: int | None = self.event_lineup_manager.get_current_gymnast_id()
         if gymnast_id is not None:
             gymnast: Gymnast = self.db_interface.get_gymnast_by_id(gymnast_id)[0]
-            print(gymnast)
             self.current_gymnast_name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
         else:
             self.current_gymnast_name_label.setText("No Gymnast currently.")

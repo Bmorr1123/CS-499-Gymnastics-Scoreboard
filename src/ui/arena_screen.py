@@ -24,12 +24,10 @@ class TeamLayout(QGridLayout):
         self.team_number = team_number
         self.db_interface = DBInterface.get_interface()
         self.data = MeetData.get_data()
-        print(self.data.schools[self.team_number])
         self.school = self.db_interface.get_school_by_name(self.data.schools[self.team_number])[0]
         self.event_lineup_manager = self.data.event_lineup_managers[self.team_number]
 
         self.display_settings = self.data.display_settings
-        print(self.display_settings)
 
         self.image_score_layout = QHBoxLayout()
         self.score_label = QLabel("0.00")
@@ -152,7 +150,7 @@ class TeamLayout(QGridLayout):
                 qimage = QImage(gymnast.gymnast_picture_path)
                 # with open(, "rb") as file:
                 #     qimage = QImage
-                print(gymnast.gymnast_picture_path)
+                # print(gymnast.gymnast_picture_path)
                 self.gymnast_image_label.pixmap = QPixmap(gymnast.gymnast_picture_path)
                 self.gymnast_image_label.setPixmap(self.gymnast_image_label.pixmap.scaled(150, 150))
                 self.gymnast_image_label.setAlignment(Qt.AlignCenter)

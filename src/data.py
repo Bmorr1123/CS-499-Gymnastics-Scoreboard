@@ -94,7 +94,6 @@ class EventLineupManager:
         if not entries:
             return None
 
-        print(self.current_gymnast_index)
         return entries[self.current_gymnast_index].gymnast_id
 
     def get_current_apparatus_name(self) -> str | None:
