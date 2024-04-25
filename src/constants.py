@@ -65,7 +65,7 @@ APPARATUS_ORDERING = {
     },
     3: {
         0: ["Vault", "Bars", "Break", "Beam", "Break", "Floor"],
-        1: ["Bars", "Break", "Vaults", "Break", "Floor", "Beam"],
+        1: ["Bars", "Break", "Vault", "Break", "Floor", "Beam"],
         2: ["Break", "Vault", "Bars", "Floor", "Beam", "Break"]
     },
     4: {

@@ -9,6 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QColor
 
+import db.models
 from db_interface import DBInterface
 from data import MeetData
 from models import Gymnast
@@ -30,6 +31,7 @@ class TeamLayout(QGridLayout):
         self.display_settings = self.data.display_settings
 
         self.image_score_layout = QHBoxLayout()
+        self.score_color_index = 0
         self.score_label = QLabel("0.00")
         self.score_label.setFont(QFont('Arial', 50))
         self.score_label.setAlignment(Qt.AlignCenter)
@@ -109,6 +111,7 @@ class TeamLayout(QGridLayout):
         self.refresh_timer = QTimer(self)
         self.refresh_timer.timeout.connect(self.refresh_ui)
         self.last_gymnast = None
+        self.last_score = None
         self.refresh_ui()
 
     def get_current_gymnast(self) -> Gymnast | None:
@@ -122,8 +125,8 @@ class TeamLayout(QGridLayout):
         self.name_label.setText(f"Gymnast Name")
         self.classification_label.setText("Classification")
         self.major_label.setText("Major")
-        self.season_avg_label.setText("Season Average")
-        self.order_label.setText("Order: " + "1st")
+        self.season_avg_label.setText("Season Avg: N/A")
+        self.order_label.setText("Order: " + "N/A")
         self.apparatus_label.setText("No Apparatus")
         if self.display_settings.display_start_value:
             self.start_value_label.setText("SV")
@@ -164,20 +167,33 @@ class TeamLayout(QGridLayout):
         current_apparatus = self.event_lineup_manager.get_current_apparatus_name()
         self.apparatus_label.setText(current_apparatus)
         if current_apparatus == "Bars":
-            self.season_avg_label.setText(f"{gymnast.bars_avg:.03f}")
+            self.season_avg_label.setText(f"Season Avg: {gymnast.bars_avg:.03f}")
         elif current_apparatus == "Beam":
-            self.season_avg_label.setText(f"{gymnast.beam_avg:.03f}")
+            self.season_avg_label.setText(f"Season Avg: {gymnast.beam_avg:.03f}")
         elif current_apparatus == "Floor":
-            self.season_avg_label.setText(f"{gymnast.floor_avg:.03f}")
+            self.season_avg_label.setText(f"Season Avg: {gymnast.floor_avg:.03f}")
         elif current_apparatus == "Vault":
-            self.season_avg_label.setText(f"{gymnast.vault_avg:.03f}")
+            self.season_avg_label.setText(f"Season Avg: {gymnast.vault_avg:.03f}")
         else:
             self.apparatus_label.setText("No Apparatus")
-            self.season_avg_label.setText("N/A")
+            self.season_avg_label.setText("Season Avg: N/A")
         self.last_gymnast = gymnast
+
+    def load_lineup_entry_information(self):
+        lineup_entry: db.models.LineupEntry | None = self.event_lineup_manager.get_current_lineup_entry()
+        if not lineup_entry:
+            return
+
+        self.order_label.setText(f"Order: {lineup_entry.order + 1}")
+        self.score_label.setText(f"{lineup_entry.score:.03f}")
+
+        if self.last_score != lineup_entry.score and lineup_entry.score != 0:
+            self.flash_score()
+        self.last_score = lineup_entry.score
 
     def refresh_ui(self):
         self.load_gymnast_information()
+        self.load_lineup_entry_information()
         self.refresh_timer.start(100)
 
     def update_score_label(self, score):
@@ -192,17 +208,16 @@ class TeamLayout(QGridLayout):
         self.stop_timer.start(3000)  # Stop flashing after 3 seconds
 
     def toggle_color(self):
-        palette = self.score_label.palette()
-        color = palette.color(self.score_label.foregroundRole())
-        if color == QColor("black"):
-            self.score_label.setStyleSheet("background-color: yellow; color: white")
+        self.score_color_index = (self.score_color_index + 1) % 2
+        if self.score_color_index:
+            self.score_label.setStyleSheet("background-color: yellow; color: black")
         else:
-            self.score_label.setStyleSheet("background-color: none; color: black")
+            self.score_label.setStyleSheet("background-color: none; color: white")
 
     def stop_flashing(self):
         self.flash_timer.stop()
         self.stop_timer.stop()
-        self.score_label.setStyleSheet("background-color: none; color: black")
+        self.score_label.setStyleSheet("background-color: none; color: white")
 
 
 class ArenaScreen(QWidget):

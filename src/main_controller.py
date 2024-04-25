@@ -21,9 +21,6 @@ def main():
 
     sys.exit(app.exec_())
 
-
-
-
     main_controller = MainController(database_interface)
 
 
