@@ -173,6 +173,15 @@ class DBInterface:
         select_statement = select(Lineup).where(Lineup.event_id == event.event_id)
         return list(session.scalars(select_statement))
 
+    def get_lineups_by_event_id_and_school_id(self, event_id: int, school_id: int):
+        session = self.get_session()
+        select_statement = select(Lineup).where(
+            Lineup.event_id == event_id
+        ).where(
+            Lineup.school_id == school_id
+        )
+        return list(session.scalars(select_statement))
+
     def get_lineups_by_event_and_apparatus(self, event: Event, apparatus_name: str) -> [Lineup]:
         session = self.get_session()
         select_statement = select(Lineup).where(
