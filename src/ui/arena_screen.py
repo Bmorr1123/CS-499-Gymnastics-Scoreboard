@@ -84,10 +84,14 @@ class TeamLayout(QGridLayout):
             self.judge_label_2.setFont(QFont('Arial', 10))
             self.judge_label_3 = QLabel("Judge 3")
             self.judge_label_3.setFont(QFont('Arial', 10))
+            self.judge_label_3 = QLabel("Judge 4")
+            self.judge_label_3.setFont(QFont('Arial', 10))
             self.judges_layout.addWidget(self.judge_title_label)
             self.judges_layout.addWidget(self.judge_label_1)
             self.judges_layout.addWidget(self.judge_label_2)
             self.judges_layout.addWidget(self.judge_label_3)
+            self.judges_layout.addWidget(self.judge_label_4)
+
         self.timer_label = QLabel("--:--")
         self.timer_label.setFont(QFont('Arial', 40))
         self.timer_label.setAlignment(Qt.AlignCenter)
@@ -134,6 +138,7 @@ class TeamLayout(QGridLayout):
         self.name_label.setText(f"{gymnast.first_name} {gymnast.last_name}")
         self.classification_label.setText(f"{gymnast.classification}")
         self.major_label.setText(f"{gymnast.major}")
+        a = self.current_apparatus_index
         if self.current_apparatus_index == 1:
             self.season_avg_label.setText(f"{gymnast.bars_avg}")
         if self.current_apparatus_index == 2:
@@ -142,6 +147,16 @@ class TeamLayout(QGridLayout):
             self.season_avg_label.setText(f"{gymnast.floor_avg}")
         if self.current_apparatus_index == 4:
             self.season_avg_label.setText(f"{gymnast.vault_avg}")
+        self.judge_label_1.setText(
+            f"{db_interface.get_judges()[a].first_name} {db_interface.get_judges()[a].last_name}")
+        self.judge_label_2.setText(
+            f"{db_interface.get_judges()[a].first_name} {db_interface.get_judges()[a].last_name}")
+        self.judge_label_3.setText(
+            f"{db_interface.get_judges()[a].first_name} {db_interface.get_judges()[a].last_name}")
+        self.judge_label_4.setText(
+            f"{db_interface.get_judges()[a].first_name} {db_interface.get_judges()[a].last_name}")
+
+
 
     def update_score_label(self, score):
         self.score_label.setText(score)
